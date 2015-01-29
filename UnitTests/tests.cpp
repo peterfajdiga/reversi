@@ -140,3 +140,38 @@ TEST_CASE("updateScores", "[updatescores]") {
 		REQUIRE(engine.getPlayer(2).getScore() == 63);
 	}
 }
+
+
+TEST_CASE("updateState", "[updatestate]") {
+	engine.initBoard();
+
+	SECTION("out of bounds") {
+		REQUIRE(engine.updateState("!!") == ReversiGameStatus::OUT_OF_BOUNDS);
+		REQUIRE(engine.updateState("a9") == ReversiGameStatus::OUT_OF_BOUNDS);
+		REQUIRE(engine.updateState("9a") == ReversiGameStatus::OUT_OF_BOUNDS);
+		REQUIRE(engine.updateState("1i") == ReversiGameStatus::OUT_OF_BOUNDS);
+	}
+
+	SECTION("position filled") {
+		REQUIRE(engine.updateState("d4") == ReversiGameStatus::POSITION_FILLED);
+		REQUIRE(engine.updateState("d5") == ReversiGameStatus::POSITION_FILLED);
+		REQUIRE(engine.updateState("e4") == ReversiGameStatus::POSITION_FILLED);
+		REQUIRE(engine.updateState("e5") == ReversiGameStatus::POSITION_FILLED);
+	}
+
+	SECTION("invalid move") {
+		REQUIRE(engine.updateState("f4") == ReversiGameStatus::INVALID_MOVE);
+		REQUIRE(engine.updateState("e3") == ReversiGameStatus::INVALID_MOVE);
+		REQUIRE(engine.updateState("a1") == ReversiGameStatus::INVALID_MOVE);
+		REQUIRE(engine.updateState("h8") == ReversiGameStatus::INVALID_MOVE);
+	}
+
+	SECTION("valid move") {
+		REQUIRE(engine.updateState("f5") == ReversiGameStatus::SUCCESS);
+
+		engine.togglePlayer(); // player 2
+		REQUIRE(engine.updateState("f6") == ReversiGameStatus::SUCCESS);
+
+		engine.togglePlayer(); // player 1
+	}
+}

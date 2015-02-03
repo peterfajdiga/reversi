@@ -49,6 +49,28 @@ public:
 	// Set id to `1` or `2` to return player 1 or player 2 specifically.
 	virtual const Player& getPlayer(int id = 0) const;
 
+	// positionToCoords
+	// Resolves a string board position ("a1", "b2", etc.)
+	// into board position x/y coordinates.
+	// Will set the value of ints x and y to the coordinates matching
+	// the position. Does not validate that a position is on the board.
+	// Use isOnBoard to validate that a position is on the board.
+	virtual void positionToCoords(const std::string& position, int& x, int& y);
+
+	// isOnBoard
+	// Determines if the supplied position (x/y indexes) is within the game board.
+	virtual bool isOnBoard(int x, int y) const;
+
+	// isValidMove
+	// Determines if the supplied position (x/y indexes) is a valid move
+	// for the current player, i.e., it is on the board, the position is not already filled,
+	// and it will flip at least one of the opponent's pieces.
+	// Default behaviour will populate mPiecesToFlip with pointers to those board positions
+	// that should have their values flipped by the move if it is valid.
+	// Set isCheck to `true` to perform a faster check that determines that a move is valid
+	// but does not find the complete set of pieces to flip for that move.
+	virtual bool isValidMove(int x, int y, bool isCheck = false);
+
 	// getPosition
 	// Returns the value of the specified board position.
 	// Possible values are `0` for an empty poistion,
@@ -100,20 +122,6 @@ protected:
 	// initBoard
 	// Initializes the game board to a new game state.
 	virtual void initBoard();
-
-	// isOnBoard
-	// Determines if the supplied position (x/y indexes) is within the game board.
-	virtual bool isOnBoard(int x, int y) const;
-
-	// isValidMove
-	// Determines if the supplied position (x/y indexes) is a valid move
-	// for the current player, i.e., it is on the board, the position is not already filled,
-	// and it will flip at least one of the opponent's pieces.
-	// Default behaviour will populate mPiecesToFlip with pointers to those board positions
-	// that should have their values flipped by the move if it is valid.
-	// Set isCheck to `true` to perform a faster check that determines that a move is valid
-	// but does not find the complete set of pieces to flip for that move.
-	virtual bool isValidMove(int x, int y, bool isCheck = false);
 
 	// initPiecesToFlip
 	// Initializes the set of pieces to flip for a given valid move.

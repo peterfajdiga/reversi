@@ -127,9 +127,8 @@ std::string ReversiGameEngine::promptInput(bool isGameOver)
 }
 
 
-ReversiGameStatus ReversiGameEngine::updateState(const std::string& position)
+void ReversiGameEngine::positionToCoords(const std::string& position, int& x, int& y)
 {
-	int x, y;
 	char p0, p1;
 	bool isLetterFirst = true;
 
@@ -148,6 +147,15 @@ ReversiGameStatus ReversiGameEngine::updateState(const std::string& position)
 	// y index
 	// subtract charcode for "1" from number character's charcode
 	y = (isLetterFirst ? p1 : p0) - 49;
+}
+
+
+ReversiGameStatus ReversiGameEngine::updateState(const std::string& position)
+{
+	int x, y;
+
+	// resolve position string
+	positionToCoords(position, x, y);
 
 	// check bounds
 	if (!isOnBoard(x, y)) {

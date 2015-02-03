@@ -175,3 +175,11 @@ TEST_CASE("updateState", "[updatestate]") {
 		engine.togglePlayer(); // player 1
 	}
 }
+
+
+TEST_CASE("positionCoordsToString", "[posstionconversion]") {
+	REQUIRE(engine.positionCoordsToString(0, 0) == "a1");
+	REQUIRE(engine.positionCoordsToString(7, 0) == "h1");
+	REQUIRE(engine.positionCoordsToString(0, 7) == "a8");
+	REQUIRE(engine.positionCoordsToString(7, 7) == "h8");
+}

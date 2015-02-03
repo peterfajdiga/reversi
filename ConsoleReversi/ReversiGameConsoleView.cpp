@@ -85,7 +85,7 @@ std::string ReversiGameConsoleView::promptInput(const ReversiGameEngine& engine,
 }
 
 
-void ReversiGameConsoleView::displayStatus(const ReversiGameEngine& engine, ReversiGameStatus status)
+void ReversiGameConsoleView::displayStatus(const ReversiGameEngine& engine, ReversiGameStatus status, const std::string& input)
 {
 	using namespace std;
 
@@ -107,6 +107,11 @@ void ReversiGameConsoleView::displayStatus(const ReversiGameEngine& engine, Reve
 		break;
 
 	case ReversiGameStatus::SUCCESS:
+		cout << "\n\n" + engine.getPlayer().getName() + " moved at position " + input + "." << endl;
+		break;
+
+	case ReversiGameStatus::FINDING_MOVE:
+		cout << "\n\n" + engine.getPlayer().getName() + " searching for move..." << endl;
 		break;
 	}
 }

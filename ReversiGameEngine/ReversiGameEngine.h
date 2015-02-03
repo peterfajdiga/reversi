@@ -51,11 +51,16 @@ public:
 
 	// positionStringToCoords
 	// Resolves a string board position ("a1", "b2", etc.)
-	// into board position x/y coordinates.
+	// into board position x/y coordinates ({ 5, 6 }, etc.)
 	// Will set the value of ints x and y to the coordinates matching
 	// the position. Does not validate that a position is on the board.
 	// Use isOnBoard to validate that a position is on the board.
 	virtual void positionStringToCoords(const std::string& position, int& x, int& y);
+
+	// positionCoordsToString
+	// Resolves board position x/y coordinates ({ 5, 6 }, etc.)
+	// into board positon string ("a1", "b2", etc.)
+	virtual std::string positionCoordsToString(int x, int y);
 
 	// isOnBoard
 	// Determines if the supplied position (x/y indexes) is within the game board.
@@ -109,7 +114,7 @@ protected:
 
 	// displayStatus
 	// Calls view.displayStatus.
-	virtual void displayStatus(ReversiGameStatus status);
+	virtual void displayStatus(ReversiGameStatus status, const std::string& input = "");
 
 	// canMove
 	// Determines if the current player can make a legal move.
@@ -118,6 +123,13 @@ protected:
 	// togglePlayer
 	// Toggles mCurrentPlayer between `1` and `2`.
 	virtual void togglePlayer();
+
+	// getComputerPlayerMove
+	// Gets a move for a player of type that is not HUMAN.
+	// Delegates to getComputerPlayerMoveEasy, etc.
+	virtual std::string getComputerPlayerMove();
+	virtual std::string getComputerPlayerMoveEasy();
+	// medium and hard not yet implemented...
 
 	// initBoard
 	// Initializes the game board to a new game state.

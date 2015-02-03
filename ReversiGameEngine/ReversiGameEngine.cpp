@@ -1,3 +1,5 @@
+#include <vector>
+#include <iostream>
 #include "ReversiGameEngine.h"
 
 
@@ -65,14 +67,21 @@ void ReversiGameEngine::runGameLoop()
 	while (isGameRunning) {
 		isPlayerAbleToMove = canMove();
 
+		// is game over?
 		if (isLastMovePass && !isPlayerAbleToMove) {
 			isGameOver = true;
 			updateScores(true);
 		}
 
+		// prompt for input
 		if (!isPlayerAbleToMove && !isGameOver) {
 			// don't ask for input if the player can't move but the game is not over
 			input = " ";
+		}
+		else if (getPlayer().getType() > Player::HUMAN && !isGameOver) {
+			// don't ask for input from computer players
+			displayStatus(ReversiGameStatus::FINDING_MOVE);
+			input = getComputerPlayerMove();
 		}
 		else {
 			input = promptInput(isGameOver);
@@ -95,10 +104,15 @@ void ReversiGameEngine::runGameLoop()
 			setupGame();
 			break;
 
+		case 116: // t: Player Type
+			// note: no error checking here for valid player types
+			getPlayer().setType(static_cast<Player::PlayerType>(tolower(input[1]) - 48));
+			break;
+
 		default:
 			if (isPlayerAbleToMove) {
 				status = updateState(input);
-				displayStatus(status);
+				displayStatus(status, input);
 
 				if (status == ReversiGameStatus::SUCCESS) {
 					isLastMovePass = false;
@@ -150,6 +164,18 @@ void ReversiGameEngine::positionStringToCoords(const std::string& position, int&
 }
 
 
+std::string ReversiGameEngine::positionCoordsToString(int x, int y)
+{
+	char temp[3];
+
+	temp[0] = x + 97;
+	temp[1] = y + 49;
+	temp[2] = NULL;
+
+	return std::string(temp);
+}
+
+
 ReversiGameStatus ReversiGameEngine::updateState(const std::string& position)
 {
 	int x, y;
@@ -183,9 +209,9 @@ ReversiGameStatus ReversiGameEngine::updateState(const std::string& position)
 }
 
 
-void ReversiGameEngine::displayStatus(ReversiGameStatus status)
+void ReversiGameEngine::displayStatus(ReversiGameStatus status, const std::string& input)
 {
-	mView->displayStatus(*this, status);
+	mView->displayStatus(*this, status, input);
 }
 
 
@@ -423,4 +449,50 @@ void ReversiGameEngine::setPosition(int x, int y, int value)
 	if (isOnBoard(x, y)) {
 		mBoard[x][y] = value;
 	}
+}
+
+
+std::string ReversiGameEngine::getComputerPlayerMove()
+{
+	switch (getPlayer().getType()) {
+	case Player::PlayerType::COMPUTER_EASY:
+		return getComputerPlayerMoveEasy();
+
+	case Player::PlayerType::COMPUTER_MEDIUM:
+		// not yet implemented
+		return " ";
+
+	case Player::PlayerType::COMPUTER_HARD:
+		// not yet implemented
+		return " ";
+
+	default:
+		return " ";
+	}
+}
+
+
+std::string ReversiGameEngine::getComputerPlayerMoveEasy()
+{
+	std::vector<int> validMovesX, validMovesY;
+	int i, j, index;
+
+	// find list of valid moves
+	for (j = 0; j < 8; j++) {
+		for (i = 0; i < 8; i++) {
+			// position is empty and a valid move
+			if (mBoard[i][j] == 0 && isValidMove(i, j, true)) {
+				validMovesX.push_back(i);
+				validMovesY.push_back(j);
+			}
+		}
+	}
+
+	// chose a valid move at random
+	if (validMovesX.size() > 0) {
+		index = rand() % validMovesX.size();
+		return positionCoordsToString(validMovesX[index], validMovesY[index]);
+	}
+
+	return " ";
 }

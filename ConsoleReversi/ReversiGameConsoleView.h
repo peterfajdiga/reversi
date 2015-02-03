@@ -26,7 +26,7 @@ public:
 	virtual void setupGame(const ReversiGameEngine& engine);
 	virtual void teardownGame(const ReversiGameEngine& engine);
 	virtual std::string promptInput(const ReversiGameEngine& engine, bool isGameOver);
-	virtual void displayStatus(const ReversiGameEngine& engine, ReversiGameStatus status);
+	virtual void displayStatus(const ReversiGameEngine& engine, ReversiGameStatus status, const std::string& input = "");
 
 protected:
 	// HELPERS

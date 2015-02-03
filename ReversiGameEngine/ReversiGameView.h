@@ -18,7 +18,8 @@ enum ReversiGameStatus {
 	POSITION_FILLED,	// invalid move, position is already filled
 	INVALID_MOVE,		// invalid move, position would not flip any of the opponent's pieces
 	CANNOT_MOVE,		// current player cannot move
-	QUIT				// quit application
+	QUIT,				// quit application
+	FINDING_MOVE		// searching for a computer player's move
 };
 
 
@@ -63,5 +64,5 @@ public:
 	// Displays the game status, usually informing the current player 
 	// of an invalid move, or that they cannot move.
 	// See enumerated ReversiGameStatus values above.
-	virtual void displayStatus(const ReversiGameEngine& engine, ReversiGameStatus status) = 0;
+	virtual void displayStatus(const ReversiGameEngine& engine, ReversiGameStatus status, const std::string& input = "") = 0;
 };

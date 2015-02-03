@@ -79,7 +79,7 @@ void ReversiGameEngine::runGameLoop()
 			input = " ";
 		}
 		else if (getPlayer().getType() > Player::HUMAN && !isGameOver) {
-			// don't ask for input from computer players
+			// don't ask for input from computer players if the game isn't over
 			displayStatus(ReversiGameStatus::FINDING_MOVE);
 			input = getComputerPlayerMove();
 		}

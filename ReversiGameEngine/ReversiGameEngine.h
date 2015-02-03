@@ -49,13 +49,13 @@ public:
 	// Set id to `1` or `2` to return player 1 or player 2 specifically.
 	virtual const Player& getPlayer(int id = 0) const;
 
-	// positionToCoords
+	// positionStringToCoords
 	// Resolves a string board position ("a1", "b2", etc.)
 	// into board position x/y coordinates.
 	// Will set the value of ints x and y to the coordinates matching
 	// the position. Does not validate that a position is on the board.
 	// Use isOnBoard to validate that a position is on the board.
-	virtual void positionToCoords(const std::string& position, int& x, int& y);
+	virtual void positionStringToCoords(const std::string& position, int& x, int& y);
 
 	// isOnBoard
 	// Determines if the supplied position (x/y indexes) is within the game board.

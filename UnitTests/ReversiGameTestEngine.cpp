@@ -47,18 +47,6 @@ void ReversiGameTestEngine::initBoard()
 }
 
 
-bool ReversiGameTestEngine::isOnBoard(int x, int y) const
-{
-	return ReversiGameEngine::isOnBoard(x, y);
-}
-
-
-bool ReversiGameTestEngine::isValidMove(int x, int y, bool isCheck)
-{
-	return ReversiGameEngine::isValidMove(x, y, isCheck);
-}
-
-
 void ReversiGameTestEngine::initPiecesToFlip()
 {
 	return ReversiGameEngine::initPiecesToFlip();

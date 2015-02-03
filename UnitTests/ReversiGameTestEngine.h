@@ -22,8 +22,6 @@ public:
 	virtual bool canMove();
 	virtual void togglePlayer();
 	virtual void initBoard();
-	virtual bool isOnBoard(int x, int y) const;
-	virtual bool isValidMove(int x, int y, bool isCheck = false);
 	virtual void initPiecesToFlip();
 	virtual void initPossiblePiecesToFlip();
 	virtual void flipPieces();

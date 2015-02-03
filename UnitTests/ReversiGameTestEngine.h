@@ -16,7 +16,7 @@ public:
 	ReversiGameTestEngine();
 	virtual ~ReversiGameTestEngine();
 
-	// expose ReversiGameEngine methods
+	// expose protected ReversiGameEngine methods
 
 	ReversiGameStatus updateState(const std::string& position);
 	virtual bool canMove();

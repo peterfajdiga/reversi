@@ -29,10 +29,9 @@ namespace reversi {
 	 *
 	 * Abstract base class for game view.
 	 *
-	 * Concrete game view class must inherit from this class,
-	 * and must implement all pure virtual interface methods.
+	 * Concrete game view class must inherit from this class.
 	 *
-	 * Each interface method is passed a const reference to the
+	 * Each interface method is passed a reference to the
 	 * game engine. See Engine.h for public view helper
 	 * methods accessible from this reference.
 	 *

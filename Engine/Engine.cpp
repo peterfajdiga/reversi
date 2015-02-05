@@ -247,20 +247,6 @@ namespace reversi {
 	}
 
 
-	PlayerInterface* Engine::getModPlayer(int id)
-	{
-		if (id == 0) {
-			id = mCurrentPlayer;
-		}
-
-		if (id == 1) {
-			return mPlayer1;
-		}
-		
-		return mPlayer2;
-	}
-
-
 	void Engine::setPlayer(PlayerInterface* player, int id)
 	{
 		if (id == 0) {

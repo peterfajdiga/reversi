@@ -45,9 +45,7 @@ namespace reversi {
 		// Retrieves a player object (see PlayerInterface.h).
 		// Will return a reference to the current player by default.
 		// Set id to `1` or `2` to return player 1 or player 2 specifically.
-		// getModPlayer will return a non-const reference.
 		virtual PlayerInterface* getPlayer(int id = 0) const;
-		virtual PlayerInterface* getModPlayer(int id = 0);
 
 		// setPlayer
 		// Updates a player object pointer, usually when changing player type.

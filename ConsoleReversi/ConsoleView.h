@@ -1,35 +1,38 @@
 #pragma once
 
 #include <string>
-#include "../ReversiGameEngine/Engine.h"
+#include "../Engine/Engine.h"
 
+namespace reversi {
 
-/**
- * ReversiGameConsoleView
- *
- * Concrete console view class for ReversiGameEngine.
- *
- * Inherits from ReversiGameView and implements the public
- * pure virtual interface methods.
- *
- * Displays a simple text-based Reversi game.
- *
- */
-class ReversiGameConsoleView : public ReversiGameView
-{
-public:
-	ReversiGameConsoleView();
-	virtual ~ReversiGameConsoleView();
+	/**
+	 * ConsoleView
+	 *
+	 * Concrete console view class for Engine.
+	 *
+	 * Inherits from ViewInterface and implements the public
+	 * pure virtual interface methods.
+	 *
+	 * Displays a simple text-based Reversi game.
+	 *
+	 */
+	class ConsoleView : public ViewInterface
+	{
+	public:
+		ConsoleView();
+		virtual ~ConsoleView();
 
-	// INTERFACE FOR ReversiGameView
+		// INTERFACE FOR ViewInterface
 
-	virtual void setupGame(const ReversiGameEngine& engine);
-	virtual void teardownGame(const ReversiGameEngine& engine);
-	virtual std::string promptInput(const ReversiGameEngine& engine, bool isGameOver);
-	virtual void displayStatus(const ReversiGameEngine& engine, ReversiGameStatus status, const std::string& input = "");
+		virtual void setupGame(const Engine& engine);
+		virtual void teardownGame(const Engine& engine);
+		virtual std::string promptInput(const Engine& engine, bool isGameOver);
+		virtual void displayStatus(const Engine& engine, Status status, const std::string& input = "");
 
-protected:
-	// HELPERS
+	protected:
+		// HELPERS
 
-	virtual std::string drawBoard(const ReversiGameEngine& engine);
-};
+		virtual std::string drawBoard(const Engine& engine);
+	};
+
+}

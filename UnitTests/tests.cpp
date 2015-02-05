@@ -2,7 +2,7 @@
 #include "catch.hpp"
 #include "TestEngine.h"
 
-ReversiGameTestEngine engine;
+reversi::TestEngine engine;
 
 TEST_CASE("initBoard", "[initboard]") {
 	int i, j;
@@ -146,31 +146,31 @@ TEST_CASE("updateState", "[updatestate]") {
 	engine.initBoard();
 
 	SECTION("out of bounds") {
-		REQUIRE(engine.updateState("!!") == ReversiGameStatus::OUT_OF_BOUNDS);
-		REQUIRE(engine.updateState("a9") == ReversiGameStatus::OUT_OF_BOUNDS);
-		REQUIRE(engine.updateState("9a") == ReversiGameStatus::OUT_OF_BOUNDS);
-		REQUIRE(engine.updateState("1i") == ReversiGameStatus::OUT_OF_BOUNDS);
+		REQUIRE(engine.updateState("!!") == reversi::Status::OUT_OF_BOUNDS);
+		REQUIRE(engine.updateState("a9") == reversi::Status::OUT_OF_BOUNDS);
+		REQUIRE(engine.updateState("9a") == reversi::Status::OUT_OF_BOUNDS);
+		REQUIRE(engine.updateState("1i") == reversi::Status::OUT_OF_BOUNDS);
 	}
 
 	SECTION("position filled") {
-		REQUIRE(engine.updateState("d4") == ReversiGameStatus::POSITION_FILLED);
-		REQUIRE(engine.updateState("d5") == ReversiGameStatus::POSITION_FILLED);
-		REQUIRE(engine.updateState("e4") == ReversiGameStatus::POSITION_FILLED);
-		REQUIRE(engine.updateState("e5") == ReversiGameStatus::POSITION_FILLED);
+		REQUIRE(engine.updateState("d4") == reversi::Status::POSITION_FILLED);
+		REQUIRE(engine.updateState("d5") == reversi::Status::POSITION_FILLED);
+		REQUIRE(engine.updateState("e4") == reversi::Status::POSITION_FILLED);
+		REQUIRE(engine.updateState("e5") == reversi::Status::POSITION_FILLED);
 	}
 
 	SECTION("invalid move") {
-		REQUIRE(engine.updateState("f4") == ReversiGameStatus::INVALID_MOVE);
-		REQUIRE(engine.updateState("e3") == ReversiGameStatus::INVALID_MOVE);
-		REQUIRE(engine.updateState("a1") == ReversiGameStatus::INVALID_MOVE);
-		REQUIRE(engine.updateState("h8") == ReversiGameStatus::INVALID_MOVE);
+		REQUIRE(engine.updateState("f4") == reversi::Status::INVALID_MOVE);
+		REQUIRE(engine.updateState("e3") == reversi::Status::INVALID_MOVE);
+		REQUIRE(engine.updateState("a1") == reversi::Status::INVALID_MOVE);
+		REQUIRE(engine.updateState("h8") == reversi::Status::INVALID_MOVE);
 	}
 
 	SECTION("valid move") {
-		REQUIRE(engine.updateState("f5") == ReversiGameStatus::SUCCESS);
+		REQUIRE(engine.updateState("f5") == reversi::Status::SUCCESS);
 
 		engine.togglePlayer(); // player 2
-		REQUIRE(engine.updateState("f6") == ReversiGameStatus::SUCCESS);
+		REQUIRE(engine.updateState("f6") == reversi::Status::SUCCESS);
 
 		engine.togglePlayer(); // player 1
 	}

@@ -3,8 +3,8 @@
 
 int main(int argc, char** argv)
 {
-	ReversiGameEngine game;
-	ReversiGameConsoleView view;
+	reversi::Engine game;
+	reversi::ConsoleView view;
 
 	game.setView(&view);
 	game.runGame();

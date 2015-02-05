@@ -1,77 +1,81 @@
 #include "TestEngine.h"
 
 
-ReversiGameTestEngine::ReversiGameTestEngine()
-{
+namespace reversi {
 
-}
+	TestEngine::TestEngine()
+	{
 
-
-ReversiGameTestEngine::~ReversiGameTestEngine()
-{
-
-}
+	}
 
 
-void ReversiGameTestEngine::clearBoard()
-{
-	initBoard();
-	setPosition(3, 3, 0);
-	setPosition(3, 4, 0);
-	setPosition(4, 3, 0);
-	setPosition(4, 4, 0);
-}
+	TestEngine::~TestEngine()
+	{
+
+	}
 
 
-ReversiGameStatus ReversiGameTestEngine::updateState(const std::string& position)
-{
-	return ReversiGameEngine::updateState(position);
-}
+	void TestEngine::clearBoard()
+	{
+		initBoard();
+		setPosition(3, 3, 0);
+		setPosition(3, 4, 0);
+		setPosition(4, 3, 0);
+		setPosition(4, 4, 0);
+	}
 
 
-bool ReversiGameTestEngine::canMove()
-{
-	return ReversiGameEngine::canMove();
-}
+	Status TestEngine::updateState(const std::string& position)
+	{
+		return Engine::updateState(position);
+	}
 
 
-void ReversiGameTestEngine::togglePlayer()
-{
-	return ReversiGameEngine::togglePlayer();
-}
+	bool TestEngine::canMove()
+	{
+		return Engine::canMove();
+	}
 
 
-void ReversiGameTestEngine::initBoard()
-{
-	return ReversiGameEngine::initBoard();
-}
+	void TestEngine::togglePlayer()
+	{
+		return Engine::togglePlayer();
+	}
 
 
-void ReversiGameTestEngine::initPiecesToFlip()
-{
-	return ReversiGameEngine::initPiecesToFlip();
-}
+	void TestEngine::initBoard()
+	{
+		return Engine::initBoard();
+	}
 
 
-void ReversiGameTestEngine::initPossiblePiecesToFlip()
-{
-	return ReversiGameEngine::initPossiblePiecesToFlip();
-}
+	void TestEngine::initPiecesToFlip()
+	{
+		return Engine::initPiecesToFlip();
+	}
 
 
-void ReversiGameTestEngine::flipPieces()
-{
-	return ReversiGameEngine::flipPieces();
-}
+	void TestEngine::initPossiblePiecesToFlip()
+	{
+		return Engine::initPossiblePiecesToFlip();
+	}
 
 
-void ReversiGameTestEngine::updateScores(bool isGameOver)
-{
-	return ReversiGameEngine::updateScores(isGameOver);
-}
+	void TestEngine::flipPieces()
+	{
+		return Engine::flipPieces();
+	}
 
 
-void ReversiGameTestEngine::setPosition(int x, int y, int value)
-{
-	return ReversiGameEngine::setPosition(x, y, value);
+	void TestEngine::updateScores(bool isGameOver)
+	{
+		return Engine::updateScores(isGameOver);
+	}
+
+
+	void TestEngine::setPosition(int x, int y, int value)
+	{
+		return Engine::setPosition(x, y, value);
+	}
+
 }

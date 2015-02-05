@@ -4,31 +4,35 @@
 #include "../ReversiGameEngine/Engine.h"
 
 
-/**
- * ReversiGameTestEngine
- *
- * Exposes most class methods to public access control for test purposes.
- *
- */
-class ReversiGameTestEngine : public ReversiGameEngine
-{
-public:
-	ReversiGameTestEngine();
-	virtual ~ReversiGameTestEngine();
+namespace reversi {
 
-	// expose protected ReversiGameEngine methods
+	/**
+	 * TestEngine
+	 *
+	 * Exposes most class methods to public access control for test purposes.
+	 *
+	 */
+	class TestEngine : public Engine
+	{
+	public:
+		TestEngine();
+		virtual ~TestEngine();
 
-	ReversiGameStatus updateState(const std::string& position);
-	virtual bool canMove();
-	virtual void togglePlayer();
-	virtual void initBoard();
-	virtual void initPiecesToFlip();
-	virtual void initPossiblePiecesToFlip();
-	virtual void flipPieces();
-	virtual void updateScores(bool isGameOver = false);
-	virtual void setPosition(int x, int y, int value);
+		// expose protected Engine methods
 
-	// helpers
+		Status updateState(const std::string& position);
+		virtual bool canMove();
+		virtual void togglePlayer();
+		virtual void initBoard();
+		virtual void initPiecesToFlip();
+		virtual void initPossiblePiecesToFlip();
+		virtual void flipPieces();
+		virtual void updateScores(bool isGameOver = false);
+		virtual void setPosition(int x, int y, int value);
 
-	virtual void clearBoard();
-};
+		// helpers
+
+		virtual void clearBoard();
+	};
+
+}

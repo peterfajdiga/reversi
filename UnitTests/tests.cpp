@@ -177,7 +177,7 @@ TEST_CASE("updateState", "[updatestate]") {
 }
 
 
-TEST_CASE("positionCoordsToString", "[posstionconversion]") {
+TEST_CASE("positionCoordsToString", "[positionconversion]") {
 	REQUIRE(engine.positionCoordsToString(0, 0) == "a1");
 	REQUIRE(engine.positionCoordsToString(7, 0) == "h1");
 	REQUIRE(engine.positionCoordsToString(0, 7) == "a8");

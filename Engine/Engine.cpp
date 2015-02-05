@@ -20,15 +20,21 @@ namespace reversi {
 	Engine::Engine()
 	{
 		mCurrentPlayer = 1;
+
+		// set initial players as Human
+		mPlayers[0] = new HumanPlayer;
+		mPlayers[1] = new HumanPlayer;
 	}
 
 
-	// no dynamic memory created within the engine
-	// view must be created and destroyed outside the engine
 	Engine::~Engine()
 	{
 		// set view pointer to NULL
 		mView = NULL;
+
+		// delete players
+		delete mPlayers[0];
+		delete mPlayers[1];
 	}
 
 
@@ -79,11 +85,6 @@ namespace reversi {
 				// don't ask for input if the player can't move but the game is not over
 				input = " ";
 			}
-			else if (getPlayer().getType() > Player::HUMAN && !isGameOver) {
-				// don't ask for input from computer players if the game isn't over
-				displayStatus(Status::FINDING_MOVE);
-				input = getComputerPlayerMove();
-			}
 			else {
 				input = promptInput(isGameOver);
 			}
@@ -103,11 +104,6 @@ namespace reversi {
 				isLastMovePass = false;
 				teardownGame();
 				setupGame();
-				break;
-
-			case 116: // t: Player Type
-				// note: no error checking here for valid player types
-				getPlayer().setType(static_cast<Player::PlayerType>(tolower(input[1]) - 48));
 				break;
 
 			default:
@@ -138,7 +134,7 @@ namespace reversi {
 
 	std::string Engine::promptInput(bool isGameOver)
 	{
-		return mView->promptInput(*this, isGameOver);
+		return getPlayer()->promptInput(*this, *mView, isGameOver);
 	}
 
 
@@ -235,7 +231,7 @@ namespace reversi {
 	}
 
 
-	const Player& Engine::getPlayer(int id) const
+	const PlayerInterface* Engine::getPlayer(int id) const
 	{
 		if (id == 0) {
 			id = mCurrentPlayer;
@@ -441,8 +437,8 @@ namespace reversi {
 			// don't modify scores in case of a tie
 		}
 
-		mPlayers[0].setScore(s1);
-		mPlayers[1].setScore(s2);
+		mPlayers[0]->setScore(s1);
+		mPlayers[1]->setScore(s2);
 	}
 
 	int Engine::getPosition(int x, int y) const
@@ -460,52 +456,6 @@ namespace reversi {
 		if (isOnBoard(x, y)) {
 			mBoard[x][y] = value;
 		}
-	}
-
-
-	std::string Engine::getComputerPlayerMove()
-	{
-		switch (getPlayer().getType()) {
-		case Player::PlayerType::COMPUTER_EASY:
-			return getComputerPlayerMoveEasy();
-
-		case Player::PlayerType::COMPUTER_MEDIUM:
-			// not yet implemented
-			return " ";
-
-		case Player::PlayerType::COMPUTER_HARD:
-			// not yet implemented
-			return " ";
-
-		default:
-			return " ";
-		}
-	}
-
-
-	std::string Engine::getComputerPlayerMoveEasy()
-	{
-		std::vector<int> validMovesX, validMovesY;
-		int i, j, index;
-
-		// find list of valid moves
-		for (j = 0; j < 8; j++) {
-			for (i = 0; i < 8; i++) {
-				// position is empty and a valid move
-				if (isOpen(i, j) && isValidMove(i, j, true)) {
-					validMovesX.push_back(i);
-					validMovesY.push_back(j);
-				}
-			}
-		}
-
-		// chose a valid move at random
-		if (validMovesX.size() > 0) {
-			index = rand() % validMovesX.size();
-			return positionCoordsToString(validMovesX[index], validMovesY[index]);
-		}
-
-		return " ";
 	}
 
 }

@@ -1,8 +1,9 @@
 #pragma once
 
 #include <string>
-#include "Player.h"
+#include "PlayerInterface.h"
 #include "ViewInterface.h"
+#include "HumanPlayer.h"
 
 namespace reversi {
 
@@ -41,10 +42,10 @@ namespace reversi {
 		virtual void runGame();
 
 		// getPlayer
-		// Retrieves a player object (see Player.h).
+		// Retrieves a player object (see PlayerInterface.h).
 		// Will return a reference to the current player by default.
 		// Set id to `1` or `2` to return player 1 or player 2 specifically.
-		virtual const Player& getPlayer(int id = 0) const;
+		virtual PlayerInterface* getPlayer(int id = 0) const;
 
 		// positionStringToCoords
 		// Resolves a string board position ("a1", "b2", etc.)
@@ -125,13 +126,6 @@ namespace reversi {
 		// Toggles mCurrentPlayer between `1` and `2`.
 		virtual void togglePlayer();
 
-		// getComputerPlayerMove
-		// Gets a move for a player of type that is not HUMAN.
-		// Delegates to getComputerPlayerMoveEasy, etc.
-		virtual std::string getComputerPlayerMove();
-		virtual std::string getComputerPlayerMoveEasy();
-		// medium and hard not yet implemented...
-
 		// initBoard
 		// Initializes the game board to a new game state.
 		virtual void initBoard();
@@ -184,7 +178,7 @@ namespace reversi {
 		// "h8" == mBoard[7][7]
 		int mBoard[8][8];
 
-		Player mPlayers[2];
+		PlayerInterface* mPlayers[2];
 
 		// Current player is toggled between `1` and `2`.
 		int mCurrentPlayer;

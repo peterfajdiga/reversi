@@ -2,27 +2,9 @@
 
 
 namespace reversi {
-
-	int PlayerInterface::sIdCounter = 1;
-
-
 	PlayerInterface::PlayerInterface()
 	{
-		using namespace std;
 
-		mId = sIdCounter++;
-		mName = "Player " + to_string(mId);
-		mScore = 0;
-	}
-
-
-	PlayerInterface::PlayerInterface(std::string name)
-	{
-		using namespace std;
-
-		mId = sIdCounter++;
-		mName = name;
-		mScore = 0;
 	}
 
 
@@ -32,13 +14,20 @@ namespace reversi {
 	}
 
 
+	void PlayerInterface::setId(int id)
+	{
+		mId = id;
+		mName = "Player " + std::to_string(id);
+	}
+
+
 	int PlayerInterface::getId() const
 	{
 		return mId;
 	}
 
 
-	void PlayerInterface::setName(std::string name) const
+	void PlayerInterface::setName(std::string name)
 	{
 		mName = name;
 	}

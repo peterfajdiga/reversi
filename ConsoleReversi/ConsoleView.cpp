@@ -2,6 +2,7 @@
 
 #include <iostream>
 #include "ConsoleView.h"
+#include "EasyComputerPlayer.h"
 
 
 namespace reversi {
@@ -18,25 +19,25 @@ namespace reversi {
 	}
 
 
-	void ConsoleView::setupGame(const Engine& engine)
+	void ConsoleView::setupGame(Engine& engine)
 	{
 		using namespace std;
 
 		cout << "\n\nConsole Reversi by jsmreese.\n\n";
-		cout << "At any time, enter 'n' for a new game or 'q' to quit playing.\n\n";
+		cout << "At any time, enter:\n- 'n' for a new game\n- 'q' to quit playing\n- 'c' to switch the current player to a computer player\n\n";
 		cout << "To make a move, enter the column letter followed by\n";
 		cout << "the row number of the desired position, e.g. 'f4'.\n\n";
 		cout << "Columns are from 'a' to 'h', and rows are from '1' to '8'." << endl;
 	}
 
 
-	void ConsoleView::teardownGame(const Engine& engine)
+	void ConsoleView::teardownGame(Engine& engine)
 	{
 
 	}
 
 
-	std::string ConsoleView::promptInput(const Engine& engine, bool isGameOver)
+	std::string ConsoleView::promptInput(Engine& engine, bool isGameOver)
 	{
 		using namespace std;
 
@@ -83,11 +84,22 @@ namespace reversi {
 		cout << "\n" + engine.getPlayer()->getName() + ", enter a move: ";
 		cin >> input;
 
+		if (input.length() == 1 && tolower(input[0]) == 99) {
+			// 'c' - switch to computer player
+
+			EasyComputerPlayer* player = new EasyComputerPlayer;
+			player->setId(engine.getPlayer()->getId());
+
+			engine.setPlayer(player);
+
+			return engine.getPlayer()->promptInput(engine, *this);
+		}
+
 		return input;
 	}
 
 
-	void ConsoleView::displayStatus(const Engine& engine, Status status, const std::string& input)
+	void ConsoleView::displayStatus(Engine& engine, Status status, const std::string& input)
 	{
 		using namespace std;
 
@@ -119,7 +131,7 @@ namespace reversi {
 	}
 
 
-	std::string ConsoleView::drawBoard(const Engine& engine)
+	std::string ConsoleView::drawBoard(Engine& engine)
 	{
 		using namespace std;
 

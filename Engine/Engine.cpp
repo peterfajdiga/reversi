@@ -1,4 +1,3 @@
-#include <vector>
 #include "Engine.h"
 
 
@@ -22,8 +21,11 @@ namespace reversi {
 		mCurrentPlayer = 1;
 
 		// set initial players as Human
-		mPlayers[0] = new HumanPlayer;
-		mPlayers[1] = new HumanPlayer;
+		mPlayer1 = new HumanPlayer;
+		mPlayer1->setId(1);
+
+		mPlayer2 = new HumanPlayer;
+		mPlayer2->setId(2);
 	}
 
 
@@ -33,8 +35,8 @@ namespace reversi {
 		mView = NULL;
 
 		// delete players
-		delete mPlayers[0];
-		delete mPlayers[1];
+		delete mPlayer1;
+		delete mPlayer2;
 	}
 
 
@@ -237,7 +239,42 @@ namespace reversi {
 			id = mCurrentPlayer;
 		}
 
-		return mPlayers[id - 1];
+		if (id == 1) {
+			return mPlayer1;
+		}
+
+		return mPlayer2;
+	}
+
+
+	PlayerInterface* Engine::getModPlayer(int id)
+	{
+		if (id == 0) {
+			id = mCurrentPlayer;
+		}
+
+		if (id == 1) {
+			return mPlayer1;
+		}
+		
+		return mPlayer2;
+	}
+
+
+	void Engine::setPlayer(PlayerInterface* player, int id)
+	{
+		if (id == 0) {
+			id = mCurrentPlayer;
+		}
+
+		if (id == 1) {
+			delete mPlayer1;
+			mPlayer1 = player;
+		}
+		else if (id == 2) {
+			delete mPlayer2;
+			mPlayer2 = player;
+		}
 	}
 
 
@@ -437,8 +474,8 @@ namespace reversi {
 			// don't modify scores in case of a tie
 		}
 
-		mPlayers[0]->setScore(s1);
-		mPlayers[1]->setScore(s2);
+		mPlayer1->setScore(s1);
+		mPlayer2->setScore(s2);
 	}
 
 	int Engine::getPosition(int x, int y) const

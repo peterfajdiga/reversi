@@ -45,7 +45,13 @@ namespace reversi {
 		// Retrieves a player object (see PlayerInterface.h).
 		// Will return a reference to the current player by default.
 		// Set id to `1` or `2` to return player 1 or player 2 specifically.
+		// getModPlayer will return a non-const reference.
 		virtual PlayerInterface* getPlayer(int id = 0) const;
+		virtual PlayerInterface* getModPlayer(int id = 0);
+
+		// setPlayer
+		// Updates a player object pointer, usually when changing player type.
+		virtual void setPlayer(PlayerInterface* player, int id = 0);
 
 		// positionStringToCoords
 		// Resolves a string board position ("a1", "b2", etc.)
@@ -178,7 +184,8 @@ namespace reversi {
 		// "h8" == mBoard[7][7]
 		int mBoard[8][8];
 
-		PlayerInterface* mPlayers[2];
+		PlayerInterface* mPlayer1;
+		PlayerInterface* mPlayer2;
 
 		// Current player is toggled between `1` and `2`.
 		int mCurrentPlayer;

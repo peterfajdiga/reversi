@@ -14,23 +14,21 @@ namespace reversi {
 	 *
 	 * Concrete player classes must implement the promptInput method.
 	 * HumanPlayer is implemented and is the initial player type.
-	 * Use dynamic_cast to change a player's type (from human to computer, etc.)
 	 *
 	 * Game view may access player objects via engine.getPlayer(id).
-	 * View may get the player id and score, and may set the player name.
 	 *
 	 */
 	class PlayerInterface
 	{
 	public:
 		PlayerInterface();
-		PlayerInterface(std::string name);
 
 		virtual ~PlayerInterface();
 
+		virtual void setId(int id);
 		virtual int getId() const;
 
-		virtual void setName(std::string name) const;
+		virtual void setName(std::string name);
 		virtual std::string getName() const;
 
 		virtual void setScore(int score);
@@ -39,10 +37,8 @@ namespace reversi {
 		virtual std::string promptInput(Engine& engine, ViewInterface& view, bool isGameOver = false) = 0;
 
 	private:
-		static int sIdCounter;
-
 		int mId;
-		mutable std::string mName;
+		std::string mName;
 		int mScore;
 	};
 

@@ -24,15 +24,15 @@ namespace reversi {
 
 		// INTERFACE FOR ViewInterface
 
-		virtual void setupGame(const Engine& engine);
-		virtual void teardownGame(const Engine& engine);
-		virtual std::string promptInput(const Engine& engine, bool isGameOver);
-		virtual void displayStatus(const Engine& engine, Status status, const std::string& input = "");
+		virtual void setupGame(Engine& engine);
+		virtual void teardownGame(Engine& engine);
+		virtual std::string promptInput(Engine& engine, bool isGameOver);
+		virtual void displayStatus(Engine& engine, Status status, const std::string& input = "");
 
 	protected:
 		// HELPERS
 
-		virtual std::string drawBoard(const Engine& engine);
+		virtual std::string drawBoard(Engine& engine);
 	};
 
 }

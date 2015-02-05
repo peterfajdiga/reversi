@@ -47,25 +47,25 @@ namespace reversi {
 		// Called before a new game is started.
 		// Automatically called when the game loop itself starts.
 		// Typically used to display welcome and instructions before the new game.
-		virtual void setupGame(const Engine& engine) = 0;
+		virtual void setupGame(Engine& engine) = 0;
 
 		// teardownGame
 		// Called after a game ends, as the game loop itself ends
 		// or just before a new game is setup.
-		virtual void teardownGame(const Engine& engine) = 0;
+		virtual void teardownGame(Engine& engine) = 0;
 
 		// promptInput
 		// Displays the game board and prompts for player input.
 		// Input string can match a special character recognized by the
 		// game loop ('n' for New Game, 'q' for Quit) or will be treated as
 		// a position on the board for a possible move by the current player.
-		virtual std::string promptInput(const Engine& engine, bool isGameOver) = 0;
+		virtual std::string promptInput(Engine& engine, bool isGameOver) = 0;
 
 		// displayStatus
 		// Displays the game status, usually informing the current player 
 		// of an invalid move, or that they cannot move.
 		// See enumerated Status values above.
-		virtual void displayStatus(const Engine& engine, Status status, const std::string& input = "") = 0;
+		virtual void displayStatus(Engine& engine, Status status, const std::string& input = "") = 0;
 	};
 
 }

@@ -41,8 +41,8 @@ namespace reversi {
 		using namespace std;
 
 		string input;
-		int s1 = engine.getPlayer(1).getScore();
-		int s2 = engine.getPlayer(2).getScore();
+		int s1 = engine.getPlayer(1)->getScore();
+		int s2 = engine.getPlayer(2)->getScore();
 
 		if (isGameOver) {
 			cout << "\n\n-----------------------------";
@@ -50,9 +50,9 @@ namespace reversi {
 
 			cout << "\n ** Game Over **\n\n";
 			cout << "\n\nScore\n";
-			cout << engine.getPlayer(1).getName();
+			cout << engine.getPlayer(1)->getName();
 			cout << ": " + to_string(s1) + "\n";
-			cout << engine.getPlayer(2).getName();
+			cout << engine.getPlayer(2)->getName();
 			cout << ": " + to_string(s2) + "\n";
 
 			if (s1 == s2) {
@@ -60,7 +60,7 @@ namespace reversi {
 			}
 			else {
 				cout << "\n Congratulations, ";
-				cout << engine.getPlayer(s1 > s2 ? 1 : 2).getName() + "!" << endl;
+				cout << engine.getPlayer(s1 > s2 ? 1 : 2)->getName() + "!" << endl;
 			}
 
 			cout << "\n\nEnter 'n' to play again, or 'q' to quit playing: ";
@@ -73,14 +73,14 @@ namespace reversi {
 		cout << "\n\n-----------------------------";
 
 		cout << "\n\nScore\n";
-		cout << engine.getPlayer(1).getName();
-		cout << ": " + to_string(engine.getPlayer(1).getScore()) + "\n";
-		cout << engine.getPlayer(2).getName();
-		cout << ": " + to_string(engine.getPlayer(2).getScore()) + "\n";
+		cout << engine.getPlayer(1)->getName();
+		cout << ": " + to_string(engine.getPlayer(1)->getScore()) + "\n";
+		cout << engine.getPlayer(2)->getName();
+		cout << ": " + to_string(engine.getPlayer(2)->getScore()) + "\n";
 
 		cout << "\n\n" + drawBoard(engine) + "\n";
 
-		cout << "\n" + engine.getPlayer().getName() + ", enter a move: ";
+		cout << "\n" + engine.getPlayer()->getName() + ", enter a move: ";
 		cin >> input;
 
 		return input;
@@ -93,7 +93,7 @@ namespace reversi {
 
 		switch (status) {
 		case Status::CANNOT_MOVE:
-			cout << "\n\n ** " + engine.getPlayer().getName() + " is unable to move. **" << endl;
+			cout << "\n\n ** " + engine.getPlayer()->getName() + " is unable to move. **" << endl;
 			break;
 
 		case Status::INVALID_MOVE:
@@ -109,11 +109,11 @@ namespace reversi {
 			break;
 
 		case Status::SUCCESS:
-			cout << "\n\n" + engine.getPlayer().getName() + " moved at position " + input + "." << endl;
+			cout << "\n\n" + engine.getPlayer()->getName() + " moved at position " + input + "." << endl;
 			break;
 
 		case Status::FINDING_MOVE:
-			cout << "\n\n" + engine.getPlayer().getName() + " searching for move..." << endl;
+			cout << "\n\n" + engine.getPlayer()->getName() + " searching for move..." << endl;
 			break;
 		}
 	}

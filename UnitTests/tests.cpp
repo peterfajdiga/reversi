@@ -47,13 +47,13 @@ TEST_CASE("isOnBoard", "[isonboard]") {
 
 // requires starting with mCurrentPlayer == 1
 TEST_CASE("togglePlayer", "[toggleplayer]") {
-	REQUIRE(engine.getPlayer().getId() == 1);
+	REQUIRE(engine.getPlayer()->getId() == 1);
 
 	engine.togglePlayer();
-	REQUIRE(engine.getPlayer().getId() == 2);
+	REQUIRE(engine.getPlayer()->getId() == 2);
 
 	engine.togglePlayer();
-	REQUIRE(engine.getPlayer().getId() == 1);
+	REQUIRE(engine.getPlayer()->getId() == 1);
 }
 
 
@@ -106,12 +106,12 @@ TEST_CASE("updateScores", "[updatescores]") {
 		engine.setPosition(0, 0, 1);
 		engine.setPosition(1, 0, 2);
 		engine.updateScores();
-		REQUIRE(engine.getPlayer(1).getScore() == 1);
-		REQUIRE(engine.getPlayer(2).getScore() == 1);
+		REQUIRE(engine.getPlayer(1)->getScore() == 1);
+		REQUIRE(engine.getPlayer(2)->getScore() == 1);
 
 		engine.updateScores(true);
-		REQUIRE(engine.getPlayer(1).getScore() == 1);
-		REQUIRE(engine.getPlayer(2).getScore() == 1);
+		REQUIRE(engine.getPlayer(1)->getScore() == 1);
+		REQUIRE(engine.getPlayer(2)->getScore() == 1);
 	}
 
 	SECTION("player 1 wins") {
@@ -119,12 +119,12 @@ TEST_CASE("updateScores", "[updatescores]") {
 		engine.setPosition(0, 1, 1);
 		engine.setPosition(1, 0, 2);
 		engine.updateScores();
-		REQUIRE(engine.getPlayer(1).getScore() == 2);
-		REQUIRE(engine.getPlayer(2).getScore() == 1);
+		REQUIRE(engine.getPlayer(1)->getScore() == 2);
+		REQUIRE(engine.getPlayer(2)->getScore() == 1);
 
 		engine.updateScores(true);
-		REQUIRE(engine.getPlayer(1).getScore() == 63);
-		REQUIRE(engine.getPlayer(2).getScore() == 1);
+		REQUIRE(engine.getPlayer(1)->getScore() == 63);
+		REQUIRE(engine.getPlayer(2)->getScore() == 1);
 	}
 
 	SECTION("player 2 wins") {
@@ -132,12 +132,12 @@ TEST_CASE("updateScores", "[updatescores]") {
 		engine.setPosition(0, 1, 2);
 		engine.setPosition(1, 0, 1);
 		engine.updateScores();
-		REQUIRE(engine.getPlayer(1).getScore() == 1);
-		REQUIRE(engine.getPlayer(2).getScore() == 2);
+		REQUIRE(engine.getPlayer(1)->getScore() == 1);
+		REQUIRE(engine.getPlayer(2)->getScore() == 2);
 
 		engine.updateScores(true);
-		REQUIRE(engine.getPlayer(1).getScore() == 1);
-		REQUIRE(engine.getPlayer(2).getScore() == 63);
+		REQUIRE(engine.getPlayer(1)->getScore() == 1);
+		REQUIRE(engine.getPlayer(2)->getScore() == 63);
 	}
 }
 

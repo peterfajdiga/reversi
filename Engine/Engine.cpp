@@ -231,7 +231,7 @@ namespace reversi {
 	}
 
 
-	const PlayerInterface* Engine::getPlayer(int id) const
+	PlayerInterface* Engine::getPlayer(int id) const
 	{
 		if (id == 0) {
 			id = mCurrentPlayer;

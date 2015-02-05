@@ -19,8 +19,8 @@ namespace reversi {
 	 *
 	 * Example usage:
 	 *
-	 * Engine game;
-	 * ViewInterfaceSub view;
+	 * reversi::Engine game;
+	 * reversi::ConcreteView view;
 	 *
 	 * game.setView(&view);
 	 * game.runGame();

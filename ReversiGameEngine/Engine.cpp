@@ -190,7 +190,7 @@ ReversiGameStatus ReversiGameEngine::updateState(const std::string& position)
 	}
 
 	// check empty position
-	if (mBoard[x][y] != 0) {
+	if (!isOpen(x, y)) {
 		// position is already filled
 		return ReversiGameStatus::POSITION_FILLED;
 	}
@@ -256,7 +256,7 @@ bool ReversiGameEngine::canMove()
 
 			// check open position and valid move
 			// set isCheck flag to shorten isValidMove search
-			if (mBoard[i][j] == 0 && isValidMove(i, j, true)) {
+			if (isOpen(i, j) && isValidMove(i, j, true)) {
 				return true;
 			}
 		}
@@ -491,7 +491,7 @@ std::string ReversiGameEngine::getComputerPlayerMoveEasy()
 	for (j = 0; j < 8; j++) {
 		for (i = 0; i < 8; i++) {
 			// position is empty and a valid move
-			if (mBoard[i][j] == 0 && isValidMove(i, j, true)) {
+			if (isOpen(i, j) && isValidMove(i, j, true)) {
 				validMovesX.push_back(i);
 				validMovesY.push_back(j);
 			}

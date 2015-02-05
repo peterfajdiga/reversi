@@ -1,7 +1,7 @@
 #pragma once
 
 #include <string>
-#include "../ReversiGameEngine/Engine.h"
+#include "../Engine/Engine.h"
 
 
 namespace reversi {

@@ -274,11 +274,21 @@ void ReversiGameEngine::togglePlayer()
 
 bool ReversiGameEngine::isOnBoard(int x, int y) const
 {
-	if (x < 0 || y < 0 || x > 7 || y > 7) {
-		return false;
+	if (x >= 0 && x <= 7 && y >= 0 && y <= 7) {
+		return true;
 	}
 
-	return true;
+	return false;
+}
+
+
+bool ReversiGameEngine::isOpen(int x, int y) const
+{
+	if (mBoard[x][y] == 0) {
+		return true;
+	}
+
+	return false;
 }
 
 
@@ -323,7 +333,7 @@ bool ReversiGameEngine::isValidMove(int x, int y, bool isCheck)
 			yPos -= yStep;
 
 			// check bounds and empty position
-			if (!isOnBoard(xPos, yPos) || mBoard[xPos][yPos] == 0) {
+			if (!isOnBoard(xPos, yPos) || isOpen(xPos, yPos)) {
 				// no flipped pieces in this direction
 				initPossiblePiecesToFlip();
 

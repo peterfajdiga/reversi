@@ -66,6 +66,10 @@ public:
 	// Determines if the supplied position (x/y indexes) is within the game board.
 	virtual bool isOnBoard(int x, int y) const;
 
+	// isOpen
+	// Determines if the supplied position (x/y indexes) is open (is empty and not already taken).
+	virtual bool isOpen(int x, int y) const;
+
 	// isValidMove
 	// Determines if the supplied position (x/y indexes) is a valid move
 	// for the current player, i.e., it is on the board, the position is not already filled,

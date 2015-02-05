@@ -1,4 +1,4 @@
-#include "ReversiGameView.h"
+#include "ViewInterface.h"
 
 ReversiGameView::ReversiGameView()
 {

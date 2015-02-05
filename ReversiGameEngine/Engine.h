@@ -2,7 +2,7 @@
 
 #include <string>
 #include "Player.h"
-#include "ReversiGameView.h"
+#include "ViewInterface.h"
 
 
 /**

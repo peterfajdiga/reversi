@@ -1,6 +1,6 @@
 #include <vector>
 #include <iostream>
-#include "ReversiGameEngine.h"
+#include "Engine.h"
 
 
 const int ReversiGameEngine::sDirectionsTable[8][2] = {

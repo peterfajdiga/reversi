@@ -1,4 +1,4 @@
-#include "ReversiGameTestEngine.h"
+#include "TestEngine.h"
 
 
 ReversiGameTestEngine::ReversiGameTestEngine()

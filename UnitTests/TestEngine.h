@@ -1,7 +1,7 @@
 #pragma once
 
 #include <string>
-#include "../ReversiGameEngine/ReversiGameEngine.h"
+#include "../ReversiGameEngine/Engine.h"
 
 
 /**

@@ -1,4 +1,4 @@
-#include "ReversiGameConsoleView.h"
+#include "ConsoleView.h"
 
 
 int main(int argc, char** argv)

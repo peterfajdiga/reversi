@@ -169,7 +169,7 @@ namespace reversi {
 
 		temp[0] = x + 97;
 		temp[1] = y + 49;
-		temp[2] = NULL;
+		temp[2] = 0;
 
 		return std::string(temp);
 	}

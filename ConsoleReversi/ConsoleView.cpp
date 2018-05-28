@@ -139,12 +139,13 @@ namespace reversi {
 		for (j = 0; j < 8; j++) {
 			board += to_string(j + 1) + " ";
 			for (i = 0; i < 8; i++) {
+				board += ' ';
 				position = engine.getPosition(i, j);
-				if (position == 0) {
-					board += " .";
-				}
-				else {
-					board += " " + to_string(position);
+				switch (position) {
+					case 0: board += '.'; break;  // unoccupied
+					case 1: board += "○"; break;  // white
+					case 2: board += "●"; break;  // black
+					default: board += to_string(position);
 				}
 			}
 

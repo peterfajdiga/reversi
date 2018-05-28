@@ -45,6 +45,6 @@ namespace reversi {
     }
 
     std::string EasyComputerPlayer::generateName() {
-        return "CPU   ";
+        return "CPU";
     }
 }

@@ -19,19 +19,24 @@ namespace reversi {
     class ConsoleView : public ViewInterface {
     public:
         ConsoleView();
-        virtual ~ConsoleView();
+
+        ~ConsoleView() override;
 
         // INTERFACE FOR ViewInterface
 
-        virtual void setupGame(Engine& engine);
-        virtual void teardownGame(Engine& engine);
-        virtual std::string promptInput(Engine& engine, bool isGameOver);
-        virtual void displayStatus(Engine& engine, Status status, const std::string& input = "");
+        void setupGame(Engine& engine) override;
+
+        void teardownGame(Engine& engine) override;
+
+        std::string promptInput(Engine& engine, bool isGameOver) override;
+
+        void displayStatus(Engine& engine, Status status, const std::string& input = "") override;
 
     protected:
         // HELPERS
 
-        virtual std::string drawBoard(Engine& engine);
+        virtual std::string drawBoard(const Engine& engine);
+        virtual std::string drawScore(const Engine& engine);
     };
 
 }

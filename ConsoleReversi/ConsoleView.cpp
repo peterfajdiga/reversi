@@ -39,11 +39,7 @@ namespace reversi {
             cout << "\n\n" + drawBoard(engine) << endl;
 
             cout << "\n ** Game Over **\n\n";
-            cout << "\n\nScore\n";
-            cout << engine.getPlayer(1)->getName();
-            cout << ": " + to_string(s1) + "\n";
-            cout << engine.getPlayer(2)->getName();
-            cout << ": " + to_string(s2) + "\n";
+            cout << "\n\n" + drawScore(engine);
 
             if (s1 == s2) {
                 cout << "Game is a draw!" << endl;
@@ -62,11 +58,7 @@ namespace reversi {
 
         cout << "\n\n-----------------------------";
 
-        cout << "\n\nScore\n";
-        cout << engine.getPlayer(1)->getName();
-        cout << ": " + to_string(engine.getPlayer(1)->getScore()) + "\n";
-        cout << engine.getPlayer(2)->getName();
-        cout << ": " + to_string(engine.getPlayer(2)->getScore()) + "\n";
+        cout << "\n\n" + drawScore(engine);
 
         cout << "\n\n" + drawBoard(engine) + "\n";
 
@@ -119,7 +111,7 @@ namespace reversi {
     }
 
 
-    std::string ConsoleView::drawBoard(Engine& engine) {
+    std::string ConsoleView::drawBoard(const Engine& engine) {
         using namespace std;
 
         int i, j, position;
@@ -144,6 +136,35 @@ namespace reversi {
         board += "\n   a b c d e f g h\n";
 
         return board;
+    }
+
+
+    std::string ConsoleView::drawScore(const Engine &engine) {
+        const std::string p1Name = engine.getPlayer(1)->getName();
+        const std::string p2Name = engine.getPlayer(2)->getName();
+
+        const std::string p1Score = std::to_string(engine.getPlayer(1)->getScore());
+        const std::string p2Score = std::to_string(engine.getPlayer(2)->getScore());
+
+        const size_t maxLength = std::max(p1Name.size(), p2Name.size()) + std::max(p1Score.size(), p2Score.size());
+        const size_t p1Padding = maxLength - p1Name.size() - p1Score.size();
+        const size_t p2Padding = maxLength - p2Name.size() - p2Score.size();
+
+        std::string score = "Score\n";
+
+        score += p1Name + ": ";
+        for (int i = 0; i < p1Padding; ++i) {
+            score += ' ';
+        }
+        score += p1Score + "\n";
+
+        score += p2Name + ": ";
+        for (int i = 0; i < p2Padding; ++i) {
+            score += ' ';
+        }
+        score += p2Score + "\n";
+
+        return score;
     }
 
 }

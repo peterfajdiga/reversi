@@ -2,53 +2,41 @@
 
 
 namespace reversi {
-	PlayerInterface::PlayerInterface()
-	{
-
-	}
+    PlayerInterface::PlayerInterface() = default;
 
 
-	PlayerInterface::~PlayerInterface()
-	{
-
-	}
+    PlayerInterface::~PlayerInterface() = default;
 
 
-	void PlayerInterface::setId(int id)
-	{
-		mId = id;
-		mName = "Player " + std::to_string(id);
-	}
+    void PlayerInterface::setId(int id) {
+        mId = id;
+        mName = "Player " + std::to_string(id);
+    }
 
 
-	int PlayerInterface::getId() const
-	{
-		return mId;
-	}
+    int PlayerInterface::getId() const {
+        return mId;
+    }
 
 
-	void PlayerInterface::setName(std::string name)
-	{
-		mName = name;
-	}
+    void PlayerInterface::setName(std::string name) {
+        mName = name;
+    }
 
 
-	std::string PlayerInterface::getName() const
-	{
-		return mName;
-	}
+    std::string PlayerInterface::getName() const {
+        return mName;
+    }
 
 
 
-	void PlayerInterface::setScore(int score)
-	{
-		mScore = score;
-	}
+    void PlayerInterface::setScore(int score) {
+        mScore = score;
+    }
 
 
-	int PlayerInterface::getScore() const
-	{
-		return mScore;
-	}
+    int PlayerInterface::getScore() const {
+        return mScore;
+    }
 
 }

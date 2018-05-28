@@ -8,23 +8,22 @@
 
 namespace reversi {
 
-	/**
-	* EasyComputerPlayer
-	*
-	* Concrete player class for easy computer players.
-	*
-	*/
-	class EasyComputerPlayer : public PlayerInterface
-	{
-	public:
-		EasyComputerPlayer();
-		
-		virtual ~EasyComputerPlayer();
+    /**
+    * EasyComputerPlayer
+    *
+    * Concrete player class for easy computer players.
+    *
+    */
+    class EasyComputerPlayer : public PlayerInterface {
+    public:
+        EasyComputerPlayer();
 
-		virtual std::string promptInput(Engine& engine, ViewInterface& view, bool isGameOver = false);
+        virtual ~EasyComputerPlayer();
 
-	private:
-		virtual std::string getMove(Engine& engine);
-	};
+        virtual std::string promptInput(Engine& engine, ViewInterface& view, bool isGameOver = false);
+
+    private:
+        virtual std::string getMove(Engine& engine);
+    };
 
 }

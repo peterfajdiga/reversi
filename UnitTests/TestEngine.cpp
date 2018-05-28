@@ -3,79 +3,79 @@
 
 namespace reversi {
 
-	TestEngine::TestEngine()
-	{
+    TestEngine::TestEngine()
+    {
 
-	}
-
-
-	TestEngine::~TestEngine()
-	{
-
-	}
+    }
 
 
-	void TestEngine::clearBoard()
-	{
-		initBoard();
-		setPosition(3, 3, 0);
-		setPosition(3, 4, 0);
-		setPosition(4, 3, 0);
-		setPosition(4, 4, 0);
-	}
+    TestEngine::~TestEngine()
+    {
+
+    }
 
 
-	Status TestEngine::updateState(const std::string& position)
-	{
-		return Engine::updateState(position);
-	}
+    void TestEngine::clearBoard()
+    {
+        initBoard();
+        setPosition(3, 3, 0);
+        setPosition(3, 4, 0);
+        setPosition(4, 3, 0);
+        setPosition(4, 4, 0);
+    }
 
 
-	bool TestEngine::canMove()
-	{
-		return Engine::canMove();
-	}
+    Status TestEngine::updateState(const std::string& position)
+    {
+        return Engine::updateState(position);
+    }
 
 
-	void TestEngine::togglePlayer()
-	{
-		return Engine::togglePlayer();
-	}
+    bool TestEngine::canMove()
+    {
+        return Engine::canMove();
+    }
 
 
-	void TestEngine::initBoard()
-	{
-		return Engine::initBoard();
-	}
+    void TestEngine::togglePlayer()
+    {
+        return Engine::togglePlayer();
+    }
 
 
-	void TestEngine::initPiecesToFlip()
-	{
-		return Engine::initPiecesToFlip();
-	}
+    void TestEngine::initBoard()
+    {
+        return Engine::initBoard();
+    }
 
 
-	void TestEngine::initPossiblePiecesToFlip()
-	{
-		return Engine::initPossiblePiecesToFlip();
-	}
+    void TestEngine::initPiecesToFlip()
+    {
+        return Engine::initPiecesToFlip();
+    }
 
 
-	void TestEngine::flipPieces()
-	{
-		return Engine::flipPieces();
-	}
+    void TestEngine::initPossiblePiecesToFlip()
+    {
+        return Engine::initPossiblePiecesToFlip();
+    }
 
 
-	void TestEngine::updateScores(bool isGameOver)
-	{
-		return Engine::updateScores(isGameOver);
-	}
+    void TestEngine::flipPieces()
+    {
+        return Engine::flipPieces();
+    }
 
 
-	void TestEngine::setPosition(int x, int y, int value)
-	{
-		return Engine::setPosition(x, y, value);
-	}
+    void TestEngine::updateScores(bool isGameOver)
+    {
+        return Engine::updateScores(isGameOver);
+    }
+
+
+    void TestEngine::setPosition(int x, int y, int value)
+    {
+        return Engine::setPosition(x, y, value);
+    }
 
 }

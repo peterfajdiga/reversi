@@ -20,13 +20,12 @@ namespace reversi {
 
 
     void PlayerInterface::setName(const std::string& name) {
-        mName = name;
-        mName += ' ';
         switch (mId) {
-            case 1: mName += "○"; break;
-            case 2: mName += "●"; break;
-            default: mName += std::to_string(mId);
+            case 1: mName = "○ "; break;
+            case 2: mName = "● "; break;
+            default: mName += std::to_string(mId) + ")";
         }
+        mName += name;
     }
 
 

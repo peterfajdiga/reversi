@@ -28,7 +28,8 @@ namespace reversi {
         virtual void setId(int id);
         virtual int getId() const;
 
-        virtual void setName(std::string name);
+        virtual std::string generateName();
+        virtual void setName(const std::string& name);
         virtual std::string getName() const;
 
         virtual void setScore(int score);

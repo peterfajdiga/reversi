@@ -10,7 +10,7 @@ namespace reversi {
 
     void PlayerInterface::setId(int id) {
         mId = id;
-        mName = "Player " + std::to_string(id);
+        setName(generateName());
     }
 
 
@@ -19,8 +19,14 @@ namespace reversi {
     }
 
 
-    void PlayerInterface::setName(std::string name) {
+    void PlayerInterface::setName(const std::string& name) {
         mName = name;
+        mName += ' ';
+        switch (mId) {
+            case 1: mName += "○"; break;
+            case 2: mName += "●"; break;
+            default: mName += std::to_string(mId);
+        }
     }
 
 
@@ -37,6 +43,10 @@ namespace reversi {
 
     int PlayerInterface::getScore() const {
         return mScore;
+    }
+
+    std::string PlayerInterface::generateName() {
+        return "Player";
     }
 
 }

@@ -36,11 +36,15 @@ namespace reversi {
         }
 
         // chose a valid move at random
-        if (validMovesX.size() > 0) {
+        if (!validMovesX.empty()) {
             index = rand() % validMovesX.size();
             return engine.positionCoordsToString(validMovesX[index], validMovesY[index]);
         }
 
         return " ";
+    }
+
+    std::string EasyComputerPlayer::generateName() {
+        return "CPU   ";
     }
 }

@@ -3,20 +3,13 @@
 
 namespace reversi {
 
-    HumanPlayer::HumanPlayer()
-    {
-
-    }
+    HumanPlayer::HumanPlayer() = default;
 
 
-    HumanPlayer::~HumanPlayer()
-    {
-
-    }
+    HumanPlayer::~HumanPlayer() = default;
 
 
-    std::string HumanPlayer::promptInput(Engine& engine, ViewInterface& view, bool isGameOver)
-    {
+    std::string HumanPlayer::promptInput(Engine& engine, ViewInterface& view, bool isGameOver) {
         return view.promptInput(engine, isGameOver);
     }
 

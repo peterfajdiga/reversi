@@ -64,7 +64,7 @@ namespace reversi {
     void Engine::runGameLoop() {
         bool isGameRunning = true, isGameOver = false, isLastMovePass = false, isPlayerAbleToMove;
         std::string input;
-        char i0; // first character of input
+        char i0;  // first character of input
         Status status;
 
         while (isGameRunning) {
@@ -90,12 +90,12 @@ namespace reversi {
             // evaluate the first character of input looking for special actions
             // note that special actions should only be defined for letters after "h"
             switch (i0) {
-            case 113: // q: Quit
+            case 113:  // q: Quit
                 isGameRunning = false;
                 displayStatus(Status::QUIT);
                 break;
 
-            case 110: // n: New Game
+            case 110:  // n: New Game
                 isGameOver = false;
                 isLastMovePass = false;
                 teardownGame();
@@ -140,26 +140,26 @@ namespace reversi {
         p0 = tolower(position[0]);
         p1 = tolower(position[1]);
 
-        // accept both "a1" and "1a" as valid moves
-        if (p1 >= 97 && p1 <= 122) {
+        // accept both 'a1' and '1a' as valid moves
+        if (p1 >= 'a' && p1 <= 'z') {
             isLetterFirst = false;
         }
 
         // x index
-        // subtract charcode for "a" from letter character's charcode
-        x = (isLetterFirst ? p0 : p1) - 97;
+        // subtract charcode for 'a' from letter character's charcode
+        x = (isLetterFirst ? p0 : p1) - 'a';
 
         // y index
-        // subtract charcode for "1" from number character's charcode
-        y = (isLetterFirst ? p1 : p0) - 49;
+        // subtract charcode for '1' from number character's charcode
+        y = (isLetterFirst ? p1 : p0) - '1';
     }
 
 
     std::string Engine::positionCoordsToString(int x, int y) {
         char temp[3];
 
-        temp[0] = x + 97;
-        temp[1] = y + 49;
+        temp[0] = (char)x + 'a';
+        temp[1] = (char)y + '1';
         temp[2] = 0;
 
         return std::string(temp);

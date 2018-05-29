@@ -22,8 +22,8 @@ namespace reversi {
 
     void PlayerInterface::setName(const std::string& name) {
         switch (mId) {
-            case 1: mName = white; break;
-            case 2: mName = black; break;
+            case 1: mName = WHITE; break;
+            case 2: mName = BLACK; break;
             default: mName += std::to_string(mId);
         }
         mName += ' ';

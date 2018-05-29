@@ -132,8 +132,8 @@ namespace reversi {
                 const int position = engine.getPosition(tile);
                 switch (position) {
                     case 0: board += '.'; break;  // unoccupied
-                    case 1: board += white; break;
-                    case 2: board += black; break;
+                    case 1: board += WHITE; break;
+                    case 2: board += BLACK; break;
                     default: board += to_string(position);
                 }
             }

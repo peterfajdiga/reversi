@@ -27,12 +27,11 @@ namespace reversi {
     }
 
 
-    std::string ConsoleView::promptInput(Engine& engine, bool isGameOver) {
+    void ConsoleView::displayState(const Engine& engine, bool isGameOver) {
         using namespace std;
 
-        string input;
-        int s1 = engine.getPlayer(1)->getScore();
-        int s2 = engine.getPlayer(2)->getScore();
+        const int s1 = engine.getPlayer(1)->getScore();
+        const int s2 = engine.getPlayer(2)->getScore();
 
         if (isGameOver) {
             cout << "\n\n-----------------------------";
@@ -49,18 +48,30 @@ namespace reversi {
                 cout << engine.getPlayer(s1 > s2 ? 1 : 2)->getName() + "!" << endl;
             }
 
+        } else {
+            cout << "\n\n-----------------------------";
+
+            cout << "\n\n" + drawScore(engine);
+
+            cout << "\n\n" + drawBoard(engine) + "\n";
+        }
+    }
+
+
+    std::string ConsoleView::promptInput(Engine& engine, bool isGameOver) {
+        using namespace std;
+
+        displayState(engine, isGameOver);
+
+        string input;
+
+        if (isGameOver) {
             cout << "\n\nEnter 'n' to play again, or 'q' to quit playing: ";
 
             cin >> input;
 
             return input;
         }
-
-        cout << "\n\n-----------------------------";
-
-        cout << "\n\n" + drawScore(engine);
-
-        cout << "\n\n" + drawBoard(engine) + "\n";
 
         cout << "\n" + engine.getPlayer()->getName() + ", enter a move: ";
         cin >> input;

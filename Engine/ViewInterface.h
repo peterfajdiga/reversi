@@ -53,6 +53,10 @@ namespace reversi {
         // or just before a new game is setup.
         virtual void teardownGame(const Engine& engine) = 0;
 
+        // displayState
+        // display the board and score and whatnot
+        virtual void displayState(const Engine& engine, bool isGameOver) = 0;
+
         // promptInput
         // Displays the game board and prompts for player input.
         // Input string can match a special character recognized by the

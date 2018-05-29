@@ -28,6 +28,8 @@ namespace reversi {
 
         void teardownGame(const Engine& engine) override;
 
+        void displayState(const Engine& engine, bool isGameOver) override;
+
         std::string promptInput(Engine& engine, bool isGameOver) override;
 
         void displayStatus(const Engine& engine, Status status, const std::string& input = "") override;

@@ -67,6 +67,8 @@ namespace reversi {
         char i0;  // first character of input
         Status status;
 
+        bool isNewState = true;
+
         while (isGameRunning) {
             isPlayerAbleToMove = canMove();
 
@@ -82,6 +84,10 @@ namespace reversi {
                 input = " ";
             }
             else {
+                if (isNewState) {
+                    mView->displayState(*this, isGameOver);
+                    isNewState = false;
+                }
                 input = promptInput(isGameOver);
             }
 
@@ -110,6 +116,7 @@ namespace reversi {
                     if (status == Status::SUCCESS) {
                         isLastMovePass = false;
                         togglePlayer();
+                        isNewState = true;
                     }
                 }
                 else {
@@ -128,7 +135,6 @@ namespace reversi {
 
 
     std::string Engine::promptInput(bool isGameOver) {
-        mView->displayState(*this, isGameOver);
         return getPlayer()->promptInput(*this, *mView, isGameOver);
     }
 

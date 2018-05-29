@@ -61,8 +61,6 @@ namespace reversi {
     std::string ConsoleView::promptInput(Engine& engine, bool isGameOver) {
         using namespace std;
 
-        displayState(engine, isGameOver);
-
         string input;
 
         if (isGameOver) {

@@ -16,8 +16,7 @@ namespace reversi {
     };
 
 
-    Engine::Engine()
-    {
+    Engine::Engine() {
         mCurrentPlayer = 1;
 
         // set initial players as Human
@@ -29,8 +28,7 @@ namespace reversi {
     }
 
 
-    Engine::~Engine()
-    {
+    Engine::~Engine() {
         // set view pointer to NULL
         mView = NULL;
 
@@ -40,23 +38,20 @@ namespace reversi {
     }
 
 
-    void Engine::setView(ViewInterface* view)
-    {
+    void Engine::setView(ViewInterface* view) {
         mView = view;
     }
 
 
 
-    void Engine::runGame()
-    {
+    void Engine::runGame() {
         setupGame();
         runGameLoop();
         teardownGame();
     }
 
 
-    void Engine::setupGame()
-    {
+    void Engine::setupGame() {
         initBoard();
         updateScores();
 
@@ -66,8 +61,7 @@ namespace reversi {
     }
 
 
-    void Engine::runGameLoop()
-    {
+    void Engine::runGameLoop() {
         bool isGameRunning = true, isGameOver = false, isLastMovePass = false, isPlayerAbleToMove;
         std::string input;
         char i0; // first character of input
@@ -128,20 +122,18 @@ namespace reversi {
     }
 
 
-    void Engine::teardownGame()
-    {
+    void Engine::teardownGame() {
         mView->teardownGame(*this);
     }
 
 
-    std::string Engine::promptInput(bool isGameOver)
-    {
+    std::string Engine::promptInput(bool isGameOver) {
+        mView->displayState(*this, isGameOver);
         return getPlayer()->promptInput(*this, *mView, isGameOver);
     }
 
 
-    void Engine::positionStringToCoords(const std::string& position, int& x, int& y)
-    {
+    void Engine::positionStringToCoords(const std::string& position, int& x, int& y) {
         char p0, p1;
         bool isLetterFirst = true;
 
@@ -163,8 +155,7 @@ namespace reversi {
     }
 
 
-    std::string Engine::positionCoordsToString(int x, int y)
-    {
+    std::string Engine::positionCoordsToString(int x, int y) {
         char temp[3];
 
         temp[0] = x + 97;
@@ -175,8 +166,7 @@ namespace reversi {
     }
 
 
-    Status Engine::updateState(const std::string& position)
-    {
+    Status Engine::updateState(const std::string& position) {
         int x, y;
 
         // resolve position string
@@ -208,14 +198,12 @@ namespace reversi {
     }
 
 
-    void Engine::displayStatus(Status status, const std::string& input)
-    {
+    void Engine::displayStatus(Status status, const std::string& input) {
         mView->displayStatus(*this, status, input);
     }
 
 
-    void Engine::initBoard()
-    {
+    void Engine::initBoard() {
         int i, j;
 
         // initialize each position to empty
@@ -233,8 +221,7 @@ namespace reversi {
     }
 
 
-    PlayerInterface* Engine::getPlayer(int id) const
-    {
+    PlayerInterface* Engine::getPlayer(int id) const {
         if (id == 0) {
             id = mCurrentPlayer;
         }
@@ -247,8 +234,7 @@ namespace reversi {
     }
 
 
-    void Engine::setPlayer(PlayerInterface* player, int id)
-    {
+    void Engine::setPlayer(PlayerInterface* player, int id) {
         if (id == 0) {
             id = mCurrentPlayer;
         }
@@ -264,8 +250,7 @@ namespace reversi {
     }
 
 
-    bool Engine::canMove()
-    {
+    bool Engine::canMove() {
         int i, j;
 
         // check each position on the board
@@ -285,15 +270,13 @@ namespace reversi {
         return false;
     }
 
-    void Engine::togglePlayer()
-    {
+    void Engine::togglePlayer() {
         // bitwise xor with 3 will toggle between 1 and 2
         mCurrentPlayer ^= 3;
     }
 
 
-    bool Engine::isOnBoard(int x, int y) const
-    {
+    bool Engine::isOnBoard(int x, int y) const {
         if (x >= 0 && x <= 7 && y >= 0 && y <= 7) {
             return true;
         }
@@ -302,8 +285,7 @@ namespace reversi {
     }
 
 
-    bool Engine::isOpen(int x, int y) const
-    {
+    bool Engine::isOpen(int x, int y) const {
         if (mBoard[x][y] == 0) {
             return true;
         }
@@ -312,8 +294,7 @@ namespace reversi {
     }
 
 
-    bool Engine::isValidMove(int x, int y, bool isCheck)
-    {
+    bool Engine::isValidMove(int x, int y, bool isCheck) {
         int i, j, xStep, yStep, xPos, yPos, flipCount = 0;
 
         initPiecesToFlip();
@@ -399,8 +380,7 @@ namespace reversi {
     }
 
 
-    void Engine::initPiecesToFlip()
-    {
+    void Engine::initPiecesToFlip() {
         int i;
 
         for (i = 0; i < sMaxPiecesToFlipPerMove; i++) {
@@ -409,8 +389,7 @@ namespace reversi {
     }
 
 
-    void Engine::initPossiblePiecesToFlip()
-    {
+    void Engine::initPossiblePiecesToFlip() {
         int i;
 
         for (i = 0; i < sMaxPossiblePiecesToFlipPerDirection; i++) {
@@ -419,8 +398,7 @@ namespace reversi {
     }
 
 
-    void Engine::flipPieces()
-    {
+    void Engine::flipPieces() {
         int i;
 
         for (i = 0; i < sMaxPiecesToFlipPerMove; i++) {
@@ -433,8 +411,7 @@ namespace reversi {
     }
 
 
-    void Engine::updateScores(bool isGameOver)
-    {
+    void Engine::updateScores(bool isGameOver) {
         int i, j, s1 = 0, s2 = 0;
 
         for (j = 0; j < 8; j++) {
@@ -464,8 +441,7 @@ namespace reversi {
         mPlayer2->setScore(s2);
     }
 
-    int Engine::getPosition(int x, int y) const
-    {
+    int Engine::getPosition(int x, int y) const {
         if (isOnBoard(x, y)) {
             return mBoard[x][y];
         }
@@ -474,8 +450,7 @@ namespace reversi {
     }
 
 
-    void Engine::setPosition(int x, int y, int value)
-    {
+    void Engine::setPosition(int x, int y, int value) {
         if (isOnBoard(x, y)) {
             mBoard[x][y] = value;
         }

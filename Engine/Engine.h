@@ -27,8 +27,7 @@ namespace reversi {
      * game.runGame();
      *
      */
-    class Engine
-    {
+    class Engine {
     public:
         Engine();
         virtual ~Engine();

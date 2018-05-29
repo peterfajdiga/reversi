@@ -283,20 +283,12 @@ namespace reversi {
 
 
     bool Engine::isOnBoard(int x, int y) const {
-        if (x >= 0 && x <= 7 && y >= 0 && y <= 7) {
-            return true;
-        }
-
-        return false;
+        return x >= 0 && x <= 7 && y >= 0 && y <= 7;
     }
 
 
     bool Engine::isOpen(int x, int y) const {
-        if (mBoard[x][y] == 0) {
-            return true;
-        }
-
-        return false;
+        return mBoard[x][y] == 0;
     }
 
 

@@ -11,7 +11,7 @@ namespace reversi {
     ConsoleView::~ConsoleView() = default;
 
 
-    void ConsoleView::setupGame(Engine& engine) {
+    void ConsoleView::setupGame(const Engine& engine) {
         using namespace std;
 
         cout << "\n\nConsole Reversi by jsmreese.\n\n";
@@ -22,7 +22,7 @@ namespace reversi {
     }
 
 
-    void ConsoleView::teardownGame(Engine& engine) {
+    void ConsoleView::teardownGame(const Engine& engine) {
 
     }
 
@@ -80,7 +80,7 @@ namespace reversi {
     }
 
 
-    void ConsoleView::displayStatus(Engine& engine, Status status, const std::string& input) {
+    void ConsoleView::displayStatus(const Engine& engine, const Status status, const std::string& input) {
         using namespace std;
 
         switch (status) {

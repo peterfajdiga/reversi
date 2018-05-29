@@ -24,13 +24,13 @@ namespace reversi {
 
         // INTERFACE FOR ViewInterface
 
-        void setupGame(Engine& engine) override;
+        void setupGame(const Engine& engine) override;
 
-        void teardownGame(Engine& engine) override;
+        void teardownGame(const Engine& engine) override;
 
         std::string promptInput(Engine& engine, bool isGameOver) override;
 
-        void displayStatus(Engine& engine, Status status, const std::string& input = "") override;
+        void displayStatus(const Engine& engine, Status status, const std::string& input = "") override;
 
     protected:
         // HELPERS

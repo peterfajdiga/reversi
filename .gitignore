@@ -45,8 +45,5 @@ UnitTests/Debug/
 
 # CLion files
 .idea/
-
-# CMake files
-CMakeLists.txt
 cmake-build-debug/
 cmake-build-release/

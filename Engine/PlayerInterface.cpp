@@ -1,4 +1,5 @@
 #include "PlayerInterface.h"
+#include "Engine.h"
 
 
 namespace reversi {
@@ -21,10 +22,11 @@ namespace reversi {
 
     void PlayerInterface::setName(const std::string& name) {
         switch (mId) {
-            case 1: mName = "○ "; break;
-            case 2: mName = "● "; break;
-            default: mName += std::to_string(mId) + ")";
+            case 1: mName = white; break;
+            case 2: mName = black; break;
+            default: mName += std::to_string(mId);
         }
+        mName += ' ';
         mName += name;
     }
 

@@ -133,8 +133,8 @@ namespace reversi {
                 position = engine.getPosition(i, j);
                 switch (position) {
                     case 0: board += '.'; break;  // unoccupied
-                    case 1: board += "○"; break;  // white
-                    case 2: board += "●"; break;  // black
+                    case 1: board += white; break;
+                    case 2: board += black; break;
                     default: board += to_string(position);
                 }
             }

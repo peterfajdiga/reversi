@@ -1,4 +1,5 @@
 #include "Engine.h"
+#include "Tile.h"
 
 
 namespace reversi {
@@ -139,64 +140,28 @@ namespace reversi {
     }
 
 
-    void Engine::positionStringToCoords(const std::string& position, int& x, int& y) {
-        char p0, p1;
-        bool isLetterFirst = true;
-
-        p0 = tolower(position[0]);
-        p1 = tolower(position[1]);
-
-        // accept both 'a1' and '1a' as valid moves
-        if (p1 >= 'a' && p1 <= 'z') {
-            isLetterFirst = false;
-        }
-
-        // x index
-        // subtract charcode for 'a' from letter character's charcode
-        x = (isLetterFirst ? p0 : p1) - 'a';
-
-        // y index
-        // subtract charcode for '1' from number character's charcode
-        y = (isLetterFirst ? p1 : p0) - '1';
-    }
-
-
-    std::string Engine::positionCoordsToString(int x, int y) {
-        char temp[3];
-
-        temp[0] = (char)x + 'a';
-        temp[1] = (char)y + '1';
-        temp[2] = 0;
-
-        return std::string(temp);
-    }
-
-
     Status Engine::updateState(const std::string& position) {
-        int x, y;
-
-        // resolve position string
-        positionStringToCoords(position, x, y);
+        Tile move(position);
 
         // check bounds
-        if (!isOnBoard(x, y)) {
+        if (!isOnBoard(move)) {
             // position is outside of the board
             return Status::OUT_OF_BOUNDS;
         }
 
         // check empty position
-        if (!isOpen(x, y)) {
+        if (!isOpen(move)) {
             // position is already filled
             return Status::POSITION_FILLED;
         }
 
         // check valid move
-        if (!isValidMove(x, y)) {
+        if (!isValidMove(move, false)) {
             // position must flip at least one of the opponent player's pieces
             return Status::INVALID_MOVE;
         }
 
-        mBoard[x][y] = mCurrentPlayer;
+        mBoard[move.x][move.y] = mCurrentPlayer;
         flipPieces();
         updateScores();
 
@@ -257,17 +222,14 @@ namespace reversi {
 
 
     bool Engine::canMove() {
-        int i, j;
-
         // check each position on the board
         // to see if it is a valid move for this player
         // stop searching when a valid move is found
-        for (j = 0; j < 8; j++) {
-            for (i = 0; i < 8; i++) {
-
+        for (Tile move(0, 0); move.y < 8; move.y++) {
+            for (move.x = 0; move.x < 8; move.x++) {
                 // check open position and valid move
                 // set isCheck flag to shorten isValidMove search
-                if (isOpen(i, j) && isValidMove(i, j, true)) {
+                if (isOpen(move) && isValidMove(move, true)) {
                     return true;
                 }
             }
@@ -282,18 +244,18 @@ namespace reversi {
     }
 
 
-    bool Engine::isOnBoard(int x, int y) const {
-        return x >= 0 && x <= 7 && y >= 0 && y <= 7;
+    bool Engine::isOnBoard(const Tile& move) const {
+        return move.x >= 0 && move.x <= 7 && move.y >= 0 && move.y <= 7;
     }
 
 
-    bool Engine::isOpen(int x, int y) const {
-        return mBoard[x][y] == 0;
+    bool Engine::isOpen(const Tile& move) const {
+        return mBoard[move.x][move.y] == 0;
     }
 
 
-    bool Engine::isValidMove(int x, int y, bool isCheck) {
-        int i, j, xStep, yStep, xPos, yPos, flipCount = 0;
+    bool Engine::isValidMove(const Tile& move, bool isCheck) {
+        int i, j, xStep, yStep, flipCount = 0;
 
         initPiecesToFlip();
 
@@ -305,8 +267,7 @@ namespace reversi {
         // and will clear mPossiblePiecesToFlip if we get there
         for (i = 0; i < 8; i++) {
             // init position and step
-            xPos = x;
-            yPos = y;
+            Tile i_move(move);
             xStep = sDirectionsTable[i][0];
             yStep = sDirectionsTable[i][1];
 
@@ -315,7 +276,7 @@ namespace reversi {
             // search in the up-right, up, or up-left directions (yStep = 1) because
             // no pieces can be flipped in that direction
             // yStep is inverted with respect to board array index
-            if (y < 2 && yStep == 1 || y > 5 && yStep == -1 || x < 2 && xStep == -1 || x > 5 && xStep == 1) {
+            if (move.y < 2 && yStep == 1 || move.y > 5 && yStep == -1 || move.x < 2 && xStep == -1 || move.x > 5 && xStep == 1) {
                 continue;
             }
 
@@ -328,11 +289,11 @@ namespace reversi {
                 // apply step
                 // step is represented as a math vector
                 // yStep is inverted with respect to board array index
-                xPos += xStep;
-                yPos -= yStep;
+                i_move.x += xStep;
+                i_move.y -= yStep;
 
                 // check bounds and empty position
-                if (!isOnBoard(xPos, yPos) || isOpen(xPos, yPos)) {
+                if (!isOnBoard(i_move) || isOpen(i_move)) {
                     // no flipped pieces in this direction
                     initPossiblePiecesToFlip();
 
@@ -341,7 +302,7 @@ namespace reversi {
                 }
 
                 // check for own piece
-                if (mBoard[xPos][yPos] == mCurrentPlayer) {
+                if (mBoard[i_move.x][i_move.y] == mCurrentPlayer) {
                     // stop searching in this direction
                     break;
                 }
@@ -349,7 +310,7 @@ namespace reversi {
                 // found opposing piece
                 // save a reference to this piece
                 // and continue searching in this direction
-                mPossiblePiecesToFlip[j] = &mBoard[xPos][yPos];
+                mPossiblePiecesToFlip[j] = &mBoard[i_move.x][i_move.y];
             }
 
             for (j = 0; j < sMaxPossiblePiecesToFlipPerDirection; j++) {
@@ -439,18 +400,18 @@ namespace reversi {
         mPlayer2->setScore(s2);
     }
 
-    int Engine::getPosition(int x, int y) const {
-        if (isOnBoard(x, y)) {
-            return mBoard[x][y];
+    int Engine::getPosition(const Tile& move) const {
+        if (isOnBoard(move)) {
+            return mBoard[move.x][move.y];
         }
 
         return -1;
     }
 
 
-    void Engine::setPosition(int x, int y, int value) {
-        if (isOnBoard(x, y)) {
-            mBoard[x][y] = value;
+    void Engine::setPosition(const Tile& move, int value) {
+        if (isOnBoard(move)) {
+            mBoard[move.x][move.y] = value;
         }
     }
 

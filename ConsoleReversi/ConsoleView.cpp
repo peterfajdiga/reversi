@@ -123,14 +123,13 @@ namespace reversi {
     std::string ConsoleView::drawBoard(const Engine& engine) {
         using namespace std;
 
-        int i, j, position;
         string board = "   a b c d e f g h\n\n";
 
-        for (j = 0; j < 8; j++) {
-            board += to_string(j + 1) + " ";
-            for (i = 0; i < 8; i++) {
+        for (Tile tile(0, 0); tile.y < 8; tile.y++) {
+            board += to_string(tile.y + 1) + " ";
+            for (tile.x = 0; tile.x < 8; tile.x++) {
                 board += ' ';
-                position = engine.getPosition(i, j);
+                const int position = engine.getPosition(tile);
                 switch (position) {
                     case 0: board += '.'; break;  // unoccupied
                     case 1: board += "○"; break;  // white
@@ -139,7 +138,7 @@ namespace reversi {
                 }
             }
 
-            board += "  " + to_string(j + 1) + "\n";
+            board += "  " + to_string(tile.y + 1) + "\n";
         }
 
         board += "\n   a b c d e f g h\n";

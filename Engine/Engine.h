@@ -4,6 +4,7 @@
 #include "PlayerInterface.h"
 #include "ViewInterface.h"
 #include "HumanPlayer.h"
+#include "Tile.h"
 
 namespace reversi {
 
@@ -50,26 +51,13 @@ namespace reversi {
         // Updates a player object pointer, usually when changing player type.
         virtual void setPlayer(PlayerInterface* player, int id = 0);
 
-        // positionStringToCoords
-        // Resolves a string board position ("a1", "b2", etc.)
-        // into board position x/y coordinates ({ 5, 6 }, etc.)
-        // Will set the value of ints x and y to the coordinates matching
-        // the position. Does not validate that a position is on the board.
-        // Use isOnBoard to validate that a position is on the board.
-        virtual void positionStringToCoords(const std::string& position, int& x, int& y);
-
-        // positionCoordsToString
-        // Resolves board position x/y coordinates ({ 5, 6 }, etc.)
-        // into board positon string ("a1", "b2", etc.)
-        virtual std::string positionCoordsToString(int x, int y);
-
         // isOnBoard
         // Determines if the supplied position (x/y indexes) is within the game board.
-        virtual bool isOnBoard(int x, int y) const;
+        virtual bool isOnBoard(const reversi::Tile& move) const;
 
         // isOpen
         // Determines if the supplied position (x/y indexes) is open (is empty and not already taken).
-        virtual bool isOpen(int x, int y) const;
+        virtual bool isOpen(const Tile& move) const;
 
         // isValidMove
         // Determines if the supplied position (x/y indexes) is a valid move
@@ -79,7 +67,7 @@ namespace reversi {
         // that should have their values flipped by the move if it is valid.
         // Set isCheck to `true` to perform a faster check that determines that a move is valid
         // but does not find the complete set of pieces to flip for that move.
-        virtual bool isValidMove(int x, int y, bool isCheck = false);
+        virtual bool isValidMove(const Tile& move, bool isCheck);
 
         // getPosition
         // Returns the value of the specified board position.
@@ -88,7 +76,7 @@ namespace reversi {
         // If the position is not on the board, returns `-1`.
         // The game board is an 8x8 two-dimensional int array with x and y indexes
         // running from 0 to 7 starting from the top-left corner of the board.
-        virtual int getPosition(int x, int y) const;
+        virtual int getPosition(const Tile& move) const;
 
     protected:
         // setupGame
@@ -157,7 +145,7 @@ namespace reversi {
         // setPosition
         // Sets the value of the supplied position (x/y indexes) to the supplied value.
         // Useful for testing, and can be used in a future version for loading a saved game.
-        virtual void setPosition(int x, int y, int value);
+        virtual void setPosition(const Tile& move, int value);
 
     private:
         // Directions table used for finding valid moves.

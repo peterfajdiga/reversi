@@ -8,6 +8,8 @@ set(SOURCE_FILES
         Engine/Engine.h
         Engine/HumanPlayer.cpp
         Engine/HumanPlayer.h
+        Engine/Tile.cpp
+        Engine/Tile.h
         Engine/PlayerInterface.cpp
         Engine/PlayerInterface.h
         Engine/ViewInterface.cpp

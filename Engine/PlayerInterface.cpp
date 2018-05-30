@@ -1,7 +1,5 @@
 #include <iostream>
 #include "PlayerInterface.h"
-#include "Engine.h"
-
 
 namespace reversi {
     PlayerInterface::PlayerInterface() : name("Player") {};
@@ -13,17 +11,17 @@ namespace reversi {
     PlayerInterface::~PlayerInterface() = default;
 
 
-    int PlayerInterface::getId() const {
+    id PlayerInterface::getId() const {
         return mId;
     }
 
 
-    void PlayerInterface::setScore(int score) {
-        mScore = score;
+    void PlayerInterface::setScore(const score s) {
+        mScore = s;
     }
 
 
-    int PlayerInterface::getScore() const {
+    score PlayerInterface::getScore() const {
         return mScore;
     }
 

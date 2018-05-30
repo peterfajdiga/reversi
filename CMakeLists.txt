@@ -4,6 +4,7 @@ project(reversi)
 set(CMAKE_CXX_STANDARD 17)
 
 set(SOURCE_FILES
+        Engine/constants.h
         Engine/Engine.cpp
         Engine/Engine.h
         Engine/HumanPlayer.cpp

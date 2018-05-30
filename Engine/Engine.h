@@ -5,6 +5,7 @@
 #include "ViewInterface.h"
 #include "HumanPlayer.h"
 #include "Tile.h"
+#include "constants.h"
 
 namespace reversi {
 
@@ -45,11 +46,11 @@ namespace reversi {
         // Retrieves a player object (see PlayerInterface.h).
         // Will return a reference to the current player by default.
         // Set id to `1` or `2` to return player 1 or player 2 specifically.
-        virtual PlayerInterface* getPlayer(int id = 0) const;
+        virtual PlayerInterface* getPlayer(id playerId = 0) const;
 
         // setPlayer
         // Updates a player object pointer, usually when changing player type.
-        virtual void setPlayer(PlayerInterface* player, int id = 0);
+        virtual void setPlayer(PlayerInterface* player, id playerId = 0);
 
         // isOpen
         // Determines if the supplied position (x/y indexes) is open (is empty and not already taken).
@@ -137,11 +138,6 @@ namespace reversi {
         // To calculate final scores, where empty positions will be added to the winner's
         // total score, set isGameOver to `true`.
         virtual void updateScores(bool isGameOver = false);
-
-        // setPosition
-        // Sets the value of the supplied position (x/y indexes) to the supplied value.
-        // Useful for testing, and can be used in a future version for loading a saved game.
-        virtual void setPosition(const Tile& move, int value);
 
     private:
         // Directions table used for finding valid moves.

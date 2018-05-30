@@ -39,8 +39,8 @@ namespace reversi {
     void ConsoleView::displayState(const Engine& engine, bool isGameOver) {
         using namespace std;
 
-        const int s1 = engine.getPlayer(1)->getScore();
-        const int s2 = engine.getPlayer(2)->getScore();
+        const score s1 = engine.getPlayer(1)->getScore();
+        const score s2 = engine.getPlayer(2)->getScore();
 
         if (isGameOver) {
             cout << "\n\n-----------------------------";
@@ -186,11 +186,11 @@ namespace reversi {
 
     std::string ConsoleView::getFormattedName(const PlayerInterface& player) const {
         std::string name;
-        const int id = player.getId();
-        switch (id) {
+        const id playerId = player.getId();
+        switch (playerId) {
             case 1: name += WHITE; break;
             case 2: name += BLACK; break;
-            default: name += std::to_string(id);
+            default: name += std::to_string(playerId);
         }
         name += ' ';
         name += player.name;

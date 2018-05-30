@@ -2,6 +2,7 @@
 
 #include <string>
 #include "ViewInterface.h"
+#include "constants.h"
 
 namespace reversi {
 
@@ -29,18 +30,18 @@ namespace reversi {
 
         virtual ~PlayerInterface();
 
-        virtual int getId() const;
+        virtual id getId() const;
 
-        virtual void setScore(int score);
-        virtual int getScore() const;
+        virtual void setScore(score s);
+        virtual score getScore() const;
 
         virtual std::string promptInput(Engine& engine, ViewInterface& view, bool isGameOver = false) = 0;
 
         const std::string name;
 
     private:
-        int mId;
-        int mScore;
+        id mId;
+        score mScore;
     };
 
 }

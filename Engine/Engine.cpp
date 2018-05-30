@@ -1,6 +1,6 @@
 #include "Engine.h"
 #include "Tile.h"
-
+#include "constants.h"
 
 namespace reversi {
 
@@ -187,12 +187,12 @@ namespace reversi {
     }
 
 
-    PlayerInterface* Engine::getPlayer(int id) const {
-        if (id == 0) {
-            id = mCurrentPlayer;
+    PlayerInterface* Engine::getPlayer(id playerId) const {
+        if (playerId == 0) {
+            playerId = mCurrentPlayer;
         }
 
-        if (id == 1) {
+        if (playerId == 1) {
             return mPlayer1;
         }
 
@@ -200,18 +200,18 @@ namespace reversi {
     }
 
 
-    void Engine::setPlayer(PlayerInterface* player, int id) {
+    void Engine::setPlayer(PlayerInterface* player, id playerId) {
         player->mId = getPlayer()->mId;
 
-        if (id == 0) {
-            id = mCurrentPlayer;
+        if (playerId == 0) {
+            playerId = mCurrentPlayer;
         }
 
-        if (id == 1) {
+        if (playerId == 1) {
             delete mPlayer1;
             mPlayer1 = player;
         }
-        else if (id == 2) {
+        else if (playerId == 2) {
             delete mPlayer2;
             mPlayer2 = player;
         }
@@ -363,10 +363,10 @@ namespace reversi {
 
 
     void Engine::updateScores(bool isGameOver) {
-        int i, j, s1 = 0, s2 = 0;
+        score s1 = 0, s2 = 0;
 
-        for (j = 0; j < 8; j++) {
-            for (i = 0; i < 8; i++) {
+        for (size_t j = 0; j < 8; j++) {
+            for (size_t i = 0; i < 8; i++) {
                 switch (mBoard[i][j]) {
                 case 1:
                     s1 += 1;
@@ -398,13 +398,6 @@ namespace reversi {
         }
 
         return -1;
-    }
-
-
-    void Engine::setPosition(const Tile& move, int value) {
-        if (move.isOnBoard()) {
-            mBoard[move.x][move.y] = value;
-        }
     }
 
 }

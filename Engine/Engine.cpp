@@ -140,7 +140,7 @@ namespace reversi {
         }
 
         // check valid move
-        if (!board.isValidMove(move, mCurrentPlayer, false)) {
+        if (!board.isValidMovePerform(move, mCurrentPlayer)) {
             // position must flip at least one of the opponent player's pieces
             return Status::INVALID_MOVE;
         }
@@ -197,7 +197,7 @@ namespace reversi {
             for (move.x = 0; move.x < 8; move.x++) {
                 // check open position and valid move
                 // set isCheck flag to shorten isValidMove search
-                if (board.isOpen(move) && board.isValidMove(move, mCurrentPlayer, true)) {
+                if (board.isOpen(move) && board.isValidMove(move, mCurrentPlayer)) {
                     return true;
                 }
             }

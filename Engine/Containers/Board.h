@@ -40,7 +40,8 @@ namespace reversi {
         // that should have their values flipped by the move if it is valid.
         // Set isCheck to `true` to perform a faster check that determines that a move is valid
         // but does not find the complete set of pieces to flip for that move.
-        virtual bool isValidMove(const Tile& move, color currentPlayer, bool isCheck);
+        virtual bool isValidMove(const Tile& move, color currentPlayer) const;
+        virtual bool isValidMovePerform(const Tile& move, color currentPlayer);
 
     private:
         color positions[8][8];

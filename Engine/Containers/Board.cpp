@@ -73,7 +73,68 @@ namespace reversi {
     }
 
 
-    bool Board::isValidMove(const Tile& move, color currentPlayer, bool isCheck) {
+    bool Board::isValidMove(const Tile& move, color currentPlayer) const {
+        size_t flipCount = 0;
+
+        // for each direction from the piece position
+        // look for one or more adjacent pieces of the opposing player
+        // followed by a piece of this player
+        // max of 7 steps can be taken in any given direction
+        // take 8 steps so that the last check is off the board
+        // and will clear mPossiblePiecesToFlip if we get there
+        for (const Direction direction : sDirectionsTable) {
+            // init position and step
+
+            // short-circuit search based on proximity to edge and direction vector
+            // e.g. a position in the first two rows of the board does not need to
+            // search in the up-right, up, or up-left directions (yStep = 1) because
+            // no pieces can be flipped in that direction
+            // yStep is inverted with respect to board array index
+            if (move.y <= 1 && direction.y == 1 || move.y >= 6 && direction.y == -1 || move.x <= 1 && direction.x == -1 || move.x >= 6 && direction.x == 1) {
+                continue;
+            }
+
+            bool validMove = false;
+
+            // max of 7 steps can be taken in any given direction
+            // take 8 steps so that the last check is off the board
+            // and will clear flippablePieces if we get there
+            Tile move_step(move);
+            for (size_t step = 0; step < 8; step++) {
+                // apply step in direction
+                // step is represented as a math vector
+                // yStep is inverted with respect to board array index
+                move_step.x += direction.x;
+                move_step.y -= direction.y;
+
+                // check bounds and empty position
+                if (!move_step.isOnBoard() || isOpen(move_step)) {
+                    // no flipped pieces in this direction
+                    validMove = false;
+
+                    // stop searching in this direction
+                    break;
+                }
+
+                // check for own piece
+                if (positions[move_step.x][move_step.y] == currentPlayer) {
+                    // stop searching in this direction
+                    break;
+                }
+
+                // found opposing piece
+                validMove = true;
+            }
+
+            if (validMove) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    bool Board::isValidMovePerform(const Tile& move, color currentPlayer) {
         size_t flipCount = 0;
 
         mPiecesToFlip.clear();
@@ -131,12 +192,6 @@ namespace reversi {
             }
 
             for (color* flippablePiece : flippablePieces) {
-                // at this point, the position is a valid move
-                // stop searching if isCheck is `true`
-                if (isCheck) {
-                    return true;
-                }
-
                 // save reference to flippable piece
                 mPiecesToFlip.emplace_back(flippablePiece);
                 // increment flipCount

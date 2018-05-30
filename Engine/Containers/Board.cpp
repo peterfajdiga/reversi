@@ -202,4 +202,19 @@ namespace reversi {
         return flipCount > 0;  // if any of the opponent's pieces will be flipped, it's a valid move
     }
 
+
+    std::vector<Tile> Board::getLegalMoves(color currentPlayer) const {
+        std::vector<Tile> legalMoves;
+        for (Tile move(0, 0); move.y < 8; move.y++) {
+            for (move.x = 0; move.x < 8; move.x++) {
+                // check open position and valid move
+                // set isCheck flag to shorten isValidMove search
+                if (isOpen(move) && isValidMove(move, currentPlayer)) {
+                    legalMoves.emplace_back(move);
+                }
+            }
+        }
+        return legalMoves;
+    }
+
 }

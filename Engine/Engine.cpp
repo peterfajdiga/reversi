@@ -190,20 +190,7 @@ namespace reversi {
 
 
     bool Engine::canMove() {
-        // check each position on the board
-        // to see if it is a valid move for this player
-        // stop searching when a valid move is found
-        for (Tile move(0, 0); move.y < 8; move.y++) {
-            for (move.x = 0; move.x < 8; move.x++) {
-                // check open position and valid move
-                // set isCheck flag to shorten isValidMove search
-                if (board.isOpen(move) && board.isValidMove(move, mCurrentPlayer)) {
-                    return true;
-                }
-            }
-        }
-
-        return false;
+        return !board.getLegalMoves(mCurrentPlayer).empty();
     }
 
     void Engine::togglePlayer() {

@@ -38,10 +38,12 @@ namespace reversi {
         // and it will flip at least one of the opponent's pieces.
         // Default behaviour will populate mPiecesToFlip with pointers to those board positions
         // that should have their values flipped by the move if it is valid.
-        // Set isCheck to `true` to perform a faster check that determines that a move is valid
+        // isValidMove performs a faster check that determines if a move is valid
         // but does not find the complete set of pieces to flip for that move.
         virtual bool isValidMove(const Tile& move, color currentPlayer) const;
         virtual bool isValidMovePerform(const Tile& move, color currentPlayer);
+
+        std::vector<Tile> getLegalMoves(color currentPlayer) const;
 
     private:
         color positions[8][8];

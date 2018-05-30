@@ -5,6 +5,15 @@
 
 namespace reversi {
 
+#ifdef _WIN32
+    const char* const WHITE = "o";
+    const char* const BLACK = "x";
+#else
+    const char* const WHITE = "○";
+    const char* const BLACK = "●";
+#endif
+
+
     ConsoleView::ConsoleView() = default;
 
 
@@ -45,7 +54,7 @@ namespace reversi {
             }
             else {
                 cout << "\n Congratulations, ";
-                cout << engine.getPlayer(s1 > s2 ? 1 : 2)->getName() + "!" << endl;
+                cout << getFormattedName(*engine.getPlayer(s1 > s2 ? 1 : 2)) + "!" << endl;
             }
 
         } else {
@@ -71,14 +80,13 @@ namespace reversi {
             return input;
         }
 
-        cout << "\n" + engine.getPlayer()->getName() + ", enter a move: ";
+        cout << "\n" + getFormattedName(*engine.getPlayer()) + ", enter a move: ";
         cin >> input;
 
         if (input.length() == 1 && tolower(input[0]) == 99) {
             // 'c' - switch to computer player
 
             EasyComputerPlayer* player = new EasyComputerPlayer;
-            player->setId(engine.getPlayer()->getId());
 
             engine.setPlayer(player);
 
@@ -94,7 +102,7 @@ namespace reversi {
 
         switch (status) {
         case Status::CANNOT_MOVE:
-            cout << "\n\n ** " + engine.getPlayer()->getName() + " is unable to move. **" << endl;
+            cout << "\n\n ** " + getFormattedName(*engine.getPlayer()) + " is unable to move. **" << endl;
             break;
 
         case Status::INVALID_MOVE:
@@ -110,17 +118,17 @@ namespace reversi {
             break;
 
         case Status::SUCCESS:
-            cout << "\n\n" + engine.getPlayer()->getName() + " moved at position " + input + "." << endl;
+            cout << "\n\n" + getFormattedName(*engine.getPlayer()) + " moved at position " + input + "." << endl;
             break;
 
         case Status::FINDING_MOVE:
-            cout << "\n\n" + engine.getPlayer()->getName() + " searching for move..." << endl;
+            cout << "\n\n" + getFormattedName(*engine.getPlayer()) + " searching for move..." << endl;
             break;
         }
     }
 
 
-    std::string ConsoleView::drawBoard(const Engine& engine) {
+    std::string ConsoleView::drawBoard(const Engine& engine) const {
         using namespace std;
 
         string board = "   a b c d e f g h\n\n";
@@ -147,9 +155,9 @@ namespace reversi {
     }
 
 
-    std::string ConsoleView::drawScore(const Engine &engine) {
-        const std::string p1Name = engine.getPlayer(1)->getName();
-        const std::string p2Name = engine.getPlayer(2)->getName();
+    std::string ConsoleView::drawScore(const Engine &engine) const {
+        const std::string p1Name = getFormattedName(*engine.getPlayer(1));
+        const std::string p2Name = getFormattedName(*engine.getPlayer(2));
 
         const std::string p1Score = std::to_string(engine.getPlayer(1)->getScore());
         const std::string p2Score = std::to_string(engine.getPlayer(2)->getScore());
@@ -173,6 +181,20 @@ namespace reversi {
         score += p2Score + "\n";
 
         return score;
+    }
+
+
+    std::string ConsoleView::getFormattedName(const PlayerInterface& player) const {
+        std::string name;
+        const int id = player.getId();
+        switch (id) {
+            case 1: name += WHITE; break;
+            case 2: name += BLACK; break;
+            default: name += std::to_string(id);
+        }
+        name += ' ';
+        name += player.name;
+        return name;
     }
 
 }

@@ -3,7 +3,10 @@
 
 
 namespace reversi {
-    EasyComputerPlayer::EasyComputerPlayer() = default;
+    EasyComputerPlayer::EasyComputerPlayer() : PlayerInterface("CPU") {}
+
+
+    EasyComputerPlayer::EasyComputerPlayer(const std::string& name) : PlayerInterface(name) {}
 
 
     EasyComputerPlayer::~EasyComputerPlayer() = default;
@@ -41,9 +44,5 @@ namespace reversi {
         }
 
         return " ";
-    }
-
-    std::string EasyComputerPlayer::generateName() {
-        return "CPU";
     }
 }

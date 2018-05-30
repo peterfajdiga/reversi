@@ -37,8 +37,9 @@ namespace reversi {
     protected:
         // HELPERS
 
-        virtual std::string drawBoard(const Engine& engine);
-        virtual std::string drawScore(const Engine& engine);
+        virtual std::string drawBoard(const Engine& engine) const;
+        virtual std::string drawScore(const Engine& engine) const;
+        virtual std::string getFormattedName(const PlayerInterface& player) const;
     };
 
 }

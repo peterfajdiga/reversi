@@ -8,9 +8,6 @@
 
 namespace reversi {
 
-    extern const char* const WHITE;
-    extern const char* const BLACK;
-
     /**
      * Engine
      *
@@ -33,7 +30,7 @@ namespace reversi {
      */
     class Engine {
     public:
-        Engine();
+        Engine(PlayerInterface* player1, PlayerInterface* player2);
         virtual ~Engine();
 
         // setView

@@ -4,14 +4,6 @@
 
 namespace reversi {
 
-#ifdef _WIN32
-    const char* const WHITE = "o";
-    const char* const BLACK = "x";
-#else
-    const char* const WHITE = "○";
-    const char* const BLACK = "●";
-#endif
-
     const int Engine::sDirectionsTable[8][2] = {
         // { x, y }
         { 0, 1 },    // up
@@ -25,15 +17,10 @@ namespace reversi {
     };
 
 
-    Engine::Engine() {
+    Engine::Engine(PlayerInterface* player1, PlayerInterface* player2) : mPlayer1(player1), mPlayer2(player2) {
+        mPlayer1->mId = 1;
+        mPlayer2->mId = 2;
         mCurrentPlayer = 1;
-
-        // set initial players as Human
-        mPlayer1 = new HumanPlayer;
-        mPlayer1->setId(1);
-
-        mPlayer2 = new HumanPlayer;
-        mPlayer2->setId(2);
     }
 
 
@@ -214,6 +201,8 @@ namespace reversi {
 
 
     void Engine::setPlayer(PlayerInterface* player, int id) {
+        player->mId = getPlayer()->mId;
+
         if (id == 0) {
             id = mCurrentPlayer;
         }

@@ -20,26 +20,26 @@ namespace reversi {
      */
     class PlayerInterface
     {
+        friend class Engine;
+
     public:
         PlayerInterface();
 
+        PlayerInterface(const std::string& name);
+
         virtual ~PlayerInterface();
 
-        virtual void setId(int id);
         virtual int getId() const;
-
-        virtual std::string generateName();
-        virtual void setName(const std::string& name);
-        virtual std::string getName() const;
 
         virtual void setScore(int score);
         virtual int getScore() const;
 
         virtual std::string promptInput(Engine& engine, ViewInterface& view, bool isGameOver = false) = 0;
 
+        const std::string name;
+
     private:
         int mId;
-        std::string mName;
         int mScore;
     };
 

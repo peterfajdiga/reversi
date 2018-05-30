@@ -1,40 +1,21 @@
+#include <iostream>
 #include "PlayerInterface.h"
 #include "Engine.h"
 
 
 namespace reversi {
-    PlayerInterface::PlayerInterface() = default;
+    PlayerInterface::PlayerInterface() : name("Player") {};
+
+
+    PlayerInterface::PlayerInterface(const std::string& name) : name(name) {}
 
 
     PlayerInterface::~PlayerInterface() = default;
 
 
-    void PlayerInterface::setId(int id) {
-        mId = id;
-        setName(generateName());
-    }
-
-
     int PlayerInterface::getId() const {
         return mId;
     }
-
-
-    void PlayerInterface::setName(const std::string& name) {
-        switch (mId) {
-            case 1: mName = WHITE; break;
-            case 2: mName = BLACK; break;
-            default: mName += std::to_string(mId);
-        }
-        mName += ' ';
-        mName += name;
-    }
-
-
-    std::string PlayerInterface::getName() const {
-        return mName;
-    }
-
 
 
     void PlayerInterface::setScore(int score) {
@@ -44,10 +25,6 @@ namespace reversi {
 
     int PlayerInterface::getScore() const {
         return mScore;
-    }
-
-    std::string PlayerInterface::generateName() {
-        return "Player";
     }
 
 }

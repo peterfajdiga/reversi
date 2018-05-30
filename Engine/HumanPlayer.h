@@ -16,6 +16,8 @@ namespace reversi {
     public:
         HumanPlayer();
 
+        HumanPlayer(const std::string& name);
+
         virtual ~HumanPlayer();
 
         virtual std::string promptInput(Engine& engine, ViewInterface& view, bool isGameOver = false);

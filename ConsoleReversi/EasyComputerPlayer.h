@@ -18,11 +18,11 @@ namespace reversi {
     public:
         EasyComputerPlayer();
 
+        EasyComputerPlayer(const std::string& name);
+
         ~EasyComputerPlayer() override;
 
         std::string promptInput(Engine& engine, ViewInterface& view, bool isGameOver = false) override;
-
-        std::string generateName() override;
 
     private:
         virtual std::string getMove(Engine& engine);

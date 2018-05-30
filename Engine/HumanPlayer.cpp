@@ -6,6 +6,9 @@ namespace reversi {
     HumanPlayer::HumanPlayer() = default;
 
 
+    HumanPlayer::HumanPlayer(const std::string& name) : PlayerInterface(name) {}
+
+
     HumanPlayer::~HumanPlayer() = default;
 
 

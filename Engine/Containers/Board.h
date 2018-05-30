@@ -1,5 +1,6 @@
 #pragma once
 
+#include <vector>
 #include "Tile.h"
 #include "../constants.h"
 
@@ -41,22 +42,12 @@ namespace reversi {
         // but does not find the complete set of pieces to flip for that move.
         virtual bool isValidMove(const Tile& move, color currentPlayer, bool isCheck);
 
-        // initPiecesToFlip
-        // Initializes the set of pieces to flip for a given valid move.
-        virtual void initPiecesToFlip();
-
     private:
         color positions[8][8];
 
 
-        // The maximum number of pieces to flip in a given direction is 6, but the
-        // maximum number of positions that could be queued while searching is 8.
-        static const int sMaxPossiblePiecesToFlipPerDirection = 8;
-
-        static const int sMaxPiecesToFlipPerMove = 19;
-
         // Temporary buffer for pieces flipped by a given move.
-        color* mPiecesToFlip[sMaxPiecesToFlipPerMove];
+        std::vector<color*> mPiecesToFlip;
     };
 
 }

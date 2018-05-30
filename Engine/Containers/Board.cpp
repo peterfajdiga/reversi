@@ -1,3 +1,4 @@
+#include <vector>
 #include "Board.h"
 #include "Direction.h"
 
@@ -61,14 +62,8 @@ namespace reversi {
 
 
     void Board::flipPieces(color playerId) {
-        int i;
-
-        for (i = 0; i < sMaxPiecesToFlipPerMove; i++) {
-            if (mPiecesToFlip[i] == NULL) {
-                break;
-            }
-
-            *mPiecesToFlip[i] = playerId;
+        for (color* pieceToFlip : mPiecesToFlip) {
+            *pieceToFlip = playerId;
         }
     }
 
@@ -81,7 +76,7 @@ namespace reversi {
     bool Board::isValidMove(const Tile& move, color currentPlayer, bool isCheck) {
         size_t flipCount = 0;
 
-        initPiecesToFlip();
+        mPiecesToFlip.clear();
 
         // for each direction from the piece position
         // look for one or more adjacent pieces of the opposing player
@@ -101,14 +96,11 @@ namespace reversi {
                 continue;
             }
 
-            color* mPossiblePiecesToFlip[sMaxPossiblePiecesToFlipPerDirection];
-            for (size_t i = 0; i < sMaxPossiblePiecesToFlipPerDirection; i++) {
-                mPossiblePiecesToFlip[i] = NULL;
-            }
+            std::vector<color*> flippablePieces;
 
             // max of 7 steps can be taken in any given direction
             // take 8 steps so that the last check is off the board
-            // and will clear mPossiblePiecesToFlip if we get there
+            // and will clear flippablePieces if we get there
             Tile move_step(move);
             for (size_t step = 0; step < 8; step++) {
                 // apply step in direction
@@ -120,9 +112,7 @@ namespace reversi {
                 // check bounds and empty position
                 if (!move_step.isOnBoard() || isOpen(move_step)) {
                     // no flipped pieces in this direction
-                    for (size_t i = 0; i < sMaxPossiblePiecesToFlipPerDirection; i++) {
-                        mPossiblePiecesToFlip[i] = NULL;
-                    }
+                    flippablePieces.clear();
 
                     // stop searching in this direction
                     break;
@@ -137,14 +127,10 @@ namespace reversi {
                 // found opposing piece
                 // save a reference to this piece
                 // and continue searching in this direction
-                mPossiblePiecesToFlip[step] = &positions[move_step.x][move_step.y];
+                flippablePieces.emplace_back(&positions[move_step.x][move_step.y]);
             }
 
-            for (size_t j = 0; j < sMaxPossiblePiecesToFlipPerDirection; j++) {
-                if (mPossiblePiecesToFlip[j] == nullptr) {
-                    break;
-                }
-
+            for (color* flippablePiece : flippablePieces) {
                 // at this point, the position is a valid move
                 // stop searching if isCheck is `true`
                 if (isCheck) {
@@ -152,19 +138,13 @@ namespace reversi {
                 }
 
                 // save reference to flippable piece
+                mPiecesToFlip.emplace_back(flippablePiece);
                 // increment flipCount
-                mPiecesToFlip[flipCount++] = mPossiblePiecesToFlip[j];
+                flipCount++;
             }
         }
 
         return flipCount > 0;  // if any of the opponent's pieces will be flipped, it's a valid move
-    }
-
-
-    void Board::initPiecesToFlip() {
-        for (size_t i = 0; i < sMaxPiecesToFlipPerMove; i++) {
-            mPiecesToFlip[i] = NULL;
-        }
     }
 
 }

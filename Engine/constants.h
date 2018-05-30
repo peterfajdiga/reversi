@@ -10,4 +10,6 @@ namespace reversi {
 
     typedef unsigned int score;
 
+    class InvalidMoveException : public std::exception {};
+
 }

@@ -23,11 +23,6 @@ namespace reversi {
 
         score getScore(color player) const;
 
-        // flipPieces
-        // Flips each piece in the set of pieces to flip for a given valid move.
-        // This sets each identified position's value equal to the current player (`1` or `2`).
-        virtual void flipPieces(color playerId);
-
         // isOpen
         // Determines if the supplied position (x/y indexes) is open (is empty and not already taken).
         bool isOpen(const Tile& move) const;
@@ -41,16 +36,14 @@ namespace reversi {
         // isValidMove performs a faster check that determines if a move is valid
         // but does not find the complete set of pieces to flip for that move.
         virtual bool isValidMove(const Tile& move, color currentPlayer) const;
-        virtual bool isValidMovePerform(const Tile& move, color currentPlayer);
+
+        // perform move
+        virtual void doMove(const Tile& move, color currentPlayer);
 
         std::vector<Tile> getLegalMoves(color currentPlayer) const;
 
     private:
         color positions[8][8];
-
-
-        // Temporary buffer for pieces flipped by a given move.
-        std::vector<color*> mPiecesToFlip;
     };
 
 }

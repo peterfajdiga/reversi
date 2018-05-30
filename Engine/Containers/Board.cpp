@@ -61,13 +61,6 @@ namespace reversi {
     }
 
 
-    void Board::flipPieces(color playerId) {
-        for (color* pieceToFlip : mPiecesToFlip) {
-            *pieceToFlip = playerId;
-        }
-    }
-
-
     bool Board::isOpen(const Tile& move) const {
         return positions[move.x][move.y] == 0;
     }
@@ -134,10 +127,10 @@ namespace reversi {
         return false;
     }
 
-    bool Board::isValidMovePerform(const Tile& move, color currentPlayer) {
+    void Board::doMove(const Tile& move, color currentPlayer) {
         size_t flipCount = 0;
 
-        mPiecesToFlip.clear();
+        std::vector<color*> mPiecesToFlip;
 
         // for each direction from the piece position
         // look for one or more adjacent pieces of the opposing player
@@ -199,7 +192,15 @@ namespace reversi {
             }
         }
 
-        return flipCount > 0;  // if any of the opponent's pieces will be flipped, it's a valid move
+        if (flipCount == 0) {
+            throw InvalidMoveException();
+        }
+        (*this)[move] = currentPlayer;
+
+        // flip pieces
+        for (color* pieceToFlip : mPiecesToFlip) {
+            *pieceToFlip = currentPlayer;
+        }
     }
 
 

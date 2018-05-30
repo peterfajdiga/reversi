@@ -139,15 +139,13 @@ namespace reversi {
             return Status::POSITION_FILLED;
         }
 
-        // check valid move
-        if (!board.isValidMovePerform(move, mCurrentPlayer)) {
-            // position must flip at least one of the opponent player's pieces
+        try {
+            board.doMove(move, mCurrentPlayer);
+        } catch (InvalidMoveException& e) {
             return Status::INVALID_MOVE;
         }
 
-        board[move] = mCurrentPlayer;
-        board.flipPieces(mCurrentPlayer);
-        updateScores();
+        updateScores();  // TODO: move into Board
 
         return Status::SUCCESS;
     }

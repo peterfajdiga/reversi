@@ -4,6 +4,14 @@
 
 namespace reversi {
 
+#ifdef _WIN32
+    const char* const WHITE = "o";
+    const char* const BLACK = "x";
+#else
+    const char* const WHITE = "○";
+    const char* const BLACK = "●";
+#endif
+
     const int Engine::sDirectionsTable[8][2] = {
         // { x, y }
         { 0, 1 },    // up

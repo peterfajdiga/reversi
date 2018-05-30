@@ -8,13 +8,8 @@
 
 namespace reversi {
 
-#ifndef _WIN32
-    const std::string WHITE = "○";
-    const std::string BLACK = "●";
-#else
-    const std::string WHITE = "o";
-    const std::string BLACK = "x";
-#endif
+    extern const char* const WHITE;
+    extern const char* const BLACK;
 
     /**
      * Engine

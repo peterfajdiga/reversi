@@ -45,11 +45,6 @@ namespace reversi {
         // Initializes the set of pieces to flip for a given valid move.
         virtual void initPiecesToFlip();
 
-        // initPossiblePiecesToFlip
-        // Initializes the set of pieces that are possibly flipped when evaluating
-        // a position as a valid move.
-        virtual void initPossiblePiecesToFlip();
-
     private:
         color positions[8][8];
 
@@ -62,9 +57,6 @@ namespace reversi {
 
         // Temporary buffer for pieces flipped by a given move.
         color* mPiecesToFlip[sMaxPiecesToFlipPerMove];
-
-        // Temporary buffer for pieces flipped in a given direction for a given move.
-        color* mPossiblePiecesToFlip[sMaxPossiblePiecesToFlipPerDirection];
     };
 
 }

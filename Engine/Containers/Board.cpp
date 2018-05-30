@@ -101,7 +101,10 @@ namespace reversi {
                 continue;
             }
 
-            initPossiblePiecesToFlip();
+            color* mPossiblePiecesToFlip[sMaxPossiblePiecesToFlipPerDirection];
+            for (size_t i = 0; i < sMaxPossiblePiecesToFlipPerDirection; i++) {
+                mPossiblePiecesToFlip[i] = NULL;
+            }
 
             // max of 7 steps can be taken in any given direction
             // take 8 steps so that the last check is off the board
@@ -117,7 +120,9 @@ namespace reversi {
                 // check bounds and empty position
                 if (!move_step.isOnBoard() || isOpen(move_step)) {
                     // no flipped pieces in this direction
-                    initPossiblePiecesToFlip();
+                    for (size_t i = 0; i < sMaxPossiblePiecesToFlipPerDirection; i++) {
+                        mPossiblePiecesToFlip[i] = NULL;
+                    }
 
                     // stop searching in this direction
                     break;
@@ -159,12 +164,6 @@ namespace reversi {
     void Board::initPiecesToFlip() {
         for (size_t i = 0; i < sMaxPiecesToFlipPerMove; i++) {
             mPiecesToFlip[i] = NULL;
-        }
-    }
-
-    void Board::initPossiblePiecesToFlip() {
-        for (size_t i = 0; i < sMaxPossiblePiecesToFlipPerDirection; i++) {
-            mPossiblePiecesToFlip[i] = NULL;
         }
     }
 

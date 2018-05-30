@@ -44,7 +44,7 @@ namespace reversi {
 
         if (isGameOver) {
             cout << "\n\n-----------------------------";
-            cout << "\n\n" + drawBoard(engine) << endl;
+            cout << "\n\n" + drawBoard(engine.getBoard()) << endl;
 
             cout << "\n ** Game Over **\n\n";
             cout << "\n\n" + drawScore(engine);
@@ -62,7 +62,7 @@ namespace reversi {
 
             cout << "\n\n" + drawScore(engine);
 
-            cout << "\n\n" + drawBoard(engine) + "\n";
+            cout << "\n\n" + drawBoard(engine.getBoard()) + "\n";
         }
     }
 
@@ -128,30 +128,30 @@ namespace reversi {
     }
 
 
-    std::string ConsoleView::drawBoard(const Engine& engine) const {
+    std::string ConsoleView::drawBoard(const Board& board) const {
         using namespace std;
 
-        string board = "   a b c d e f g h\n\n";
+        string boardString = "   a b c d e f g h\n\n";
 
         for (Tile tile(0, 0); tile.y < 8; tile.y++) {
-            board += to_string(tile.y + 1) + " ";
+            boardString += to_string(tile.y + 1) + " ";
             for (tile.x = 0; tile.x < 8; tile.x++) {
-                board += ' ';
-                const int position = engine.getPosition(tile);
+                boardString += ' ';
+                const int position = board[tile];
                 switch (position) {
-                    case 0: board += '.'; break;  // unoccupied
-                    case 1: board += WHITE; break;
-                    case 2: board += BLACK; break;
-                    default: board += to_string(position);
+                    case 0: boardString += '.'; break;  // unoccupied
+                    case 1: boardString += WHITE; break;
+                    case 2: boardString += BLACK; break;
+                    default: boardString += to_string(position);
                 }
             }
 
-            board += "  " + to_string(tile.y + 1) + "\n";
+            boardString += "  " + to_string(tile.y + 1) + "\n";
         }
 
-        board += "\n   a b c d e f g h\n";
+        boardString += "\n   a b c d e f g h\n";
 
-        return board;
+        return boardString;
     }
 
 

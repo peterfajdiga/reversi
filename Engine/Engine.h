@@ -4,8 +4,9 @@
 #include "PlayerInterface.h"
 #include "ViewInterface.h"
 #include "HumanPlayer.h"
-#include "Tile.h"
+#include "Containers/Tile.h"
 #include "constants.h"
+#include "Containers/Board.h"
 
 namespace reversi {
 
@@ -30,6 +31,7 @@ namespace reversi {
      *
      */
     class Engine {
+        friend class EasyComputerPlayer;  // TODO: remove
     public:
         Engine(PlayerInterface* player1, PlayerInterface* player2);
         virtual ~Engine();
@@ -52,28 +54,7 @@ namespace reversi {
         // Updates a player object pointer, usually when changing player type.
         virtual void setPlayer(PlayerInterface* player, id playerId = 0);
 
-        // isOpen
-        // Determines if the supplied position (x/y indexes) is open (is empty and not already taken).
-        virtual bool isOpen(const Tile& move) const;
-
-        // isValidMove
-        // Determines if the supplied position (x/y indexes) is a valid move
-        // for the current player, i.e., it is on the board, the position is not already filled,
-        // and it will flip at least one of the opponent's pieces.
-        // Default behaviour will populate mPiecesToFlip with pointers to those board positions
-        // that should have their values flipped by the move if it is valid.
-        // Set isCheck to `true` to perform a faster check that determines that a move is valid
-        // but does not find the complete set of pieces to flip for that move.
-        virtual bool isValidMove(const Tile& move, bool isCheck);
-
-        // getPosition
-        // Returns the value of the specified board position.
-        // Possible values are `0` for an empty poistion,
-        // `1` for Player 1's piece, and `2` for Player 2's piece.
-        // If the position is not on the board, returns `-1`.
-        // The game board is an 8x8 two-dimensional int array with x and y indexes
-        // running from 0 to 7 starting from the top-left corner of the board.
-        virtual int getPosition(const Tile& move) const;
+        virtual const Board& getBoard() const;
 
     protected:
         // setupGame
@@ -114,24 +95,6 @@ namespace reversi {
         // Toggles mCurrentPlayer between `1` and `2`.
         virtual void togglePlayer();
 
-        // initBoard
-        // Initializes the game board to a new game state.
-        virtual void initBoard();
-
-        // initPiecesToFlip
-        // Initializes the set of pieces to flip for a given valid move.
-        virtual void initPiecesToFlip();
-
-        // initPossiblePiecesToFlip
-        // Initializes the set of pieces that are possibly flipped when evaluating
-        // a position as a valid move.
-        virtual void initPossiblePiecesToFlip();
-
-        // flipPieces
-        // Flips each piece in the set of pieces to flip for a given valid move.
-        // This sets each identified position's value equal to the current player (`1` or `2`).
-        virtual void flipPieces();
-
         // updateScores
         // Calculates each player's current score, and sets the score on each player object
         // using the player.setScore method.
@@ -140,38 +103,18 @@ namespace reversi {
         virtual void updateScores(bool isGameOver = false);
 
     private:
-        // Directions table used for finding valid moves.
-        // Each table value is a vector (math vector, not a C++ STL data structure!)
-        // representing one of the eight directions to check (up, up-right, right, etc.)
-        static const int sDirectionsTable[8][2];
-
-        // The maximum number of pieces to flip in a given direction is 6, but the
-        // maximum number of positions that could be queued while searching is 8.
-        static const int sMaxPossiblePiecesToFlipPerDirection = 8;
-
-        static const int sMaxPiecesToFlipPerMove = 19;
 
         // The view reference must be set via setView before calling runGame.
         ViewInterface* mView;
 
         // Positions:
-        // "a1" == mBoard[0][0]
-        // "a2" == mBoard[0][1]
-        // "b1" == mBoard[1][0]
-        // "h8" == mBoard[7][7]
-        int mBoard[8][8];
+        Board board;
 
         PlayerInterface* mPlayer1;
         PlayerInterface* mPlayer2;
 
         // Current player is toggled between `1` and `2`.
-        int mCurrentPlayer;
-
-        // Temporary buffer for pieces flipped by a given move.
-        int* mPiecesToFlip[sMaxPiecesToFlipPerMove];
-
-        // Temporary buffer for pieces flipped in a given direction for a given move.
-        int* mPossiblePiecesToFlip[sMaxPossiblePiecesToFlipPerDirection];
+        id mCurrentPlayer;
 
     };
 

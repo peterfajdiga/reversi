@@ -24,6 +24,7 @@ namespace reversi {
 
 
     std::string EasyComputerPlayer::getMove(Engine& engine) {
+        Board& board = engine.board;
         std::vector<Tile> validMoves;
 
         // find list of valid moves
@@ -31,7 +32,7 @@ namespace reversi {
             for (coordinate i = 0; i < 8; i++) {
                 // position is empty and a valid move
                 Tile move(i, j);
-                if (engine.isOpen(move) && engine.isValidMove(move, true)) {
+                if (board.isOpen(move) && board.isValidMove(move, getId(), true)) {
                     validMoves.emplace_back(move);
                 }
             }

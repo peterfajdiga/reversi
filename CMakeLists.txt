@@ -4,13 +4,15 @@ project(reversi)
 set(CMAKE_CXX_STANDARD 17)
 
 set(SOURCE_FILES
+        Engine/Containers/Board.cpp
+        Engine/Containers/Board.h
         Engine/constants.h
         Engine/Engine.cpp
         Engine/Engine.h
         Engine/HumanPlayer.cpp
         Engine/HumanPlayer.h
-        Engine/Tile.cpp
-        Engine/Tile.h
+        Engine/Containers/Tile.cpp
+        Engine/Containers/Tile.h
         Engine/PlayerInterface.cpp
         Engine/PlayerInterface.h
         Engine/ViewInterface.cpp

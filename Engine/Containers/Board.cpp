@@ -157,17 +157,13 @@ namespace reversi {
 
 
     void Board::initPiecesToFlip() {
-        int i;
-
-        for (i = 0; i < sMaxPiecesToFlipPerMove; i++) {
+        for (size_t i = 0; i < sMaxPiecesToFlipPerMove; i++) {
             mPiecesToFlip[i] = NULL;
         }
     }
 
     void Board::initPossiblePiecesToFlip() {
-        int i;
-
-        for (i = 0; i < sMaxPossiblePiecesToFlipPerDirection; i++) {
+        for (size_t i = 0; i < sMaxPossiblePiecesToFlipPerDirection; i++) {
             mPossiblePiecesToFlip[i] = NULL;
         }
     }

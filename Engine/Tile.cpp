@@ -24,4 +24,9 @@ namespace reversi {
         str += y + '1';
         return str;
     }
+
+
+    bool Tile::isOnBoard() const {
+        return x >= 0 && x <= 7 && y >= 0 && y <= 7;
+    }
 }

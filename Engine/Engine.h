@@ -51,10 +51,6 @@ namespace reversi {
         // Updates a player object pointer, usually when changing player type.
         virtual void setPlayer(PlayerInterface* player, int id = 0);
 
-        // isOnBoard
-        // Determines if the supplied position (x/y indexes) is within the game board.
-        virtual bool isOnBoard(const reversi::Tile& move) const;
-
         // isOpen
         // Determines if the supplied position (x/y indexes) is open (is empty and not already taken).
         virtual bool isOpen(const Tile& move) const;

@@ -139,7 +139,7 @@ namespace reversi {
         Tile move(position);
 
         // check bounds
-        if (!isOnBoard(move)) {
+        if (!move.isOnBoard()) {
             // position is outside of the board
             return Status::OUT_OF_BOUNDS;
         }
@@ -241,11 +241,6 @@ namespace reversi {
     }
 
 
-    bool Engine::isOnBoard(const Tile& move) const {
-        return move.x >= 0 && move.x <= 7 && move.y >= 0 && move.y <= 7;
-    }
-
-
     bool Engine::isOpen(const Tile& move) const {
         return mBoard[move.x][move.y] == 0;
     }
@@ -290,7 +285,7 @@ namespace reversi {
                 i_move.y -= yStep;
 
                 // check bounds and empty position
-                if (!isOnBoard(i_move) || isOpen(i_move)) {
+                if (!i_move.isOnBoard() || isOpen(i_move)) {
                     // no flipped pieces in this direction
                     initPossiblePiecesToFlip();
 
@@ -398,7 +393,7 @@ namespace reversi {
     }
 
     int Engine::getPosition(const Tile& move) const {
-        if (isOnBoard(move)) {
+        if (move.isOnBoard()) {
             return mBoard[move.x][move.y];
         }
 
@@ -407,7 +402,7 @@ namespace reversi {
 
 
     void Engine::setPosition(const Tile& move, int value) {
-        if (isOnBoard(move)) {
+        if (move.isOnBoard()) {
             mBoard[move.x][move.y] = value;
         }
     }

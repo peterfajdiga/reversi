@@ -39,8 +39,8 @@ namespace reversi {
     void ConsoleView::displayState(const Engine& engine, bool isGameOver) {
         using namespace std;
 
-        const score s1 = engine.getPlayer(1)->getScore();
-        const score s2 = engine.getPlayer(2)->getScore();
+        const score s1 = engine.getPlayer(white)->getScore();
+        const score s2 = engine.getPlayer(black)->getScore();
 
         if (isGameOver) {
             cout << "\n\n-----------------------------";
@@ -54,7 +54,7 @@ namespace reversi {
             }
             else {
                 cout << "\n Congratulations, ";
-                cout << getFormattedName(*engine.getPlayer(s1 > s2 ? 1 : 2)) + "!" << endl;
+                cout << getFormattedName(*engine.getPlayer(s1 > s2 ? white : black)) + "!" << endl;
             }
 
         } else {
@@ -156,11 +156,11 @@ namespace reversi {
 
 
     std::string ConsoleView::drawScore(const Engine &engine) const {
-        const std::string p1Name = getFormattedName(*engine.getPlayer(1));
-        const std::string p2Name = getFormattedName(*engine.getPlayer(2));
+        const std::string p1Name = getFormattedName(*engine.getPlayer(white));
+        const std::string p2Name = getFormattedName(*engine.getPlayer(black));
 
-        const std::string p1Score = std::to_string(engine.getPlayer(1)->getScore());
-        const std::string p2Score = std::to_string(engine.getPlayer(2)->getScore());
+        const std::string p1Score = std::to_string(engine.getPlayer(white)->getScore());
+        const std::string p2Score = std::to_string(engine.getPlayer(black)->getScore());
 
         const size_t maxLength = std::max(p1Name.size(), p2Name.size()) + std::max(p1Score.size(), p2Score.size());
         const size_t p1Padding = maxLength - p1Name.size() - p1Score.size();
@@ -186,7 +186,7 @@ namespace reversi {
 
     std::string ConsoleView::getFormattedName(const PlayerInterface& player) const {
         std::string name;
-        const id playerId = player.getId();
+        const color playerId = player.getId();
         switch (playerId) {
             case 1: name += WHITE; break;
             case 2: name += BLACK; break;

@@ -48,11 +48,11 @@ namespace reversi {
         // Retrieves a player object (see PlayerInterface.h).
         // Will return a reference to the current player by default.
         // Set id to `1` or `2` to return player 1 or player 2 specifically.
-        virtual PlayerInterface* getPlayer(id playerId = 0) const;
+        virtual PlayerInterface* getPlayer(color playerId = unoccupied) const;
 
         // setPlayer
         // Updates a player object pointer, usually when changing player type.
-        virtual void setPlayer(PlayerInterface* player, id playerId = 0);
+        virtual void setPlayer(PlayerInterface* player, color playerId = unoccupied);
 
         virtual const Board& getBoard() const;
 
@@ -114,7 +114,7 @@ namespace reversi {
         PlayerInterface* mPlayer2;
 
         // Current player is toggled between `1` and `2`.
-        id mCurrentPlayer;
+        color mCurrentPlayer;
 
     };
 

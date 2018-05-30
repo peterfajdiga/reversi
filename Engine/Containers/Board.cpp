@@ -22,33 +22,33 @@ namespace reversi {
     Board::Board() {
         for (int y = 0; y < 8; ++y) {
             for (int x = 0; x < 8; ++x) {
-                positions[x][y] = 0;
+                positions[x][y] = unoccupied;
             }
         }
 
         // initialize starting positions for each player
-        positions[3][3] = 2;
-        positions[3][4] = 1;
-        positions[4][3] = 1;
-        positions[4][4] = 2;
+        positions[3][3] = black;
+        positions[3][4] = white;
+        positions[4][3] = white;
+        positions[4][4] = black;
     }
 
 
-    id& Board::operator[] (const Tile &tile) {
+    color& Board::operator[] (const Tile &tile) {
         return positions[tile.x][tile.y];
     }
-    const id& Board::operator[] (const Tile &tile) const {
+    const color& Board::operator[] (const Tile &tile) const {
         return positions[tile.x][tile.y];
     }
 
-    id& Board::operator()(coordinate x, coordinate y) {
+    color& Board::operator()(coordinate x, coordinate y) {
         return positions[x][y];
     }
-    const id& Board::operator()(coordinate x, coordinate y) const {
+    const color& Board::operator()(coordinate x, coordinate y) const {
         return positions[x][y];
     }
 
-    score Board::getScore(id player) const {
+    score Board::getScore(color player) const {
         score sum = 0;
         for (size_t y = 0; y < 8; y++) {
             for (size_t x = 0; x < 8; x++) {
@@ -59,7 +59,7 @@ namespace reversi {
     }
 
 
-    void Board::flipPieces(id playerId) {
+    void Board::flipPieces(color playerId) {
         int i;
 
         for (i = 0; i < sMaxPiecesToFlipPerMove; i++) {
@@ -77,7 +77,7 @@ namespace reversi {
     }
 
 
-    bool Board::isValidMove(const Tile& move, id currentPlayer, bool isCheck) {
+    bool Board::isValidMove(const Tile& move, color currentPlayer, bool isCheck) {
         int i, j, xStep, yStep, flipCount = 0;
 
         initPiecesToFlip();

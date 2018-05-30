@@ -11,7 +11,7 @@ namespace reversi {
     PlayerInterface::~PlayerInterface() = default;
 
 
-    id PlayerInterface::getId() const {
+    color PlayerInterface::getId() const {
         return mId;
     }
 

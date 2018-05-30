@@ -30,7 +30,7 @@ namespace reversi {
 
         virtual ~PlayerInterface();
 
-        virtual id getId() const;
+        virtual color getId() const;
 
         virtual void setScore(score s);
         virtual score getScore() const;
@@ -40,7 +40,7 @@ namespace reversi {
         const std::string name;
 
     private:
-        id mId;
+        color mId;
         score mScore;
     };
 

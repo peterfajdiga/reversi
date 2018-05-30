@@ -1,6 +1,13 @@
+#pragma once
+
 namespace reversi {
 
-    typedef unsigned int id;  // used to identify player and his pieces
+    enum color {
+        unoccupied = 0,
+        white = 1,
+        black = 2
+    };
+
     typedef unsigned int score;
 
 }

@@ -6,9 +6,9 @@ namespace reversi {
 
 
     Engine::Engine(PlayerInterface* player1, PlayerInterface* player2) : mPlayer1(player1), mPlayer2(player2) {
-        mPlayer1->mId = 1;
-        mPlayer2->mId = 2;
-        mCurrentPlayer = 1;
+        mPlayer1->mId = white;
+        mPlayer2->mId = black;
+        mCurrentPlayer = white;
     }
 
 
@@ -39,7 +39,7 @@ namespace reversi {
         board = Board();  // TODO: do differently
         updateScores();
 
-        mCurrentPlayer = 1;
+        mCurrentPlayer = white;
 
         mView->setupGame(*this);
     }
@@ -158,7 +158,7 @@ namespace reversi {
     }
 
 
-    PlayerInterface* Engine::getPlayer(id playerId) const {
+    PlayerInterface* Engine::getPlayer(color playerId) const {
         if (playerId == 0) {
             playerId = mCurrentPlayer;
         }
@@ -171,7 +171,7 @@ namespace reversi {
     }
 
 
-    void Engine::setPlayer(PlayerInterface* player, id playerId) {
+    void Engine::setPlayer(PlayerInterface* player, color playerId) {
         player->mId = getPlayer()->mId;
 
         if (playerId == 0) {
@@ -208,13 +208,13 @@ namespace reversi {
 
     void Engine::togglePlayer() {
         // bitwise xor with 3 will toggle between 1 and 2
-        mCurrentPlayer ^= 3;
+        mCurrentPlayer = (color)(mCurrentPlayer ^ 3);
     }
 
 
     void Engine::updateScores(bool isGameOver) {
-        score s1 = board.getScore(1);
-        score s2 = board.getScore(2);
+        score s1 = board.getScore(white);
+        score s2 = board.getScore(black);
 
         if (isGameOver) {
             if (s1 > s2 || s2 > s1) {

@@ -1,4 +1,5 @@
 #include <vector>
+#include <assert.h>
 #include "Board.h"
 #include "Direction.h"
 
@@ -33,6 +34,8 @@ namespace reversi {
         positions[3][4] = white;
         positions[4][3] = white;
         positions[4][4] = black;
+
+        currentPlayer = white;
     }
 
 
@@ -50,6 +53,12 @@ namespace reversi {
         return positions[x][y];
     }
 
+
+    color Board::getCurrentPlayer() const {
+        return currentPlayer;
+    }
+
+
     score Board::getScore(color player) const {
         score sum = 0;
         for (size_t y = 0; y < 8; y++) {
@@ -66,7 +75,7 @@ namespace reversi {
     }
 
 
-    bool Board::isValidMove(const Tile& move, color currentPlayer) const {
+    bool Board::isValidMove(const Tile& move) const {
         size_t flipCount = 0;
 
         // for each direction from the piece position
@@ -127,7 +136,7 @@ namespace reversi {
         return false;
     }
 
-    void Board::doMove(const Tile& move, color currentPlayer) {
+    void Board::doMove(const Tile& move) {
         size_t flipCount = 0;
 
         std::vector<color*> mPiecesToFlip;
@@ -201,21 +210,39 @@ namespace reversi {
         for (color* pieceToFlip : mPiecesToFlip) {
             *pieceToFlip = currentPlayer;
         }
+
+        togglePlayer();
+    }
+
+    void Board::doNothing() {
+        assert (!canMove());
+        togglePlayer();
     }
 
 
-    std::vector<Tile> Board::getLegalMoves(color currentPlayer) const {
+    std::vector<Tile> Board::getLegalMoves() const {
         std::vector<Tile> legalMoves;
         for (Tile move(0, 0); move.y < 8; move.y++) {
             for (move.x = 0; move.x < 8; move.x++) {
                 // check open position and valid move
                 // set isCheck flag to shorten isValidMove search
-                if (isOpen(move) && isValidMove(move, currentPlayer)) {
+                if (isOpen(move) && isValidMove(move)) {
                     legalMoves.emplace_back(move);
                 }
             }
         }
         return legalMoves;
+    }
+
+
+    bool Board::canMove() {
+        return !getLegalMoves().empty();
+    }
+
+    void Board::togglePlayer() {
+        // bitwise xor with 3 will toggle between 1 and 2
+        assert (currentPlayer == white || currentPlayer == black);
+        currentPlayer = (color)(currentPlayer ^ 3);
     }
 
 }

@@ -21,6 +21,8 @@ namespace reversi {
         color& operator() (coordinate x, coordinate y);
         const color& operator() (coordinate x, coordinate y) const;
 
+        color getCurrentPlayer() const;
+
         score getScore(color player) const;
 
         // isOpen
@@ -35,15 +37,26 @@ namespace reversi {
         // that should have their values flipped by the move if it is valid.
         // isValidMove performs a faster check that determines if a move is valid
         // but does not find the complete set of pieces to flip for that move.
-        virtual bool isValidMove(const Tile& move, color currentPlayer) const;
+        virtual bool isValidMove(const Tile& move) const;
 
         // perform move
-        virtual void doMove(const Tile& move, color currentPlayer);
+        virtual void doMove(const Tile& move);
+        virtual void doNothing();
 
-        std::vector<Tile> getLegalMoves(color currentPlayer) const;
+        std::vector<Tile> getLegalMoves() const;
+
+        // canMove
+        // Determines if the current player can make a legal move.
+        virtual bool canMove();
 
     private:
         color positions[8][8];
+
+        color currentPlayer;
+
+        // togglePlayer
+        // Toggles mCurrentPlayer between `1` and `2`.
+        virtual void togglePlayer();
     };
 
 }

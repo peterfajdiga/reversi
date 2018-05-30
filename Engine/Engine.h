@@ -87,14 +87,6 @@ namespace reversi {
         // Calls view.displayStatus.
         virtual void displayStatus(Status status, const std::string& input = "");
 
-        // canMove
-        // Determines if the current player can make a legal move.
-        virtual bool canMove();
-
-        // togglePlayer
-        // Toggles mCurrentPlayer between `1` and `2`.
-        virtual void togglePlayer();
-
         // updateScores
         // Calculates each player's current score, and sets the score on each player object
         // using the player.setScore method.
@@ -112,9 +104,6 @@ namespace reversi {
 
         PlayerInterface* mPlayer1;
         PlayerInterface* mPlayer2;
-
-        // Current player is toggled between `1` and `2`.
-        color mCurrentPlayer;
 
     };
 

@@ -8,13 +8,12 @@ namespace reversi {
     Engine::Engine(PlayerInterface* player1, PlayerInterface* player2) : mPlayer1(player1), mPlayer2(player2) {
         mPlayer1->mId = white;
         mPlayer2->mId = black;
-        mCurrentPlayer = white;
     }
 
 
     Engine::~Engine() {
         // set view pointer to NULL
-        mView = NULL;
+        mView = nullptr;
 
         // delete players
         delete mPlayer1;
@@ -39,8 +38,6 @@ namespace reversi {
         board = Board();  // TODO: do differently
         updateScores();
 
-        mCurrentPlayer = white;
-
         mView->setupGame(*this);
     }
 
@@ -54,7 +51,7 @@ namespace reversi {
         bool isNewState = true;
 
         while (isGameRunning) {
-            isPlayerAbleToMove = canMove();
+            isPlayerAbleToMove = board.canMove();
 
             // is game over?
             if (isLastMovePass && !isPlayerAbleToMove) {
@@ -95,19 +92,18 @@ namespace reversi {
 
             default:
                 if (isPlayerAbleToMove) {
-                    status = updateState(input);
+                    status = updateState(input);  // do move
                     displayStatus(status, input);
 
                     if (status == Status::SUCCESS) {
                         isLastMovePass = false;
-                        togglePlayer();
                         isNewState = true;
                     }
                 }
                 else {
                     displayStatus(Status::CANNOT_MOVE);
                     isLastMovePass = true;
-                    togglePlayer();
+                    board.doNothing();  // skip move
                 }
             }
         }
@@ -140,7 +136,7 @@ namespace reversi {
         }
 
         try {
-            board.doMove(move, mCurrentPlayer);
+            board.doMove(move);
         } catch (InvalidMoveException& e) {
             return Status::INVALID_MOVE;
         }
@@ -158,7 +154,7 @@ namespace reversi {
 
     PlayerInterface* Engine::getPlayer(color playerId) const {
         if (playerId == 0) {
-            playerId = mCurrentPlayer;
+            playerId = board.getCurrentPlayer();
         }
         return playerId == 1 ? mPlayer1 : mPlayer2;
     }
@@ -169,11 +165,11 @@ namespace reversi {
     }
 
 
-    void Engine::setPlayer(PlayerInterface* player, color playerId) {
+    void Engine::setPlayer(PlayerInterface* player, color playerId) {  // TODO: remove (along with ability to change player to ai)
         player->mId = getPlayer()->mId;
 
         if (playerId == 0) {
-            playerId = mCurrentPlayer;
+            playerId = board.getCurrentPlayer();
         }
 
         if (playerId == 1) {
@@ -184,16 +180,6 @@ namespace reversi {
             delete mPlayer2;
             mPlayer2 = player;
         }
-    }
-
-
-    bool Engine::canMove() {
-        return !board.getLegalMoves(mCurrentPlayer).empty();
-    }
-
-    void Engine::togglePlayer() {
-        // bitwise xor with 3 will toggle between 1 and 2
-        mCurrentPlayer = (color)(mCurrentPlayer ^ 3);
     }
 
 

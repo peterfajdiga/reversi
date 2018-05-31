@@ -15,14 +15,4 @@ namespace reversi {
         return mId;
     }
 
-
-    void PlayerInterface::setScore(const score s) {
-        mScore = s;
-    }
-
-
-    score PlayerInterface::getScore() const {
-        return mScore;
-    }
-
 }

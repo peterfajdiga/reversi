@@ -1,17 +1,20 @@
 #include <iostream>
+#include <cassert>
 #include "ConsoleView.h"
 #include "EasyComputerPlayer.h"
 
+#ifdef _WIN32
+#define UNOCCUPIED "."
+#define WHITE "o"
+#define BLACK "x"
+#else
+#define UNOCCUPIED "·"
+#define WHITE "○"
+#define BLACK "●"
+#endif
+
 
 namespace reversi {
-
-#ifdef _WIN32
-    const char* const WHITE = "o";
-    const char* const BLACK = "x";
-#else
-    const char* const WHITE = "○";
-    const char* const BLACK = "●";
-#endif
 
 
     ConsoleView::ConsoleView() = default;
@@ -39,8 +42,8 @@ namespace reversi {
     void ConsoleView::displayState(const Engine& engine, bool isGameOver) {
         using namespace std;
 
-        const score s1 = engine.getPlayer(white)->getScore();
-        const score s2 = engine.getPlayer(black)->getScore();
+        const score s1 = engine.getBoard().getScoreWhite();
+        const score s2 = engine.getBoard().getScoreBlack();
 
         if (isGameOver) {
             cout << "\n\n-----------------------------";
@@ -131,17 +134,17 @@ namespace reversi {
     std::string ConsoleView::drawBoard(const Board& board) const {
         using namespace std;
 
-        string boardString = "   a b c d e f g h\n\n";
+        string boardString = "   a b c d e f g h\n";
 
         for (Tile tile(0, 0); tile.y < 8; tile.y++) {
             boardString += to_string(tile.y + 1) + " ";
             for (tile.x = 0; tile.x < 8; tile.x++) {
                 boardString += ' ';
-                const int position = board[tile];
+                const color position = board[tile];
                 switch (position) {
-                    case 0: boardString += '.'; break;  // unoccupied
-                    case 1: boardString += WHITE; break;
-                    case 2: boardString += BLACK; break;
+                    case unoccupied: boardString += UNOCCUPIED; break;
+                    case white: boardString += WHITE; break;
+                    case black: boardString += BLACK; break;
                     default: boardString += to_string(position);
                 }
             }
@@ -149,18 +152,18 @@ namespace reversi {
             boardString += "  " + to_string(tile.y + 1) + "\n";
         }
 
-        boardString += "\n   a b c d e f g h\n";
+        boardString += "   a b c d e f g h\n";
 
         return boardString;
     }
 
 
-    std::string ConsoleView::drawScore(const Engine &engine) const {
+    std::string ConsoleView::drawScore(const Engine& engine) const {
         const std::string p1Name = getFormattedName(*engine.getPlayer(white));
         const std::string p2Name = getFormattedName(*engine.getPlayer(black));
 
-        const std::string p1Score = std::to_string(engine.getPlayer(white)->getScore());
-        const std::string p2Score = std::to_string(engine.getPlayer(black)->getScore());
+        const std::string p1Score = std::to_string(engine.getBoard().getScoreWhite());
+        const std::string p2Score = std::to_string(engine.getBoard().getScoreBlack());
 
         const size_t maxLength = std::max(p1Name.size(), p2Name.size()) + std::max(p1Score.size(), p2Score.size());
         const size_t p1Padding = maxLength - p1Name.size() - p1Score.size();
@@ -188,9 +191,9 @@ namespace reversi {
         std::string name;
         const color playerId = player.getId();
         switch (playerId) {
-            case 1: name += WHITE; break;
-            case 2: name += BLACK; break;
-            default: name += std::to_string(playerId);
+            case white: name += WHITE; break;
+            case black: name += BLACK; break;
+            default: assert(false);
         }
         name += ' ';
         name += player.name;

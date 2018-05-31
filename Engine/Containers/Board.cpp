@@ -36,6 +36,9 @@ namespace reversi {
         positions[4][4] = black;
 
         currentPlayer = white;
+
+        scoreWhite = 2;
+        scoreBlack = 2;
     }
 
 
@@ -59,14 +62,12 @@ namespace reversi {
     }
 
 
-    score Board::getScore(color player) const {
-        score sum = 0;
-        for (size_t y = 0; y < 8; y++) {
-            for (size_t x = 0; x < 8; x++) {
-                sum += positions[x][y] == player;  // increment if player holds xy tile
-            }
-        }
-        return sum;
+    score Board::getScoreWhite() const {
+        return scoreWhite;  // TODO: on gameover, add empty tiles to winner
+    }
+
+    score Board::getScoreBlack() const {
+        return scoreBlack;  // TODO: on gameover, add empty tiles to winner
     }
 
 
@@ -210,12 +211,21 @@ namespace reversi {
         if (flipCount == 0) {
             throw InvalidMoveException();
         }
+
+        // add piece
         (*this)[move] = currentPlayer;
+        (currentPlayer == white ? scoreWhite : scoreBlack)++;
 
         // flip pieces
         for (color* pieceToFlip : mPiecesToFlip) {
             *pieceToFlip = currentPlayer;
         }
+
+        // update score
+        const int sign = ((int)(currentPlayer == white) * 2 - 1);
+        const int whiteGain = (int)mPiecesToFlip.size() * sign;
+        scoreWhite += whiteGain;
+        scoreBlack -= whiteGain;
 
         togglePlayer();
     }

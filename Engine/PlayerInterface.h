@@ -32,16 +32,12 @@ namespace reversi {
 
         virtual color getId() const;
 
-        virtual void setScore(score s);
-        virtual score getScore() const;
-
         virtual std::string promptInput(Engine& engine, ViewInterface& view, bool isGameOver = false) = 0;
 
         const std::string name;
 
     private:
         color mId;
-        score mScore;
     };
 
 }

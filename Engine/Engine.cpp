@@ -36,8 +36,6 @@ namespace reversi {
 
     void Engine::setupGame() {
         board = Board();  // TODO: do differently
-        updateScores();
-
         mView->setupGame(*this);
     }
 
@@ -56,7 +54,6 @@ namespace reversi {
             // is game over?
             if (isLastMovePass && !isPlayerAbleToMove) {
                 isGameOver = true;
-                updateScores(true);
             }
 
             // prompt for input
@@ -141,8 +138,6 @@ namespace reversi {
             return Status::INVALID_MOVE;
         }
 
-        updateScores();  // TODO: move into Board
-
         return Status::SUCCESS;
     }
 
@@ -180,25 +175,6 @@ namespace reversi {
             delete mPlayer2;
             mPlayer2 = player;
         }
-    }
-
-
-    void Engine::updateScores(bool isGameOver) {
-        score s1 = board.getScore(white);
-        score s2 = board.getScore(black);
-
-        if (isGameOver) {
-            if (s1 > s2 || s2 > s1) {
-                // if one player wins
-                // add all the empty positions to the winner's score
-                (s1 > s2 ? s1 : s2) += (64 - s2 - s1);
-            }
-
-            // don't modify scores in case of a tie
-        }
-
-        mPlayer1->setScore(s1);
-        mPlayer2->setScore(s2);
     }
 
 }

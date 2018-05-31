@@ -23,7 +23,8 @@ namespace reversi {
 
         color getCurrentPlayer() const;
 
-        score getScore(color player) const;
+        score getScoreWhite() const;
+        score getScoreBlack() const;
 
         // isOpen
         // Determines if the supplied position (x/y indexes) is open (is empty and not already taken).
@@ -51,6 +52,8 @@ namespace reversi {
         color positions[8][8];
 
         color currentPlayer;
+
+        score scoreWhite, scoreBlack;
 
         // togglePlayer
         // Toggles mCurrentPlayer between `1` and `2`.

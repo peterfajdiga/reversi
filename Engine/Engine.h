@@ -87,13 +87,6 @@ namespace reversi {
         // Calls view.displayStatus.
         virtual void displayStatus(Status status, const std::string& input = "");
 
-        // updateScores
-        // Calculates each player's current score, and sets the score on each player object
-        // using the player.setScore method.
-        // To calculate final scores, where empty positions will be added to the winner's
-        // total score, set isGameOver to `true`.
-        virtual void updateScores(bool isGameOver = false);
-
     private:
 
         // The view reference must be set via setView before calling runGame.

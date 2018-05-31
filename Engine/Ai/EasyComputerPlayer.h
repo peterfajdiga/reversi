@@ -1,9 +1,9 @@
 #pragma once
 
 #include <string>
-#include "../Engine/PlayerInterface.h"
-#include "../Engine/ViewInterface.h"
-#include "../Engine/Engine.h"
+#include "../PlayerInterface.h"
+#include "../ViewInterface.h"
+#include "../Engine.h"
 
 
 namespace reversi {

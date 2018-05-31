@@ -1,7 +1,7 @@
 #include "Engine.h"
 #include "Containers/Tile.h"
 #include "constants.h"
-#include "../ConsoleReversi/EasyComputerPlayer.h"
+#include "Ai/EasyComputerPlayer.h"
 
 namespace reversi {
 

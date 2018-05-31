@@ -20,8 +20,8 @@ set(SOURCE_FILES
         Engine/ViewInterface.h
         ConsoleReversi/ConsoleView.cpp
         ConsoleReversi/ConsoleView.h
-        ConsoleReversi/EasyComputerPlayer.cpp
-        ConsoleReversi/EasyComputerPlayer.h
+        Engine/Ai/EasyComputerPlayer.cpp
+        Engine/Ai/EasyComputerPlayer.h
         ConsoleReversi/main.cpp)
 
 add_executable(reversi ${SOURCE_FILES})

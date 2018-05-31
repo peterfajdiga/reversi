@@ -1,7 +1,7 @@
 #include <iostream>
 #include <cassert>
 #include "ConsoleView.h"
-#include "EasyComputerPlayer.h"
+#include "../Engine/Ai/EasyComputerPlayer.h"
 
 #ifdef _WIN32
 #define UNOCCUPIED "."

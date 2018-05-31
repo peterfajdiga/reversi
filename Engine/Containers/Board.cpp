@@ -43,6 +43,21 @@ namespace reversi {
     }
 
 
+    Board::Board(const Board& parent, const Tile& move) {
+        for (size_t y = 0; y < 8; ++y) {
+            for (size_t x = 0; x < 8; ++x) {
+                positions[x][y] = parent.positions[x][y];
+            }
+        }
+
+        scoreWhite = parent.scoreWhite;
+        scoreBlack = parent.scoreBlack;
+
+        state = parent.state;
+        doMove(move);
+    }
+
+
     color& Board::operator[] (const Tile &tile) {
         return positions[tile.x][tile.y];
     }

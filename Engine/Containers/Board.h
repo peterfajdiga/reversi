@@ -15,6 +15,8 @@ namespace reversi {
     public:
         Board();
 
+        Board(const Board& parent, const Tile& move);
+
         color& operator[] (const Tile &tile);
         const color& operator[] (const Tile &tile) const;
 

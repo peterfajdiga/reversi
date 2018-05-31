@@ -154,7 +154,7 @@ namespace reversi {
         if (playerId == 0) {
             playerId = board.getCurrentPlayer();
         }
-        return playerId == 1 ? playerWhite : playerBlack;
+        return playerId == white ? playerWhite : playerBlack;
     }
 
 
@@ -166,15 +166,15 @@ namespace reversi {
     void Engine::setPlayer(PlayerInterface* player, color playerId) {  // TODO: remove (along with ability to change player to ai)
         player->mId = getPlayer()->mId;
 
-        if (playerId == 0) {
+        if (playerId == unoccupied) {
             playerId = board.getCurrentPlayer();
         }
 
-        if (playerId == 1) {
+        if (playerId == white) {
             delete playerWhite;
             playerWhite = player;
         }
-        else if (playerId == 2) {
+        else if (playerId == black) {
             delete playerBlack;
             playerBlack = player;
         }

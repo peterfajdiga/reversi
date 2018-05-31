@@ -56,7 +56,7 @@ namespace reversi {
         score scoreWhite, scoreBlack;
 
         // togglePlayer
-        // Toggles mCurrentPlayer between `1` and `2`.
+        // Toggles currentPlayer between white and black.
         void togglePlayer();
     };
 

@@ -222,8 +222,8 @@ namespace reversi {
         }
 
         // update score
-        const int sign = ((int)(currentPlayer == white) * 2 - 1);
-        const int whiteGain = (int)mPiecesToFlip.size() * sign;
+        assert(white == 1 && black == -1);
+        const int whiteGain = (int)mPiecesToFlip.size() * currentPlayer;
         scoreWhite += whiteGain;
         scoreBlack -= whiteGain;
 
@@ -256,10 +256,10 @@ namespace reversi {
     }
 
     void Board::togglePlayer() {
-        // bitwise xor with 3 will toggle between 1 and 2
+        // multiplication with -1 will toggle between 1 and -1 (white and black)
         assert(currentPlayer == white || currentPlayer == black);
-        assert(white == 1 && black == 2);
-        currentPlayer = (color)(currentPlayer ^ 3);
+        assert(white == 1 && black == -1);
+        currentPlayer = (color)(currentPlayer * -1);
     }
 
 }

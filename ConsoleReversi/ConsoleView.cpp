@@ -86,7 +86,7 @@ namespace reversi {
         cout << "\n" + getFormattedName(*engine->getPlayer()) + ", enter a move: ";
         cin >> input;
 
-        if (input.length() == 1 && tolower(input[0]) == 99) {
+        if (input.length() == 1 && tolower(input[0]) == 'c') {
             // 'c' - switch to computer player
 
             EasyComputerPlayer* player = new EasyComputerPlayer;

@@ -47,7 +47,6 @@ namespace reversi {
         // getPlayer
         // Retrieves a player object (see PlayerInterface.h).
         // Will return a reference to the current player by default.
-        // Set id to `1` or `2` to return player 1 or player 2 specifically.
         virtual PlayerInterface* getPlayer(color playerId = unoccupied) const;
 
         // setPlayer

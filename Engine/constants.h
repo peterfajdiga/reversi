@@ -4,8 +4,8 @@ namespace reversi {
 
     enum color {
         unoccupied = 0,
-        white = 1,
-        black = 2
+        white =  1,
+        black = -1
     };
 
     typedef unsigned int score;

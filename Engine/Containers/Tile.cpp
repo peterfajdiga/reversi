@@ -11,11 +11,11 @@ namespace reversi {
 
         // x index
         // subtract charcode for 'a' from letter character's charcode
-        x = tolower((isLetterFirst ? p0 : p1)) - 'a';
+        x = (coordinate)(tolower((isLetterFirst ? p0 : p1)) - 'a');
 
         // y index
         // subtract charcode for '1' from number character's charcode
-        y = (isLetterFirst ? p1 : p0) - '1';
+        y = (coordinate)((isLetterFirst ? p1 : p0) - '1');
     }
 
     std::string Tile::toString() const {

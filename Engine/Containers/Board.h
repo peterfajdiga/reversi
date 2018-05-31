@@ -33,17 +33,19 @@ namespace reversi {
         // Determines if the supplied position (x/y indexes) is a valid move
         // for the current player, i.e., it is on the board, the position is not already filled,
         // and it will flip at least one of the opponent's pieces.
-        virtual bool isLegal(const Tile& move) const;
+        bool isLegal(const Tile& move) const;
 
         // perform move
-        virtual void doMove(const Tile& move);
-        virtual void doNothing();
+        void doMove(const Tile& move);
+        void doNothing();
 
+        // don't overuse
         std::vector<Tile> getLegalMoves() const;
 
         // canMove
         // Determines if the current player can make a legal move.
-        virtual bool canMove();
+        // don't overuse (if you already have a list of legal moves, use that instead)
+        bool canMove();
 
     private:
         color positions[8][8];
@@ -52,7 +54,7 @@ namespace reversi {
 
         // togglePlayer
         // Toggles mCurrentPlayer between `1` and `2`.
-        virtual void togglePlayer();
+        void togglePlayer();
     };
 
 }

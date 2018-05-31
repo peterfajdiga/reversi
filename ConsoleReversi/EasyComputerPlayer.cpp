@@ -24,19 +24,10 @@ namespace reversi {
 
 
     std::string EasyComputerPlayer::getMove(Engine& engine) {
-        Board& board = engine.board;
-        std::vector<Tile> validMoves;
+        const Board& board = engine.getBoard();
 
         // find list of valid moves
-        for (coordinate j = 0; j < 8; j++) {
-            for (coordinate i = 0; i < 8; i++) {
-                // position is empty and a valid move
-                Tile move(i, j);
-                if (board.isLegal(move)) {
-                    validMoves.emplace_back(move);
-                }
-            }
-        }
+        std::vector<Tile> validMoves = board.getLegalMoves();
 
         // chose a valid move at random
         if (!validMoves.empty()) {

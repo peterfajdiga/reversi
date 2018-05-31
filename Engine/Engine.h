@@ -33,7 +33,7 @@ namespace reversi {
     class Engine {
         friend class EasyComputerPlayer;  // TODO: remove
     public:
-        Engine(PlayerInterface* player1, PlayerInterface* player2);
+        Engine();
         virtual ~Engine();
 
         // setView
@@ -95,8 +95,8 @@ namespace reversi {
         // Positions:
         Board board;
 
-        PlayerInterface* mPlayer1;
-        PlayerInterface* mPlayer2;
+        PlayerInterface* playerWhite;
+        PlayerInterface* playerBlack;
 
     };
 

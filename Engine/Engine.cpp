@@ -5,9 +5,11 @@
 namespace reversi {
 
 
-    Engine::Engine(PlayerInterface* player1, PlayerInterface* player2) : mPlayer1(player1), mPlayer2(player2) {
-        mPlayer1->mId = white;
-        mPlayer2->mId = black;
+    Engine::Engine() {
+        playerWhite = new HumanPlayer();
+        playerBlack = new HumanPlayer();
+        playerWhite->mId = white;
+        playerBlack->mId = black;
     }
 
 
@@ -16,8 +18,8 @@ namespace reversi {
         mView = nullptr;
 
         // delete players
-        delete mPlayer1;
-        delete mPlayer2;
+        delete playerWhite;
+        delete playerBlack;
     }
 
 
@@ -151,7 +153,7 @@ namespace reversi {
         if (playerId == 0) {
             playerId = board.getCurrentPlayer();
         }
-        return playerId == 1 ? mPlayer1 : mPlayer2;
+        return playerId == 1 ? playerWhite : playerBlack;
     }
 
 
@@ -168,12 +170,12 @@ namespace reversi {
         }
 
         if (playerId == 1) {
-            delete mPlayer1;
-            mPlayer1 = player;
+            delete playerWhite;
+            playerWhite = player;
         }
         else if (playerId == 2) {
-            delete mPlayer2;
-            mPlayer2 = player;
+            delete playerBlack;
+            playerBlack = player;
         }
     }
 

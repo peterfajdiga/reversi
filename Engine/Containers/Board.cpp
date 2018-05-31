@@ -76,7 +76,11 @@ namespace reversi {
 
 
     bool Board::isLegal(const Tile& move) const {
-        size_t flipCount = 0;
+        assert(move.isOnBoard());
+
+        if (!isOpen(move)) {
+            return false;
+        }
 
         // for each direction from the piece position
         // look for one or more adjacent pieces of the opposing player
@@ -137,6 +141,8 @@ namespace reversi {
     }
 
     void Board::doMove(const Tile& move) {
+        assert(move.isOnBoard() && isOpen(move));
+
         size_t flipCount = 0;
 
         std::vector<color*> mPiecesToFlip;
@@ -215,7 +221,7 @@ namespace reversi {
     }
 
     void Board::doNothing() {
-        assert (!canMove());
+        assert(!canMove());
         togglePlayer();
     }
 
@@ -226,7 +232,7 @@ namespace reversi {
             for (move.x = 0; move.x < 8; move.x++) {
                 // check open position and valid move
                 // set isCheck flag to shorten isLegal search
-                if (isOpen(move) && isLegal(move)) {
+                if (isLegal(move)) {
                     legalMoves.emplace_back(move);
                 }
             }
@@ -241,8 +247,8 @@ namespace reversi {
 
     void Board::togglePlayer() {
         // bitwise xor with 3 will toggle between 1 and 2
-        assert (currentPlayer == white || currentPlayer == black);
-        assert (white == 1 && black == 2);
+        assert(currentPlayer == white || currentPlayer == black);
+        assert(white == 1 && black == 2);
         currentPlayer = (color)(currentPlayer ^ 3);
     }
 

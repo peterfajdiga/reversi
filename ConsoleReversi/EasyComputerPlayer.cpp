@@ -32,7 +32,7 @@ namespace reversi {
             for (coordinate i = 0; i < 8; i++) {
                 // position is empty and a valid move
                 Tile move(i, j);
-                if (board.isOpen(move) && board.isValidMove(move)) {
+                if (board.isOpen(move) && board.isLegal(move)) {
                     validMoves.emplace_back(move);
                 }
             }

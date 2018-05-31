@@ -29,15 +29,11 @@ namespace reversi {
         // Determines if the supplied position (x/y indexes) is open (is empty and not already taken).
         bool isOpen(const Tile& move) const;
 
-        // isValidMove
+        // isLegal
         // Determines if the supplied position (x/y indexes) is a valid move
         // for the current player, i.e., it is on the board, the position is not already filled,
         // and it will flip at least one of the opponent's pieces.
-        // Default behaviour will populate mPiecesToFlip with pointers to those board positions
-        // that should have their values flipped by the move if it is valid.
-        // isValidMove performs a faster check that determines if a move is valid
-        // but does not find the complete set of pieces to flip for that move.
-        virtual bool isValidMove(const Tile& move) const;
+        virtual bool isLegal(const Tile& move) const;
 
         // perform move
         virtual void doMove(const Tile& move);

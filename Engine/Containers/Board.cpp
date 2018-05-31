@@ -1,5 +1,5 @@
 #include <vector>
-#include <assert.h>
+#include <cassert>
 #include "Board.h"
 #include "Direction.h"
 
@@ -35,7 +35,7 @@ namespace reversi {
         positions[4][3] = white;
         positions[4][4] = black;
 
-        currentPlayer = white;
+        state = white_turn;
 
         scoreWhite = 2;
         scoreBlack = 2;
@@ -57,8 +57,17 @@ namespace reversi {
     }
 
 
+    gamestate Board::getGamestate() const {
+        return state;
+    }
+
     color Board::getCurrentPlayer() const {
-        return currentPlayer;
+        assert (!isGameOver());
+        return (color)state;
+    }
+
+    bool Board::isGameOver() const {
+        return state != white_turn && state != black_turn;
     }
 
 
@@ -77,6 +86,7 @@ namespace reversi {
 
 
     bool Board::isLegal(const Tile& move) const {
+        assert(!isGameOver());
         assert(move.isOnBoard());
 
         if (!isOpen(move)) {
@@ -124,7 +134,7 @@ namespace reversi {
                 }
 
                 // check for own piece
-                if (positions[move_step.x][move_step.y] == currentPlayer) {
+                if (positions[move_step.x][move_step.y] == (color)state) {
                     // stop searching in this direction
                     break;
                 }
@@ -142,6 +152,9 @@ namespace reversi {
     }
 
     void Board::doMove(const Tile& move) {
+        assert(!isGameOver());
+        const color currentPlayer = (color)state;
+
         assert(move.isOnBoard() && isOpen(move));
 
         size_t flipCount = 0;
@@ -231,7 +244,7 @@ namespace reversi {
     }
 
     void Board::doNothing() {
-        assert(!canMove());
+        assert(!isGameOver() && !canMove());
         togglePlayer();
     }
 
@@ -251,15 +264,17 @@ namespace reversi {
     }
 
 
-    bool Board::canMove() {
+    bool Board::canMove() const {
         return !getLegalMoves().empty();
     }
 
+
     void Board::togglePlayer() {
+        assert(!isGameOver());
+
         // multiplication with -1 will toggle between 1 and -1 (white and black)
-        assert(currentPlayer == white || currentPlayer == black);
         assert(white == 1 && black == -1);
-        currentPlayer = (color)(currentPlayer * -1);
+        state = (gamestate)(state * -1);
     }
 
 }

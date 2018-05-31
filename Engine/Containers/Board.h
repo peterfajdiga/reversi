@@ -21,7 +21,11 @@ namespace reversi {
         color& operator() (coordinate x, coordinate y);
         const color& operator() (coordinate x, coordinate y) const;
 
+        gamestate getGamestate() const;
+
         color getCurrentPlayer() const;
+
+        bool isGameOver() const;
 
         score getScoreWhite() const;
         score getScoreBlack() const;
@@ -40,19 +44,15 @@ namespace reversi {
         void doMove(const Tile& move);
         void doNothing();
 
-        // don't overuse
         std::vector<Tile> getLegalMoves() const;
 
         // canMove
         // Determines if the current player can make a legal move.
-        // don't overuse (if you already have a list of legal moves, use that instead)
-        bool canMove();
+        bool canMove() const;
 
     private:
         color positions[8][8];
-
-        color currentPlayer;
-
+        gamestate state;
         score scoreWhite, scoreBlack;
 
         // togglePlayer

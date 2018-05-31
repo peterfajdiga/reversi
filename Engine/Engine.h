@@ -84,7 +84,7 @@ namespace reversi {
 
         // displayStatus
         // Calls view.displayStatus.
-        virtual void displayStatus(Status status, const std::string& input = "");
+        virtual void displayStatus(Status status);
 
     private:
 

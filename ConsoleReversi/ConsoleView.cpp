@@ -131,7 +131,7 @@ namespace reversi {
             break;
 
         case Status::SUCCESS:
-            cout << "\n\n" + getFormattedName(*engine->getLastMovePlayer()) + " moved at position " + engine->getLastMoveTile().toString() + "." << endl;
+            cout << "\n\n" + getFormattedName(*engine->getLastMovePlayer()) + " moved at position " << engine->getLastMoveTile() << "." << endl;
             break;
 
         case Status::FINDING_MOVE:

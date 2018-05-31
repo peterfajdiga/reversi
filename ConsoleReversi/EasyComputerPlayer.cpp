@@ -17,6 +17,6 @@ namespace reversi {
 
         std::vector<Tile> legalMoves = board.getLegalMoves();
         const size_t index = rand() % legalMoves.size();
-        return legalMoves[index].toString();
+        return legalMoves[index];
     }
 }

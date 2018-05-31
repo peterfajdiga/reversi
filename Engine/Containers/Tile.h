@@ -17,11 +17,11 @@ namespace reversi {
 
         Tile(std::string str);
 
-        std::string toString() const;
-
         // isOnBoard
         // Determines if the supplied position (x/y indexes) is within the game board.
         bool isOnBoard() const;
     };
+
+    std::ostream& operator<<(std::ostream& os, const Tile& tile);
 
 }

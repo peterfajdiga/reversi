@@ -21,15 +21,17 @@ namespace reversi {
         y = (coordinate)((isLetterFirst ? p1 : p0) - '1');
     }
 
-    std::string Tile::toString() const {
-        std::string str;
-        str += x + 'a';
-        str += y + '1';
-        return str;
-    }
-
 
     bool Tile::isOnBoard() const {
         return x >= 0 && x <= 7 && y >= 0 && y <= 7;
+    }
+
+
+    std::ostream& operator<<(std::ostream& os, const Tile& tile) {
+        std::string str;
+        str += tile.x + 'a';
+        str += tile.y + '1';
+        os << str;
+        return os;
     }
 }

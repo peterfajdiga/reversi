@@ -76,7 +76,7 @@ namespace reversi {
                 Tile requestedMove = getPlayer()->getMove(board, *mView);  // TODO: reference
 
                 Status status = updateState(requestedMove);
-                displayStatus(status, requestedMove.toString());
+                displayStatus(status);
                 if (lastMoveSkipped) {
                     displayStatus(Status::CANNOT_MOVE);
                 }
@@ -119,7 +119,7 @@ namespace reversi {
     }
 
 
-    void Engine::displayStatus(Status status, const std::string& input) {
+    void Engine::displayStatus(Status status) {
         mView->displayStatus(status);
     }
 

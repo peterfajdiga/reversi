@@ -30,9 +30,11 @@ namespace reversi {
 
         void displayState(bool isGameOver) override;
 
-        std::string promptInput(bool isGameOver) override;
+        Tile getMoveInput() override;
 
-        void displayStatus(Status status, const std::string& input) override;
+        void onGameOver() override;
+
+        void displayStatus(Status status) override;
 
     protected:
         // HELPERS

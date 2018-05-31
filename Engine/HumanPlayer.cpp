@@ -12,8 +12,8 @@ namespace reversi {
     HumanPlayer::~HumanPlayer() = default;
 
 
-    std::string HumanPlayer::promptInput(Engine& engine, ViewInterface& view, bool isGameOver) {
-        return view.promptInput(isGameOver);
+    Tile HumanPlayer::getMove(const Board& board, ViewInterface& view) {
+        return view.getMoveInput();
     }
 
 }

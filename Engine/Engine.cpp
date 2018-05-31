@@ -1,6 +1,7 @@
 #include "Engine.h"
 #include "Containers/Tile.h"
 #include "constants.h"
+#include "../ConsoleReversi/EasyComputerPlayer.h"
 
 namespace reversi {
 
@@ -31,9 +32,26 @@ namespace reversi {
 
 
     void Engine::runGame() {
-        setupGame();
-        runGameLoop();
-        teardownGame();
+        playNextGame = true;
+        while (playNextGame) {
+            playNextGame = false;
+            setupGame();
+            runGameLoop();
+            teardownGame();
+        }
+    }
+
+    void Engine::quitGame() {
+        playCurrentGame = false;
+    }
+
+    void Engine::newGame() {
+        quitGame();
+        playNextGame = true;
+    }
+
+    void Engine::playerToAi() {
+        setPlayer(new EasyComputerPlayer);
     }
 
 
@@ -44,67 +62,26 @@ namespace reversi {
 
 
     void Engine::runGameLoop() {
-        bool isGameRunning = true, isGameOver = false, isLastMovePass = false, isPlayerAbleToMove;
-        std::string input;
-        char i0;  // first character of input
-        Status status;
+        playCurrentGame = true;
+        while (playCurrentGame) {
+            bool isGameOver = board.isGameOver();
+            mView->displayState(isGameOver);
 
-        bool isNewState = true;
-
-        while (isGameRunning) {
-            isPlayerAbleToMove = board.canMove();
-
-            // is game over?
-            if (isLastMovePass && !isPlayerAbleToMove) {
-                isGameOver = true;
-            }
-
-            // prompt for input
-            if (!isPlayerAbleToMove && !isGameOver) {
-                // don't ask for input if the player can't move but the game is not over
-                input = " ";
-            }
-            else {
-                if (isNewState) {
-                    mView->displayState(isGameOver);
-                    isNewState = false;
-                }
-                input = promptInput(isGameOver);
-            }
-
-            i0 = tolower(input[0]);
-
-            // evaluate the first character of input looking for special actions
-            // note that special actions should only be defined for letters after "h"
-            switch (i0) {
-            case 'q':  // q: Quit
-                isGameRunning = false;
-                displayStatus(Status::QUIT);
+            if (isGameOver) {
+                mView->onGameOver();
                 break;
+            }
 
-            case 'n':  // n: New Game
-                isGameOver = false;
-                isLastMovePass = false;
-                teardownGame();
-                setupGame();
-                isNewState = true;
-                break;
+            try {
+                Tile requestedMove = getPlayer()->getMove(board, *mView);  // TODO: reference
 
-            default:
-                if (isPlayerAbleToMove) {
-                    status = updateState(input);  // do move
-                    displayStatus(status, input);
-
-                    if (status == Status::SUCCESS) {
-                        isLastMovePass = false;
-                        isNewState = true;
-                    }
-                }
-                else {
+                Status status = updateState(requestedMove);
+                displayStatus(status, requestedMove.toString());
+                if (lastMoveSkipped) {
                     displayStatus(Status::CANNOT_MOVE);
-                    isLastMovePass = true;
-                    board.doNothing();  // skip move
                 }
+            } catch (const NoMoveException& e) {
+                continue;
             }
         }
     }
@@ -115,13 +92,8 @@ namespace reversi {
     }
 
 
-    std::string Engine::promptInput(bool isGameOver) {
-        return getPlayer()->promptInput(*this, *mView, isGameOver);
-    }
-
-
-    Status Engine::updateState(const std::string& position) {
-        Tile move(position);
+    Status Engine::updateState(const Tile& move) {
+        const color currentPlayer = board.getCurrentPlayer();
 
         // check bounds
         if (!move.isOnBoard()) {
@@ -136,8 +108,10 @@ namespace reversi {
         }
 
         try {
-            board.doMove(move);
-        } catch (InvalidMoveException& e) {
+            lastMoveSkipped = board.doMove(move);
+            lastMovePlayer = currentPlayer;
+            lastMoveTile = move;
+        } catch (const InvalidMoveException& e) {
             return Status::INVALID_MOVE;
         }
 
@@ -146,7 +120,7 @@ namespace reversi {
 
 
     void Engine::displayStatus(Status status, const std::string& input) {
-        mView->displayStatus(status, input);
+        mView->displayStatus(status);
     }
 
 
@@ -160,6 +134,15 @@ namespace reversi {
 
     const Board& Engine::getBoard() const {
         return board;
+    }
+
+
+    const Tile& Engine::getLastMoveTile() const {
+        return lastMoveTile;
+    }
+
+    const PlayerInterface* Engine::getLastMovePlayer() const {
+        return getPlayer(lastMovePlayer);
     }
 
 

@@ -3,6 +3,7 @@
 #include <string>
 #include "ViewInterface.h"
 #include "constants.h"
+#include "Containers/Board.h"
 
 namespace reversi {
 
@@ -32,7 +33,7 @@ namespace reversi {
 
         virtual color getId() const;
 
-        virtual std::string promptInput(Engine& engine, ViewInterface& view, bool isGameOver = false) = 0;
+        virtual Tile getMove(const Board& board, ViewInterface& view) = 0;
 
         const std::string name;
 

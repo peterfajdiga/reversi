@@ -22,4 +22,6 @@ namespace reversi {
 
     class InvalidMoveException : public std::exception {};
 
+    class NoMoveException : public std::exception {};
+
 }

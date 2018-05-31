@@ -31,7 +31,6 @@ namespace reversi {
      *
      */
     class Engine {
-        friend class EasyComputerPlayer;  // TODO: remove
     public:
         Engine();
         virtual ~Engine();
@@ -44,6 +43,12 @@ namespace reversi {
         // Sets up a new game and starts the game loop.
         virtual void runGame();
 
+        virtual void quitGame();
+
+        virtual void newGame();
+
+        virtual void playerToAi();
+
         // getPlayer
         // Retrieves a player object (see PlayerInterface.h).
         // Will return a reference to the current player by default.
@@ -54,6 +59,10 @@ namespace reversi {
         virtual void setPlayer(PlayerInterface* player, color playerId = unoccupied);
 
         virtual const Board& getBoard() const;
+
+        virtual const Tile& getLastMoveTile() const;
+
+        virtual const PlayerInterface* getLastMovePlayer() const;
 
     protected:
         // setupGame
@@ -68,19 +77,10 @@ namespace reversi {
         // Calls view.teardownGame.
         virtual void teardownGame();
 
-        // promptInput
-        // Calls view.promptInput.
-        virtual std::string promptInput(bool isGameOver);
-
         // updateState
         // Updates game state based on input.
         // Returns a Status enum value representing update status.
-        // Position should be a string identifying a board position, e.g. "a1", "c5", etc.
-        // The letter character denotes "x" position on board, from a-h, and can be upper- or lower-case.
-        // The number character denotes "y" position on board, from 1-8.
-        // "a1 is the top-left corner of the board. "h8" is the bottom right corner of the board.
-        // The letter and number characters can be reversed, e.g. "5c" and "c5" are equivalent inputs.
-        virtual Status updateState(const std::string& position);
+        virtual Status updateState(const Tile& move);
 
         // displayStatus
         // Calls view.displayStatus.
@@ -88,11 +88,17 @@ namespace reversi {
 
     private:
 
+        bool playCurrentGame, playNextGame;
+
         // The view reference must be set via setView before calling runGame.
         ViewInterface* mView;
 
         // Positions:
         Board board;
+
+        bool lastMoveSkipped;
+        Tile lastMoveTile;  // if lastMoveSkipped, think of this as lastLastMoveTile
+        color lastMovePlayer;  // if lastMoveSkipped, think of this as lastLastMovePlayer
 
         PlayerInterface* playerWhite;
         PlayerInterface* playerBlack;

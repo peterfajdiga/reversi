@@ -11,6 +11,8 @@ namespace reversi {
     public:
         coordinate x, y;
 
+        Tile();
+
         Tile(coordinate x, coordinate y);
 
         Tile(std::string str);

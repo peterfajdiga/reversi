@@ -41,10 +41,9 @@ namespace reversi {
         bool isLegal(const Tile& move) const;
 
         // perform move
-        void doMove(const Tile& move);
-        void doNothing();
+        bool doMove(const Tile& move);
 
-        std::vector<Tile> getLegalMoves() const;
+        const std::vector<Tile>& getLegalMoves() const;
 
         // canMove
         // Determines if the current player can make a legal move.
@@ -54,6 +53,11 @@ namespace reversi {
         color positions[8][8];
         gamestate state;
         score scoreWhite, scoreBlack;
+        std::vector<Tile> legalMoves;
+
+        void generateLegalMoves();
+
+        void setGameOver();
 
         // togglePlayer
         // Toggles currentPlayer between white and black.

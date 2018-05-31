@@ -11,8 +11,7 @@ namespace reversi {
     * Concrete player class for human players.
     *
     */
-    class HumanPlayer : public PlayerInterface
-    {
+    class HumanPlayer : public PlayerInterface {
     public:
         HumanPlayer();
 
@@ -20,7 +19,7 @@ namespace reversi {
 
         virtual ~HumanPlayer();
 
-        virtual std::string promptInput(Engine& engine, ViewInterface& view, bool isGameOver = false);
+        Tile getMove(const Board& board, ViewInterface& view) override;
     };
 
 }

@@ -1,6 +1,7 @@
 #pragma once
 
 #include <string>
+#include "Containers/Tile.h"
 
 namespace reversi {
 
@@ -58,18 +59,15 @@ namespace reversi {
         // display the board and score and whatnot
         virtual void displayState(bool isGameOver) = 0;
 
-        // promptInput
-        // Displays the game board and prompts for player input.
-        // Input string can match a special character recognized by the
-        // game loop ('n' for New Game, 'q' for Quit) or will be treated as
-        // a position on the board for a possible move by the current player.
-        virtual std::string promptInput(bool isGameOver) = 0;
-
         // displayStatus
         // Displays the game status, usually informing the current player
         // of an invalid move, or that they cannot move.
         // See enumerated Status values above.
-        virtual void displayStatus(Status status, const std::string& input = "") = 0;
+        virtual void displayStatus(Status status) = 0;
+
+        virtual Tile getMoveInput() = 0;
+
+        virtual void onGameOver() = 0;
 
     protected:
         Engine* engine;

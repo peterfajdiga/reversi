@@ -22,10 +22,7 @@ namespace reversi {
 
         ~EasyComputerPlayer() override;
 
-        std::string promptInput(Engine& engine, ViewInterface& view, bool isGameOver = false) override;
-
-    private:
-        virtual std::string getMove(Engine& engine);
+        Tile getMove(const Board& board, ViewInterface& view) override;
     };
 
 }

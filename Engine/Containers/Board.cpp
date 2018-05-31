@@ -35,10 +35,11 @@ namespace reversi {
         positions[4][3] = white;
         positions[4][4] = black;
 
-        state = white_turn;
-
         scoreWhite = 2;
         scoreBlack = 2;
+
+        state = white_turn;
+        generateLegalMoves();
     }
 
 
@@ -72,16 +73,16 @@ namespace reversi {
 
 
     score Board::getScoreWhite() const {
-        return scoreWhite;  // TODO: on gameover, add empty tiles to winner
+        return scoreWhite;
     }
 
     score Board::getScoreBlack() const {
-        return scoreBlack;  // TODO: on gameover, add empty tiles to winner
+        return scoreBlack;
     }
 
 
     bool Board::isOpen(const Tile& move) const {
-        return positions[move.x][move.y] == 0;
+        return positions[move.x][move.y] == unoccupied;
     }
 
 
@@ -151,13 +152,14 @@ namespace reversi {
         return false;
     }
 
-    void Board::doMove(const Tile& move) {
+    bool Board::doMove(const Tile& move) {
         assert(!isGameOver());
         const color currentPlayer = (color)state;
 
         assert(move.isOnBoard() && isOpen(move));
 
         size_t flipCount = 0;
+        bool skippedMove = false;
 
         std::vector<color*> mPiecesToFlip;
 
@@ -240,17 +242,38 @@ namespace reversi {
         scoreWhite += whiteGain;
         scoreBlack -= whiteGain;
 
+        // give turn to other player
         togglePlayer();
+        generateLegalMoves();
+
+        if (!canMove()) {
+            // other player has no moves possible, toggle player back to previous player
+            skippedMove = true;
+            togglePlayer();
+            generateLegalMoves();
+            if (!canMove()) {
+                // previous player also has no moves possible, game has ended
+                skippedMove = false;
+                setGameOver();
+            }
+        }
+
+        return skippedMove;
     }
 
-    void Board::doNothing() {
-        assert(!isGameOver() && !canMove());
-        togglePlayer();
+
+    const std::vector<Tile>& Board::getLegalMoves() const {
+        return legalMoves;
     }
 
 
-    std::vector<Tile> Board::getLegalMoves() const {
-        std::vector<Tile> legalMoves;
+    bool Board::canMove() const {
+        return !legalMoves.empty();
+    }
+
+
+    void Board::generateLegalMoves() {
+        legalMoves.clear();
         for (Tile move(0, 0); move.y < 8; move.y++) {
             for (move.x = 0; move.x < 8; move.x++) {
                 // check open position and valid move
@@ -260,12 +283,26 @@ namespace reversi {
                 }
             }
         }
-        return legalMoves;
     }
 
 
-    bool Board::canMove() const {
-        return !getLegalMoves().empty();
+    void Board::setGameOver() {
+        if (scoreWhite == scoreBlack) {
+            state = draw;
+        } else {
+            const color winner = scoreWhite > scoreBlack ? white : black;
+            state = (gamestate)(winner * 2);
+            score& winnerScore = winner == white ? scoreWhite : scoreBlack;
+
+            // add unoccupied tiles to winner
+            for (Tile move(0, 0); move.y < 8; move.y++) {
+                for (move.x = 0; move.x < 8; move.x++) {
+                    if (isOpen(move)) {
+                        winnerScore++;
+                    }
+                }
+            }
+        }
     }
 
 

@@ -1,6 +1,9 @@
 #include "Tile.h"
 
 namespace reversi {
+
+    Tile::Tile() = default;
+
     Tile::Tile(coordinate x, coordinate y) : x(x), y(y) {}
 
     Tile::Tile(std::string str) {

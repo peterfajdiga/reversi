@@ -12,29 +12,11 @@ namespace reversi {
     EasyComputerPlayer::~EasyComputerPlayer() = default;
 
 
-    std::string EasyComputerPlayer::promptInput(Engine& engine, ViewInterface& view, bool isGameOver) {
-        if (isGameOver) {
-            return view.promptInput(isGameOver);
-        }
-
+    Tile EasyComputerPlayer::getMove(const Board& board, ViewInterface& view) {
         view.displayStatus(Status::FINDING_MOVE);
 
-        return getMove(engine);
-    }
-
-
-    std::string EasyComputerPlayer::getMove(Engine& engine) {
-        const Board& board = engine.getBoard();
-
-        // find list of valid moves
-        std::vector<Tile> validMoves = board.getLegalMoves();
-
-        // chose a valid move at random
-        if (!validMoves.empty()) {
-            const size_t index = rand() % validMoves.size();
-            return validMoves[index].toString();
-        }
-
-        return " ";
+        std::vector<Tile> legalMoves = board.getLegalMoves();
+        const size_t index = rand() % legalMoves.size();
+        return legalMoves[index].toString();
     }
 }

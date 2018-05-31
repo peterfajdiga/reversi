@@ -70,42 +70,52 @@ namespace reversi {
     }
 
 
-    std::string ConsoleView::promptInput(bool isGameOver) {
-        using namespace std;
+    Tile ConsoleView::getMoveInput() {
+        const Board& board = engine->getBoard();
 
-        string input;
+        ask:
+        std::cout << "\n" + getFormattedName(*engine->getPlayer()) + ", enter a move: ";
+        std::string input;
+        std::cin >> input;
 
-        if (isGameOver) {
-            cout << "\n\nEnter 'n' to play again, or 'q' to quit playing: ";
-
-            cin >> input;
-
-            return input;
+        switch (input.length()) {
+            case 1:
+                switch (input[0]) {
+                    case 'q': engine->quitGame(); break;
+                    case 'n': engine->newGame(); break;
+                    case 'c': engine->playerToAi(); break;
+                    default: goto ask;
+                } break;
+            case 2: return Tile(input);
+            default: goto ask;
         }
 
-        cout << "\n" + getFormattedName(*engine->getPlayer()) + ", enter a move: ";
-        cin >> input;
-
-        if (input.length() == 1 && tolower(input[0]) == 'c') {
-            // 'c' - switch to computer player
-
-            EasyComputerPlayer* player = new EasyComputerPlayer;
-
-            engine->setPlayer(player);
-
-            return engine->getPlayer()->promptInput(*engine, *this);
-        }
-
-        return input;
+        throw NoMoveException();
     }
 
 
-    void ConsoleView::displayStatus(Status status, const std::string& input) {
+    void ConsoleView::onGameOver() {
+        ask:
+        std::string input;
+        do {
+            std::cout << "\n\nEnter 'n' to play again, or 'q' to quit playing: ";
+            std::cin >> input;
+        } while (input.length() != 1);
+
+        switch (input[0]) {
+            case 'q': engine->quitGame(); break;
+            case 'n': engine->newGame(); break;
+            default: goto ask;
+        }
+    }
+
+
+    void ConsoleView::displayStatus(Status status) {
         using namespace std;
 
         switch (status) {
         case Status::CANNOT_MOVE:
-            cout << "\n\n ** " + getFormattedName(*engine->getPlayer()) + " is unable to move. **" << endl;
+            cout << "\n\n ** " + getFormattedName(*engine->getPlayer(engine->getBoard().getCurrentPlayer())) + " is unable to move. **" << endl;
             break;
 
         case Status::INVALID_MOVE:
@@ -121,7 +131,7 @@ namespace reversi {
             break;
 
         case Status::SUCCESS:
-            cout << "\n\n" + getFormattedName(*engine->getPlayer()) + " moved at position " + input + "." << endl;
+            cout << "\n\n" + getFormattedName(*engine->getLastMovePlayer()) + " moved at position " + engine->getLastMoveTile().toString() + "." << endl;
             break;
 
         case Status::FINDING_MOVE:

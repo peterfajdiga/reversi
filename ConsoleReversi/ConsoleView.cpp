@@ -23,7 +23,7 @@ namespace reversi {
     ConsoleView::~ConsoleView() = default;
 
 
-    void ConsoleView::setupGame(const Engine& engine) {
+    void ConsoleView::setupGame() {
         using namespace std;
 
         cout << "\n\nConsole Reversi by jsmreese.\n\n";
@@ -34,43 +34,43 @@ namespace reversi {
     }
 
 
-    void ConsoleView::teardownGame(const Engine& engine) {
+    void ConsoleView::teardownGame() {
 
     }
 
 
-    void ConsoleView::displayState(const Engine& engine, bool isGameOver) {
+    void ConsoleView::displayState(bool isGameOver) {
         using namespace std;
 
-        const score s1 = engine.getBoard().getScoreWhite();
-        const score s2 = engine.getBoard().getScoreBlack();
+        const score s1 = engine->getBoard().getScoreWhite();
+        const score s2 = engine->getBoard().getScoreBlack();
 
         if (isGameOver) {
             cout << "\n\n-----------------------------";
-            cout << "\n\n" + drawBoard(engine.getBoard()) << endl;
+            cout << "\n\n" + drawBoard(engine->getBoard()) << endl;
 
             cout << "\n ** Game Over **\n\n";
-            cout << "\n\n" + drawScore(engine);
+            cout << "\n\n" + drawScore();
 
             if (s1 == s2) {
                 cout << "Game is a draw!" << endl;
             }
             else {
                 cout << "\n Congratulations, ";
-                cout << getFormattedName(*engine.getPlayer(s1 > s2 ? white : black)) + "!" << endl;
+                cout << getFormattedName(*engine->getPlayer(s1 > s2 ? white : black)) + "!" << endl;
             }
 
         } else {
             cout << "\n\n-----------------------------";
 
-            cout << "\n\n" + drawScore(engine);
+            cout << "\n\n" + drawScore();
 
-            cout << "\n\n" + drawBoard(engine.getBoard()) + "\n";
+            cout << "\n\n" + drawBoard(engine->getBoard()) + "\n";
         }
     }
 
 
-    std::string ConsoleView::promptInput(Engine& engine, bool isGameOver) {
+    std::string ConsoleView::promptInput(bool isGameOver) {
         using namespace std;
 
         string input;
@@ -83,7 +83,7 @@ namespace reversi {
             return input;
         }
 
-        cout << "\n" + getFormattedName(*engine.getPlayer()) + ", enter a move: ";
+        cout << "\n" + getFormattedName(*engine->getPlayer()) + ", enter a move: ";
         cin >> input;
 
         if (input.length() == 1 && tolower(input[0]) == 99) {
@@ -91,21 +91,21 @@ namespace reversi {
 
             EasyComputerPlayer* player = new EasyComputerPlayer;
 
-            engine.setPlayer(player);
+            engine->setPlayer(player);
 
-            return engine.getPlayer()->promptInput(engine, *this);
+            return engine->getPlayer()->promptInput(*engine, *this);
         }
 
         return input;
     }
 
 
-    void ConsoleView::displayStatus(const Engine& engine, const Status status, const std::string& input) {
+    void ConsoleView::displayStatus(Status status, const std::string& input) {
         using namespace std;
 
         switch (status) {
         case Status::CANNOT_MOVE:
-            cout << "\n\n ** " + getFormattedName(*engine.getPlayer()) + " is unable to move. **" << endl;
+            cout << "\n\n ** " + getFormattedName(*engine->getPlayer()) + " is unable to move. **" << endl;
             break;
 
         case Status::INVALID_MOVE:
@@ -121,11 +121,11 @@ namespace reversi {
             break;
 
         case Status::SUCCESS:
-            cout << "\n\n" + getFormattedName(*engine.getPlayer()) + " moved at position " + input + "." << endl;
+            cout << "\n\n" + getFormattedName(*engine->getPlayer()) + " moved at position " + input + "." << endl;
             break;
 
         case Status::FINDING_MOVE:
-            cout << "\n\n" + getFormattedName(*engine.getPlayer()) + " searching for move..." << endl;
+            cout << "\n\n" + getFormattedName(*engine->getPlayer()) + " searching for move..." << endl;
             break;
         }
     }
@@ -158,12 +158,12 @@ namespace reversi {
     }
 
 
-    std::string ConsoleView::drawScore(const Engine& engine) const {
-        const std::string p1Name = getFormattedName(*engine.getPlayer(white));
-        const std::string p2Name = getFormattedName(*engine.getPlayer(black));
+    std::string ConsoleView::drawScore() const {
+        const std::string p1Name = getFormattedName(*engine->getPlayer(white));
+        const std::string p2Name = getFormattedName(*engine->getPlayer(black));
 
-        const std::string p1Score = std::to_string(engine.getBoard().getScoreWhite());
-        const std::string p2Score = std::to_string(engine.getBoard().getScoreBlack());
+        const std::string p1Score = std::to_string(engine->getBoard().getScoreWhite());
+        const std::string p2Score = std::to_string(engine->getBoard().getScoreBlack());
 
         const size_t maxLength = std::max(p1Name.size(), p2Name.size()) + std::max(p1Score.size(), p2Score.size());
         const size_t p1Padding = maxLength - p1Name.size() - p1Score.size();

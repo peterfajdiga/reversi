@@ -13,7 +13,7 @@ namespace reversi {
 
 
     std::string HumanPlayer::promptInput(Engine& engine, ViewInterface& view, bool isGameOver) {
-        return view.promptInput(engine, isGameOver);
+        return view.promptInput(isGameOver);
     }
 
 }

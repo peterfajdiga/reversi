@@ -25,6 +25,7 @@ namespace reversi {
 
     void Engine::setView(ViewInterface* view) {
         mView = view;
+        view->engine = this;
     }
 
 
@@ -38,7 +39,7 @@ namespace reversi {
 
     void Engine::setupGame() {
         board = Board();  // TODO: do differently
-        mView->setupGame(*this);
+        mView->setupGame();
     }
 
 
@@ -65,7 +66,7 @@ namespace reversi {
             }
             else {
                 if (isNewState) {
-                    mView->displayState(*this, isGameOver);
+                    mView->displayState(isGameOver);
                     isNewState = false;
                 }
                 input = promptInput(isGameOver);
@@ -110,7 +111,7 @@ namespace reversi {
 
 
     void Engine::teardownGame() {
-        mView->teardownGame(*this);
+        mView->teardownGame();
     }
 
 
@@ -145,7 +146,7 @@ namespace reversi {
 
 
     void Engine::displayStatus(Status status, const std::string& input) {
-        mView->displayStatus(*this, status, input);
+        mView->displayStatus(status, input);
     }
 
 

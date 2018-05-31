@@ -14,10 +14,10 @@ namespace reversi {
 
     std::string EasyComputerPlayer::promptInput(Engine& engine, ViewInterface& view, bool isGameOver) {
         if (isGameOver) {
-            return view.promptInput(engine, isGameOver);
+            return view.promptInput(isGameOver);
         }
 
-        view.displayStatus(engine, Status::FINDING_MOVE);
+        view.displayStatus(Status::FINDING_MOVE);
 
         return getMove(engine);
     }

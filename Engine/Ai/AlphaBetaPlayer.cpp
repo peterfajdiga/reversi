@@ -15,10 +15,11 @@ namespace reversi {
     Tile AlphaBetaPlayer::getMove(const Board& board, ViewInterface& view) {
         view.displayStatus(Status::FINDING_MOVE);
 
-        double maxEvalScore = INFINITY * -1;
-        Tile bestMove;
+        const std::vector<Tile>& legalMoves = board.getLegalMoves();
+        double maxEvalScore = -INFINITY;
+        Tile bestMove = legalMoves[0];  // default move if given state is not winnable
 
-        for (const Tile& move : board.getLegalMoves()) {
+        for (const Tile& move : legalMoves) {
             Board child(board, move);
             const double evalScore = negamax(child, 4, -INFINITY, INFINITY);
             if (evalScore > maxEvalScore) {
@@ -68,11 +69,14 @@ namespace reversi {
     }
 
 
-    const double VICTORY_MULTIPLIER = 100.0 / 2.0;
     double AlphaBetaPlayer::evaluate(const Board& board) const {
         if (board.isGameOver()) {
-            const int whiteAdvantage = board.getScoreWhite() - board.getScoreBlack();
-            return whiteAdvantage * VICTORY_MULTIPLIER * board.getGamestate() * getId();
+            const gamestate state = board.getGamestate();
+            if (state == draw) {
+                return 0.0;
+            } else {
+                return INFINITY * state * getId();
+            }
         }
 
         return board.getLegalMoves().size() * board.getCurrentPlayer() * getId();

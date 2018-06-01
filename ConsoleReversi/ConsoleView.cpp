@@ -4,7 +4,7 @@
 #include "../Engine/Ai/EasyComputerPlayer.h"
 #include "../Engine/Ai/MonteCarloPlayer.h"
 #include "helpers.h"
-#include "../Engine/Ai/NegamaxPlayer.h"
+#include "../Engine/Ai/AlphaBetaPlayer.h"
 
 #ifdef _WIN32
 #define UNOCCUPIED "."
@@ -90,7 +90,7 @@ namespace reversi {
                     case 'n': engine->newGame(); break;
                     case 'h': std::cout << "\nLegal moves are now marked with " << UNOCCUPIED_LEGAL << "\n\n\n" << drawBoard(board, true) << "\n"; goto ask;
                     case 'c': engine->playerToAi<EasyComputerPlayer>(); break;
-                    case 'v': engine->playerToAi<NegamaxPlayer>(); break;
+                    case 'v': engine->playerToAi<AlphaBetaPlayer>(); break;
                     case 'm': engine->playerToAi<MonteCarloPlayer>(); break;
                     default: goto ask;
                 } break;

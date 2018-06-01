@@ -24,6 +24,7 @@ set(SOURCE_FILES
         Engine/ViewInterface.h
         ConsoleReversi/ConsoleView.cpp
         ConsoleReversi/ConsoleView.h
+        ConsoleReversi/helpers.h
         ConsoleReversi/main.cpp)
 
 add_executable(reversi ${SOURCE_FILES})

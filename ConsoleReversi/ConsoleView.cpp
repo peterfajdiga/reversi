@@ -3,13 +3,16 @@
 #include "ConsoleView.h"
 #include "../Engine/Ai/EasyComputerPlayer.h"
 #include "../Engine/Ai/MonteCarloPlayer.h"
+#include "helpers.h"
 
 #ifdef _WIN32
 #define UNOCCUPIED "."
+#define UNOCCUPIED_LEGAL ","
 #define WHITE "o"
 #define BLACK "x"
 #else
 #define UNOCCUPIED "·"
+#define UNOCCUPIED_LEGAL "•"
 #define WHITE "○"
 #define BLACK "●"
 #endif
@@ -27,8 +30,8 @@ namespace reversi {
     void ConsoleView::setupGame() {
         using namespace std;
 
-        cout << "\n\nConsole Reversi by jsmreese.\n\n";
-        cout << "At any time, enter:\n- 'n' for a new game\n- 'q' to quit playing\n- 'c' to switch the current player to a computer player\n\n";
+        cout << "\n\nConsole Reversi originally by jsmreese.\n\n";
+        cout << "At any time, enter:\n- 'n' for a new game\n- 'q' to quit playing\n- 'h' to highlight available moves\n- 'c' to switch the current player to a computer player\n\n";
         cout << "To make a move, enter the column letter followed by\n";
         cout << "the row number of the desired position, e.g. 'f4'.\n\n";
         cout << "Columns are from 'a' to 'h', and rows are from '1' to '8'." << endl;
@@ -48,7 +51,7 @@ namespace reversi {
 
         if (isGameOver) {
             cout << "\n\n-----------------------------";
-            cout << "\n\n" + drawBoard(engine->getBoard()) << endl;
+            cout << "\n\n" + drawBoard(engine->getBoard(), false) << endl;
 
             cout << "\n ** Game Over **\n\n";
             cout << "\n\n" + drawScore();
@@ -66,7 +69,7 @@ namespace reversi {
 
             cout << "\n\n" + drawScore();
 
-            cout << "\n\n" + drawBoard(engine->getBoard()) + "\n";
+            cout << "\n\n" + drawBoard(engine->getBoard(), false) + "\n";
         }
     }
 
@@ -84,6 +87,7 @@ namespace reversi {
                 switch (input[0]) {
                     case 'q': engine->quitGame(); break;
                     case 'n': engine->newGame(); break;
+                    case 'h': std::cout << "\nLegal moves are now marked with " << UNOCCUPIED_LEGAL << "\n\n\n" + drawBoard(board, true) + "\n"; goto ask;
                     case 'c': engine->playerToAi<EasyComputerPlayer>(); break;
                     case 'm': engine->playerToAi<MonteCarloPlayer>(); break;
                     default: goto ask;
@@ -143,25 +147,25 @@ namespace reversi {
     }
 
 
-    std::string ConsoleView::drawBoard(const Board& board) const {
-        using namespace std;
+    std::string ConsoleView::drawBoard(const Board& board, bool highlight) const {
+        std::string boardString = "   a b c d e f g h\n";
 
-        string boardString = "   a b c d e f g h\n";
+        const std::vector<Tile>& legalMoves = board.getLegalMoves();
 
         for (Tile tile(0, 0); tile.y < 8; tile.y++) {
-            boardString += to_string(tile.y + 1) + " ";
+            boardString += std::to_string(tile.y + 1) + " ";
             for (tile.x = 0; tile.x < 8; tile.x++) {
                 boardString += ' ';
                 const color position = board[tile];
                 switch (position) {
-                    case unoccupied: boardString += UNOCCUPIED; break;
+                    case unoccupied: boardString += highlight && helpers::contains(legalMoves, tile) ? UNOCCUPIED_LEGAL : UNOCCUPIED; break;
                     case white: boardString += WHITE; break;
                     case black: boardString += BLACK; break;
-                    default: boardString += to_string(position);
+                    default: boardString += std::to_string(position);
                 }
             }
 
-            boardString += "  " + to_string(tile.y + 1) + "\n";
+            boardString += "  " + std::to_string(tile.y + 1) + "\n";
         }
 
         boardString += "   a b c d e f g h\n";

@@ -27,6 +27,11 @@ namespace reversi {
     }
 
 
+    bool Tile::operator==(const Tile& other) const {
+        return x == other.x && y == other.y;
+    }
+
+
     std::ostream& operator<<(std::ostream& os, const Tile& tile) {
         std::string str;
         str += tile.x + 'a';

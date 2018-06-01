@@ -20,6 +20,8 @@ namespace reversi {
         // isOnBoard
         // Determines if the supplied position (x/y indexes) is within the game board.
         bool isOnBoard() const;
+
+        bool operator==(const Tile& other) const;
     };
 
     std::ostream& operator<<(std::ostream& os, const Tile& tile);

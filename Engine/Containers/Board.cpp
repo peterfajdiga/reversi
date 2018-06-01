@@ -30,15 +30,15 @@ namespace reversi {
         }
 
         // initialize starting positions for each player
-        positions[3][3] = black;
-        positions[3][4] = white;
-        positions[4][3] = white;
-        positions[4][4] = black;
+        positions[3][3] = white;
+        positions[3][4] = black;
+        positions[4][3] = black;
+        positions[4][4] = white;
 
         scoreWhite = 2;
         scoreBlack = 2;
 
-        state = white_turn;
+        state = black_turn;
         generateLegalMoves();
     }
 

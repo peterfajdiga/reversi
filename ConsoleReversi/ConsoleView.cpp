@@ -51,25 +51,25 @@ namespace reversi {
 
         if (isGameOver) {
             cout << "\n\n-----------------------------";
-            cout << "\n\n" + drawBoard(engine->getBoard(), false) << endl;
+            cout << "\n\n" << drawBoard(engine->getBoard(), false) << endl;
 
             cout << "\n ** Game Over **\n\n";
-            cout << "\n\n" + drawScore();
+            cout << "\n\n" << drawScore();
 
             if (s1 == s2) {
                 cout << "Game is a draw!" << endl;
             }
             else {
                 cout << "\n Congratulations, ";
-                cout << getFormattedName(*engine->getPlayer(s1 > s2 ? white : black)) + "!" << endl;
+                cout << getFormattedName(*engine->getPlayer(s1 > s2 ? white : black)) << "!" << endl;
             }
 
         } else {
             cout << "\n\n-----------------------------";
 
-            cout << "\n\n" + drawScore();
+            cout << "\n\n" << drawScore();
 
-            cout << "\n\n" + drawBoard(engine->getBoard(), false) + "\n";
+            cout << "\n\n" << drawBoard(engine->getBoard(), false) << "\n";
         }
     }
 
@@ -78,7 +78,7 @@ namespace reversi {
         const Board& board = engine->getBoard();
 
         ask:
-        std::cout << "\n" + getFormattedName(*engine->getPlayer()) + ", enter a move: ";
+        std::cout << "\n" << getFormattedName(*engine->getPlayer()) << ", enter a move: ";
         std::string input;
         std::cin >> input;
 
@@ -87,7 +87,7 @@ namespace reversi {
                 switch (input[0]) {
                     case 'q': engine->quitGame(); break;
                     case 'n': engine->newGame(); break;
-                    case 'h': std::cout << "\nLegal moves are now marked with " << UNOCCUPIED_LEGAL << "\n\n\n" + drawBoard(board, true) + "\n"; goto ask;
+                    case 'h': std::cout << "\nLegal moves are now marked with " << UNOCCUPIED_LEGAL << "\n\n\n" << drawBoard(board, true) << "\n"; goto ask;
                     case 'c': engine->playerToAi<EasyComputerPlayer>(); break;
                     case 'm': engine->playerToAi<MonteCarloPlayer>(); break;
                     default: goto ask;
@@ -121,7 +121,7 @@ namespace reversi {
 
         switch (status) {
         case Status::CANNOT_MOVE:
-            cout << "\n\n ** " + getFormattedName(*engine->getPlayer(engine->getBoard().getCurrentPlayer())) + " is unable to move. **" << endl;
+            cout << "\n\n ** " << getFormattedName(*engine->getPlayer(engine->getBoard().getCurrentPlayer())) << " is unable to move. **" << endl;
             break;
 
         case Status::INVALID_MOVE:
@@ -137,11 +137,11 @@ namespace reversi {
             break;
 
         case Status::SUCCESS:
-            cout << "\n\n" + getFormattedName(*engine->getLastMovePlayer()) + " moved at position " << engine->getLastMoveTile() << "." << endl;
+            cout << "\n\n" << getFormattedName(*engine->getLastMovePlayer()) << " moved at position " << engine->getLastMoveTile() << "." << endl;
             break;
 
         case Status::FINDING_MOVE:
-            cout << "\n\n" + getFormattedName(*engine->getPlayer()) + " searching for move..." << endl;
+            cout << "\n\n" << getFormattedName(*engine->getPlayer()) << " searching for move..." << endl;
             break;
         }
     }

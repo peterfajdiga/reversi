@@ -1,4 +1,6 @@
+#include <ostream>
 #include "Tile.h"
+
 
 namespace reversi {
 
@@ -33,10 +35,7 @@ namespace reversi {
 
 
     std::ostream& operator<<(std::ostream& os, const Tile& tile) {
-        std::string str;
-        str += tile.x + 'a';
-        str += tile.y + '1';
-        os << str;
+        os << (char)(tile.x + 'a') << (char)(tile.y + '1');
         return os;
     }
 }

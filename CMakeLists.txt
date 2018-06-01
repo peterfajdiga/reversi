@@ -25,6 +25,6 @@ set(SOURCE_FILES
         ConsoleReversi/ConsoleView.cpp
         ConsoleReversi/ConsoleView.h
         ConsoleReversi/helpers.h
-        ConsoleReversi/main.cpp)
+        ConsoleReversi/main.cpp Engine/Ai/NegamaxPlayer.cpp Engine/Ai/NegamaxPlayer.h)
 
 add_executable(reversi ${SOURCE_FILES})

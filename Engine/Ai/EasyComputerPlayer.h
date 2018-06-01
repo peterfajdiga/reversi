@@ -2,8 +2,6 @@
 
 #include <string>
 #include "../PlayerInterface.h"
-#include "../ViewInterface.h"
-#include "../Engine.h"
 
 
 namespace reversi {

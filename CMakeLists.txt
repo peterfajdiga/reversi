@@ -4,6 +4,10 @@ project(reversi)
 set(CMAKE_CXX_STANDARD 17)
 
 set(SOURCE_FILES
+        Engine/Ai/EasyComputerPlayer.cpp
+        Engine/Ai/EasyComputerPlayer.h
+        Engine/Ai/MonteCarloPlayer.cpp
+        Engine/Ai/MonteCarloPlayer.h
         Engine/Containers/Board.cpp
         Engine/Containers/Board.h
         Engine/Containers/Direction.h
@@ -20,8 +24,6 @@ set(SOURCE_FILES
         Engine/ViewInterface.h
         ConsoleReversi/ConsoleView.cpp
         ConsoleReversi/ConsoleView.h
-        Engine/Ai/EasyComputerPlayer.cpp
-        Engine/Ai/EasyComputerPlayer.h
         ConsoleReversi/main.cpp)
 
 add_executable(reversi ${SOURCE_FILES})

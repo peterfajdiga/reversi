@@ -15,9 +15,9 @@ namespace reversi {
 
         Tile getMove(const Board& board, ViewInterface& view) override;
 
-        double evaluateMC(const Board& board) const;
+        double sampleMC(const Board& board) const;
 
-        static void playRandom(Board& board);
+        bool playRandom(const Board& boardStart) const;
     };
 
 }

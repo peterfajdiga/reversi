@@ -50,10 +50,6 @@ namespace reversi {
         playNextGame = true;
     }
 
-    void Engine::playerToAi() {
-        setPlayer(new EasyComputerPlayer);
-    }
-
 
     void Engine::setupGame() {
         board = Board();  // TODO: do differently

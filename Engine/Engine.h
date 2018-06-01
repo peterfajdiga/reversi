@@ -47,7 +47,10 @@ namespace reversi {
 
         virtual void newGame();
 
-        virtual void playerToAi();
+        template <class T>
+        void playerToAi() {
+            setPlayer(new T);
+        }
 
         // getPlayer
         // Retrieves a player object (see PlayerInterface.h).

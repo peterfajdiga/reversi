@@ -2,6 +2,7 @@
 #include <cassert>
 #include "ConsoleView.h"
 #include "../Engine/Ai/EasyComputerPlayer.h"
+#include "../Engine/Ai/MonteCarloPlayer.h"
 
 #ifdef _WIN32
 #define UNOCCUPIED "."
@@ -83,7 +84,8 @@ namespace reversi {
                 switch (input[0]) {
                     case 'q': engine->quitGame(); break;
                     case 'n': engine->newGame(); break;
-                    case 'c': engine->playerToAi(); break;
+                    case 'c': engine->playerToAi<EasyComputerPlayer>(); break;
+                    case 'm': engine->playerToAi<MonteCarloPlayer>(); break;
                     default: goto ask;
                 } break;
             case 2: return Tile(input);

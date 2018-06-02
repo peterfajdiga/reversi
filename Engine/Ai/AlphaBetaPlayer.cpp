@@ -6,9 +6,9 @@
 
 namespace reversi {
 
-    AlphaBetaPlayer::AlphaBetaPlayer(color playerColor) : AiPlayerTimed(playerColor, "Alphabet") {};
+    AlphaBetaPlayer::AlphaBetaPlayer(color playerColor) : AiEvaluationPlayer(playerColor, "Alphabet") {};
 
-    AlphaBetaPlayer::AlphaBetaPlayer(color playerColor, const std::string& name) : AiPlayerTimed(playerColor, name) {}
+    AlphaBetaPlayer::AlphaBetaPlayer(color playerColor, const std::string& name) : AiEvaluationPlayer(playerColor, name) {}
 
     AlphaBetaPlayer::~AlphaBetaPlayer() = default;
 
@@ -59,27 +59,8 @@ namespace reversi {
     };
 
 
-    Tile AlphaBetaPlayer::getMoveTimed(const Board& board) {
-        if (board.getPiecesCount() == 4) {
-            return helpers::getRandom(board.getLegalMoves());
-        }
-
-        const std::vector<Tile>& legalMoves = board.getLegalMoves();
-        double maxEvalScore = -INFINITY;
-        Tile bestMove = legalMoves[0];  // default move if given state is not winnable
-
-        //printf("pieces: %ld | moves: %ld | depth: %ld\n", board.getPiecesCount(), legalMoves.size(), estimateDepth(board.getPiecesCount(), 0));
-
-        for (const Tile& move : legalMoves) {
-            Board child(board, move);
-            //const double evalScore = negamax(child, estimateDepth(board.getPiecesCount(), legalMoves.size()), -INFINITY, INFINITY);
-            const double evalScore = negamax(child, 5, -INFINITY, INFINITY);
-            if (evalScore > maxEvalScore) {
-                maxEvalScore = evalScore;
-                bestMove = move;
-            }
-        }
-        return bestMove;
+    double AlphaBetaPlayer::evaluateStart(const Board& board) {
+        return negamax(board, 6, -INFINITY, INFINITY);
     }
 
 

@@ -1,11 +1,11 @@
 #pragma once
 
-#include "AiPlayerTimed.h"
+#include "AiEvaluationPlayer.h"
 
 
 namespace reversi {
 
-    class AlphaBetaPlayer : public AiPlayerTimed {
+    class AlphaBetaPlayer : public AiEvaluationPlayer {
     public:
         AlphaBetaPlayer(color playerColor);
 
@@ -19,7 +19,7 @@ namespace reversi {
 
         static size_t estimateDepth(const size_t n_pieces, const size_t n_moves);
 
-        Tile getMoveTimed(const Board& board) override;
+        double evaluateStart(const Board& board) override;
 
         double negamax(const Board& board, size_t depth, double alpha, double beta) const;
 

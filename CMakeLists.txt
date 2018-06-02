@@ -20,6 +20,7 @@ set(SOURCE_FILES
         Engine/constants.h
         Engine/Engine.cpp
         Engine/Engine.h
+        Engine/helpers.h
         Engine/HumanPlayer.cpp
         Engine/HumanPlayer.h
         Engine/PlayerInterface.cpp
@@ -28,7 +29,6 @@ set(SOURCE_FILES
         Engine/ViewInterface.h
         ConsoleReversi/ConsoleView.cpp
         ConsoleReversi/ConsoleView.h
-        ConsoleReversi/helpers.h
         ConsoleReversi/main.cpp)
 
 add_executable(reversi ${SOURCE_FILES})

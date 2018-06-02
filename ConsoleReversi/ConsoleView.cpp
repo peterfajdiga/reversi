@@ -3,7 +3,7 @@
 #include "ConsoleView.h"
 #include "../Engine/Ai/EasyComputerPlayer.h"
 #include "../Engine/Ai/MonteCarloPlayer.h"
-#include "helpers.h"
+#include "../Engine/helpers.h"
 #include "../Engine/Ai/AlphaBetaPlayer.h"
 
 #ifdef _WIN32

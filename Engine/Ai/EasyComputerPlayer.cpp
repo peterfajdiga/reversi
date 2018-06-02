@@ -1,4 +1,5 @@
 #include "EasyComputerPlayer.h"
+#include "../helpers.h"
 
 
 namespace reversi {
@@ -9,8 +10,6 @@ namespace reversi {
     EasyComputerPlayer::~EasyComputerPlayer() = default;
 
     Tile EasyComputerPlayer::getMoveTimed(const Board& board) {
-        std::vector<Tile> legalMoves = board.getLegalMoves();
-        const size_t index = rand() % legalMoves.size();
-        return legalMoves[index];
+        return helpers::getRandom(board.getLegalMoves());
     }
 }

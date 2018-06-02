@@ -1,6 +1,6 @@
 #pragma once
 
-#include "AiEvaluationPlayer.h"
+#include "Abstract/AiEvaluationPlayer.h"
 
 
 namespace reversi {
@@ -21,9 +21,9 @@ namespace reversi {
 
         double evaluateStart(const Board& board) override;
 
-        double negamax(const Board& board, size_t depth, double alpha, double beta) const;
+        double negamax(const Board& board, size_t depth, double alpha, double beta);
 
-        double evaluate(const Board& board) const;
+        double heuristic(const Board& board) override;
     };
 
 }

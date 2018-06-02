@@ -1,5 +1,6 @@
 #include <cmath>
 #include "AiHeuristicPlayer.h"
+#include "Abstract/heuristics.h"
 
 
 namespace reversi {
@@ -10,26 +11,9 @@ namespace reversi {
 
     AiHeuristicPlayer::~AiHeuristicPlayer() = default;
 
-    const double weights[8][8] = {
-            {16.160, -3.575,  1.160,  0.530,  0.530,  1.160, -3.575, 16.160},
-            {-3.575, -1.810, -0.060, -0.225, -0.225, -0.060, -1.810, -3.575},
-            { 1.160, -0.060,  0.510,  0.015,  0.015,  0.510, -0.060,  1.160},
-            { 0.530, -0.225,  0.015, -0.010, -0.010,  0.015, -0.225,  0.530},
-            { 0.530, -0.225,  0.015, -0.010, -0.010,  0.015, -0.225,  0.530},
-            { 1.160, -0.060,  0.510,  0.015,  0.015,  0.510, -0.060,  1.160},
-            {-3.575, -1.810, -0.060, -0.225, -0.225, -0.060, -1.810, -3.575},
-            {16.160, -3.575,  1.160,  0.530,  0.530,  1.160, -3.575, 16.160}
-    };
-
     double AiHeuristicPlayer::evaluateStart(const Board& board) {
-        if (board.isGameOver()) {
-            const gamestate state = board.getGamestate();
-            if (state == draw) {
-                return 0.0;
-            } else {
-                return INFINITY * state * playerColor;
-            }
-        }
+        return evaluate(board);
+    }
 
         double weightsModified[8][8];
         std::copy(&weights[0][0], &weights[0][0]+8*8,&weightsModified[0][0]);
@@ -65,6 +49,8 @@ namespace reversi {
         const double legalMovesValue =  board.getLegalMoves().size() * board.getCurrentPlayer(); // * getId();
         //if(board.getPiecesCount() >= 40) return (boardValue + legalMovesValue) * playerColor;
         return (boardValue) * playerColor;
+    double AiHeuristicPlayer::heuristic(const Board& board) {
+        return heuristics::moves(board);
     }
-    
+
 }

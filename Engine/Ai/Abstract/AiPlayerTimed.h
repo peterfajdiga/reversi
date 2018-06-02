@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../PlayerInterface.h"
+#include "../../PlayerInterface.h"
 
 
 namespace reversi {

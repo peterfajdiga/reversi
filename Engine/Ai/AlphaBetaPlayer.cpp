@@ -2,6 +2,7 @@
 #include <cassert>
 #include "AlphaBetaPlayer.h"
 #include "../helpers.h"
+#include "Abstract/heuristics.h"
 
 
 namespace reversi {
@@ -47,25 +48,13 @@ namespace reversi {
     }
 
 
-    const double weights[8][8] = {
-            {16.160, -3.575,  1.160,  0.530,  0.530,  1.160, -3.575, 16.160},
-            {-3.575, -1.810, -0.060, -0.225, -0.225, -0.060, -1.810, -3.575},
-            { 1.160, -0.060,  0.510,  0.015,  0.015,  0.510, -0.060,  1.160},
-            { 0.530, -0.225,  0.015, -0.010, -0.010,  0.015, -0.225,  0.530},
-            { 0.530, -0.225,  0.015, -0.010, -0.010,  0.015, -0.225,  0.530},
-            { 1.160, -0.060,  0.510,  0.015,  0.015,  0.510, -0.060,  1.160},
-            {-3.575, -1.810, -0.060, -0.225, -0.225, -0.060, -1.810, -3.575},
-            {16.160, -3.575,  1.160,  0.530,  0.530,  1.160, -3.575, 16.160}
-    };
-
-
     double AlphaBetaPlayer::evaluateStart(const Board& board) {
         if(board.getPiecesCount() >= 50){return negamax(board, 14, -INFINITY, INFINITY);}
         return negamax(board, 5, -INFINITY, INFINITY);
     }
 
 
-    double AlphaBetaPlayer::negamax(const Board& board, size_t depth, double alpha, double beta) const {
+    double AlphaBetaPlayer::negamax(const Board& board, size_t depth, double alpha, double beta) {
         if (depth == 0 || board.isGameOver()) {
             return evaluate(board);
         }
@@ -103,7 +92,7 @@ namespace reversi {
     }
 
 
-    double AlphaBetaPlayer::evaluate(const Board& board) const {
+    double AlphaBetaPlayer::heuristic(const Board& board) const {
         if (board.isGameOver()) {
             const gamestate state = board.getGamestate();
             if (state == draw) {

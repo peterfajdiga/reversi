@@ -25,4 +25,16 @@ namespace reversi {
         }
         return bestMove;
     }
+
+    double AiEvaluationPlayer::evaluate(const Board& board) {
+        if (board.isGameOver()) {
+            const gamestate state = board.getGamestate();
+            if (state == draw) {
+                return 0.0;
+            } else {
+                return INFINITY * state * playerColor;
+            }
+        }
+        return heuristic(board) * playerColor;
+    }
 }

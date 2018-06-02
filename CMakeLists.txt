@@ -3,6 +3,8 @@ cmake_minimum_required(VERSION 3.9)
 set(CMAKE_CXX_STANDARD 17)
 
 set(SOURCE_FILES
+        Engine/Ai/AiEvaluationPlayer.cpp
+        Engine/Ai/AiEvaluationPlayer.h
         Engine/Ai/AiPlayerTimed.cpp
         Engine/Ai/AiPlayerTimed.h
         Engine/Ai/AlphaBetaPlayer.cpp

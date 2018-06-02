@@ -1,5 +1,6 @@
 #include <iostream>
 #include "AiPlayerTimed.h"
+#include "../helpers.h"
 
 
 namespace reversi {
@@ -12,6 +13,10 @@ namespace reversi {
 
     Tile AiPlayerTimed::getMove(const Board& board, ViewInterface& view) {
         view.displayStatus(Status::FINDING_MOVE);
+        if (board.getPiecesCount() == 4) {
+            return helpers::getRandom(board.getLegalMoves());
+        }
+
         const clock_t startTime = clock();
         Tile move = getMoveTimed(board);
         //fprintf(stderr, "%ld\t%ld\t%lf\n", board.getPiecesCount(), board.getLegalMoves().size(), (double)(clock() - startTime) / CLOCKS_PER_SEC);

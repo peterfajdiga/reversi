@@ -7,8 +7,8 @@ int main() {
 
     using namespace reversi;
 
-    EasyComputerPlayer playerWhite;
-    EasyComputerPlayer playerBlack;
+    EasyComputerPlayer playerWhite(white);
+    AlphaBetaPlayer playerBlack(black);
 
     size_t winsWhite = 0;
     size_t winsBlack = 0;

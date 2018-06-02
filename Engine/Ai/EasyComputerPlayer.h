@@ -13,9 +13,9 @@ namespace reversi {
     */
     class EasyComputerPlayer : public AiPlayerTimed {
     public:
-        EasyComputerPlayer();
+        EasyComputerPlayer(color playerColor);
 
-        EasyComputerPlayer(const std::string& name);
+        EasyComputerPlayer(color playerColor, const std::string& name);
 
         ~EasyComputerPlayer() override;
 

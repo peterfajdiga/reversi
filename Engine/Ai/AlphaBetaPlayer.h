@@ -7,9 +7,9 @@ namespace reversi {
 
     class AlphaBetaPlayer : public AiPlayerTimed {
     public:
-        AlphaBetaPlayer();
+        AlphaBetaPlayer(color playerColor);
 
-        AlphaBetaPlayer(const std::string& name);
+        AlphaBetaPlayer(color playerColor, const std::string& name);
 
         ~AlphaBetaPlayer() override;
 

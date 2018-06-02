@@ -7,8 +7,6 @@
 
 namespace reversi {
 
-    class Engine; // forward declaration
-
     /**
      * PlayerInterface
      *
@@ -22,23 +20,18 @@ namespace reversi {
      */
     class PlayerInterface
     {
-        friend class Engine;
-
     public:
-        PlayerInterface();
+        PlayerInterface(color playerColor);
 
-        PlayerInterface(const std::string& name);
+        PlayerInterface(color playerColor, const std::string& name);
 
         virtual ~PlayerInterface();
 
-        virtual color getId() const;
-
         virtual Tile getMove(const Board& board, ViewInterface& view) = 0;
 
-        const std::string name;
+        const color playerColor;
 
-    private:
-        color mId;
+        const std::string name;
     };
 
 }

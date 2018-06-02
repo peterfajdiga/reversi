@@ -1,14 +1,13 @@
 #include <cmath>
-#include <cassert>
 #include "AlphaBetaPlayer.h"
 #include "../helpers.h"
 
 
 namespace reversi {
 
-    AlphaBetaPlayer::AlphaBetaPlayer() : AiPlayerTimed("Alphabet") {};
+    AlphaBetaPlayer::AlphaBetaPlayer(color playerColor) : AiPlayerTimed(playerColor, "Alphabet") {};
 
-    AlphaBetaPlayer::AlphaBetaPlayer(const std::string& name) : AiPlayerTimed(name) {}
+    AlphaBetaPlayer::AlphaBetaPlayer(color playerColor, const std::string& name) : AiPlayerTimed(playerColor, name) {}
 
     AlphaBetaPlayer::~AlphaBetaPlayer() = default;
 
@@ -72,7 +71,7 @@ namespace reversi {
 
         for (const Tile& move : legalMoves) {
             Board child(board, move);
-            const double evalScore = negamax(child, estimateDepth(board.getPiecesCount(), legalMoves.size()), -INFINITY, INFINITY);
+            const double evalScore = negamax(child, 6, -INFINITY, INFINITY);
             if (evalScore > maxEvalScore) {
                 maxEvalScore = evalScore;
                 bestMove = move;
@@ -87,7 +86,7 @@ namespace reversi {
             return evaluate(board);
         }
 
-        if (board.getCurrentPlayer() == getId()) {
+        if (board.getCurrentPlayer() == playerColor) {
             // my turn
             double maxEvalScore = -INFINITY;
 
@@ -126,10 +125,10 @@ namespace reversi {
             if (state == draw) {
                 return 0.0;
             } else {
-                return INFINITY * state * getId();
+                return INFINITY * state * playerColor;
             }
         }
 
-        return board.getLegalMoves().size() * board.getCurrentPlayer() * getId();
+        return board.getLegalMoves().size() * board.getCurrentPlayer() * playerColor;
     }
 }

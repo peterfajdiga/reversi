@@ -13,9 +13,9 @@ namespace reversi {
     */
     class HumanPlayer : public PlayerInterface {
     public:
-        HumanPlayer();
+        HumanPlayer(color playerColor);
 
-        HumanPlayer(const std::string& name);
+        HumanPlayer(color playerColor, const std::string& name);
 
         virtual ~HumanPlayer();
 

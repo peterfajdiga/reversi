@@ -1,4 +1,5 @@
 #include <cassert>
+#include <ctime>
 #include "../Engine/Ai/EasyComputerPlayer.h"
 #include "../Engine/Ai/AiHeuristicPlayer.h"
 #include "NullView.h"

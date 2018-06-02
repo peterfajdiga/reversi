@@ -8,15 +8,14 @@ int main() {
 
     using namespace reversi;
 
-    EasyComputerPlayer playerWhite;
-    EasyComputerPlayer playerBlack;
+    EasyComputerPlayer playerWhite(white);
+    AlphaBetaPlayer playerBlack(black);
 
     size_t winsWhite = 0;
     size_t winsBlack = 0;
     size_t draws = 0;
 
-    printf("white : black\n");
-    printf("%s : %s\n", playerWhite.name.c_str(), playerBlack.name.c_str());
+    printf("%s (white) : %s (black)\n", playerWhite.name.c_str(), playerBlack.name.c_str());
     clock_t lastPrint = 0;
     while (true) {
         Board board;

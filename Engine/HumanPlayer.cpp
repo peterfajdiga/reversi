@@ -3,11 +3,9 @@
 
 namespace reversi {
 
-    HumanPlayer::HumanPlayer() = default;
+    HumanPlayer::HumanPlayer(color playerColor) : PlayerInterface(playerColor) {}
 
-
-    HumanPlayer::HumanPlayer(const std::string& name) : PlayerInterface(name) {}
-
+    HumanPlayer::HumanPlayer(color playerColor, const std::string& name) : PlayerInterface(playerColor, name) {}
 
     HumanPlayer::~HumanPlayer() = default;
 

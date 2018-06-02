@@ -4,9 +4,9 @@
 
 namespace reversi {
 
-    MonteCarloPlayer::MonteCarloPlayer() : AiPlayerTimed("Carlos") {}
+    MonteCarloPlayer::MonteCarloPlayer(color playerColor) : AiPlayerTimed(playerColor, "Carlos") {}
 
-    MonteCarloPlayer::MonteCarloPlayer(const std::string& name) : AiPlayerTimed(name) {}
+    MonteCarloPlayer::MonteCarloPlayer(color playerColor, const std::string& name) : AiPlayerTimed(playerColor, name) {}
 
     MonteCarloPlayer::~MonteCarloPlayer() = default;
 
@@ -43,7 +43,7 @@ namespace reversi {
             const size_t index = rand() % legalMoves.size();
             board.doMove(legalMoves[index]);
         }
-        return board.getGamestate() / 2 == getId();
+        return board.getGamestate() / 2 == playerColor;
     }
 
 }

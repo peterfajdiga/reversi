@@ -47,19 +47,20 @@ namespace reversi {
 
         virtual void newGame();
 
+        // replace current player with an AI player
         template <class T>
         void playerToAi() {
-            setPlayer(new T);
+            //assert(!board.isGameOver());
+            const color currentPlayerColor = board.getCurrentPlayer();
+            PlayerInterface*& currentPlayer = currentPlayerColor == white ? playerWhite : playerBlack;
+            delete currentPlayer;
+            currentPlayer = new T(currentPlayerColor);
         }
 
         // getPlayer
         // Retrieves a player object (see PlayerInterface.h).
         // Will return a reference to the current player by default.
         virtual PlayerInterface* getPlayer(color playerId = unoccupied) const;
-
-        // setPlayer
-        // Updates a player object pointer, usually when changing player type.
-        virtual void setPlayer(PlayerInterface* player, color playerId = unoccupied);
 
         virtual const Board& getBoard() const;
 

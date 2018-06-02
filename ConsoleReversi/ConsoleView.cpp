@@ -207,7 +207,7 @@ namespace reversi {
 
     std::string ConsoleView::getFormattedName(const PlayerInterface& player) const {
         std::string name;
-        const color playerId = player.getId();
+        const color playerId = player.playerColor;
         switch (playerId) {
             case white: name += WHITE; break;
             case black: name += BLACK; break;

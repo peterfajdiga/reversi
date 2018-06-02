@@ -7,9 +7,9 @@ namespace reversi {
 
     class MonteCarloPlayer : public AiPlayerTimed {
     public:
-        MonteCarloPlayer();
+        MonteCarloPlayer(color playerColor);
 
-        MonteCarloPlayer(const std::string& name);
+        MonteCarloPlayer(color playerColor, const std::string& name);
 
         ~MonteCarloPlayer() override;
 

@@ -5,9 +5,9 @@
 
 namespace reversi {
 
-    AiPlayerTimed::AiPlayerTimed() : PlayerInterface("CPU") {}
+    AiPlayerTimed::AiPlayerTimed(color playerColor) : PlayerInterface(playerColor, "CPU") {}
 
-    AiPlayerTimed::AiPlayerTimed(const std::string& name) : PlayerInterface(name) {}
+    AiPlayerTimed::AiPlayerTimed(color playerColor, const std::string& name) : PlayerInterface(playerColor, name) {}
 
     AiPlayerTimed::~AiPlayerTimed() = default;
 

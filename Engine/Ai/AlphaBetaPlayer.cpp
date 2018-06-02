@@ -6,9 +6,9 @@
 
 namespace reversi {
 
-    AlphaBetaPlayer::AlphaBetaPlayer() : AiPlayerTimed("Alphabet") {};
+    AlphaBetaPlayer::AlphaBetaPlayer(color playerColor) : AiPlayerTimed(playerColor, "Alphabet") {};
 
-    AlphaBetaPlayer::AlphaBetaPlayer(const std::string& name) : AiPlayerTimed(name) {}
+    AlphaBetaPlayer::AlphaBetaPlayer(color playerColor, const std::string& name) : AiPlayerTimed(playerColor, name) {}
 
     AlphaBetaPlayer::~AlphaBetaPlayer() = default;
 
@@ -88,7 +88,7 @@ namespace reversi {
             return evaluate(board);
         }
 
-        if (board.getCurrentPlayer() == getId()) {
+        if (board.getCurrentPlayer() == playerColor) {
             // my turn
             double maxEvalScore = -INFINITY;
 
@@ -127,7 +127,7 @@ namespace reversi {
             if (state == draw) {
                 return 0.0;
             } else {
-                return INFINITY * state * getId();
+                return INFINITY * state * playerColor;
             }
         }
 
@@ -163,7 +163,7 @@ namespace reversi {
         }
 
         const double legalMovesValue =  board.getLegalMoves().size() * board.getCurrentPlayer(); // * getId();
-        //if(board.getPiecesCount() >= 40) return (boardValue + legalMovesValue) * getId();
-        return (boardValue) * getId();
+        //if(board.getPiecesCount() >= 40) return (boardValue + legalMovesValue) * playerColor;
+        return (boardValue) * playerColor;
     }
 }

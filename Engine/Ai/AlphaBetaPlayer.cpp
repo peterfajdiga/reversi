@@ -60,7 +60,8 @@ namespace reversi {
 
 
     double AlphaBetaPlayer::evaluateStart(const Board& board) {
-        return negamax(board, 6, -INFINITY, INFINITY);
+        if(board.getPiecesCount() >= 50){return negamax(board, 14, -INFINITY, INFINITY);}
+        return negamax(board, 5, -INFINITY, INFINITY);
     }
 
 
@@ -139,7 +140,7 @@ namespace reversi {
         double boardValue = 0.0;
         for (coordinate y = 0; y < 8; ++y) {
             for (coordinate x = 0; x < 8; ++x) {
-                boardValue += board(x, y) * weightsModified[x][y];
+                boardValue += 4.8 * (board(x, y) * weightsModified[x][y]);
             }
         }
 

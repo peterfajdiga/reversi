@@ -3,14 +3,17 @@
 #include "../Engine/Ai/EasyComputerPlayer.h"
 #include "../Engine/Ai/AiHeuristicPlayer.h"
 #include "NullView.h"
+#include "../Engine/Ai/AiHeuristicPlayer2.h"
+#include "../Engine/Ai/AlphaBetaPlayer.h"
+#include "../Engine/Ai/MonteCarloPlayer.h"
 
 
 int main() {
 
     using namespace reversi;
 
-    EasyComputerPlayer playerWhite(white);
-    AiHeuristicPlayer playerBlack(black);
+    MonteCarloPlayer playerWhite(white);
+    AlphaBetaPlayer playerBlack(black);
     NullView nullView;
 
     size_t winsWhite = 0;

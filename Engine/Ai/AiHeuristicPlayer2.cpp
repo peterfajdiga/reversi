@@ -1,14 +1,14 @@
 #include <cmath>
-#include "AiHeuristicPlayer.h"
+#include "AiHeuristicPlayer2.h"
 
 
 namespace reversi {
-    
-    AiHeuristicPlayer::AiHeuristicPlayer(color playerColor) : AiEvaluationPlayer(playerColor, "Heuristic") {}
 
-    AiHeuristicPlayer::AiHeuristicPlayer(color playerColor, const std::string& name) : AiEvaluationPlayer(playerColor, name) {}
+    AiHeuristicPlayer2::AiHeuristicPlayer2(color playerColor) : AiEvaluationPlayer(playerColor, "Heuristic") {}
 
-    AiHeuristicPlayer::~AiHeuristicPlayer() = default;
+    AiHeuristicPlayer2::AiHeuristicPlayer2(color playerColor, const std::string& name) : AiEvaluationPlayer(playerColor, name) {}
+
+    AiHeuristicPlayer2::~AiHeuristicPlayer2() = default;
 
     const double weights[8][8] = {
             {16.160, -3.575,  1.160,  0.530,  0.530,  1.160, -3.575, 16.160},
@@ -21,7 +21,7 @@ namespace reversi {
             {16.160, -3.575,  1.160,  0.530,  0.530,  1.160, -3.575, 16.160}
     };
 
-    double AiHeuristicPlayer::evaluateStart(const Board& board) {
+    double AiHeuristicPlayer2::evaluateStart(const Board& board) {
         if (board.isGameOver()) {
             const gamestate state = board.getGamestate();
             if (state == draw) {
@@ -58,13 +58,15 @@ namespace reversi {
         double boardValue = 0.0;
         for (coordinate y = 0; y < 8; ++y) {
             for (coordinate x = 0; x < 8; ++x) {
-                boardValue += board(x, y) * weightsModified[x][y];
+                boardValue += 4.8*(board(x, y) * weightsModified[x][y]);
             }
         }
 
         const double legalMovesValue =  board.getLegalMoves().size() * board.getCurrentPlayer(); // * getId();
         //if(board.getPiecesCount() >= 40) return (boardValue + legalMovesValue) * playerColor;
+        const double prog = board.getProgression() * 0.1;
+        const double progn = 1.0 - prog;
         return (boardValue) * playerColor;
     }
-    
+
 }

@@ -7,6 +7,8 @@ set(SOURCE_FILES
         Engine/Ai/AiEvaluationPlayer.h
         Engine/Ai/AiHeuristicPlayer.cpp
         Engine/Ai/AiHeuristicPlayer.h
+        Engine/Ai/AiHeuristicPlayer2.cpp
+        Engine/Ai/AiHeuristicPlayer2.h
         Engine/Ai/AiPlayerTimed.cpp
         Engine/Ai/AiPlayerTimed.h
         Engine/Ai/AlphaBetaPlayer.cpp

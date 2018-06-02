@@ -6,22 +6,6 @@
 
 namespace reversi {
 
-    // Directions table used for finding valid moves.
-    // Each table value is a vector (math vector, not a C++ STL data structure!)
-    // representing one of the eight directions to check (up, up-right, right, etc.)
-    const Direction sDirectionsTable[8] = {
-            // { x, y }
-            {  0,  1 },  // up
-            {  1,  1 },  // up-left
-            {  1,  0 },  // left
-            {  1, -1 },  // down-left
-            {  0, -1 },  // down
-            { -1, -1 },  // down-right
-            { -1,  0 },  // right
-            { -1,  1 }   // up-right
-    };
-
-
     Board::Board() {
         for (int y = 0; y < 8; ++y) {
             for (int x = 0; x < 8; ++x) {
@@ -123,7 +107,7 @@ namespace reversi {
         // max of 7 steps can be taken in any given direction
         // take 8 steps so that the last check is off the board
         // and will clear mPossiblePiecesToFlip if we get there
-        for (const Direction direction : sDirectionsTable) {
+        for (const Direction direction : DIRECTIONS) {
             // init position and step
 
             // short-circuit search based on proximity to edge and direction vector
@@ -192,7 +176,7 @@ namespace reversi {
         // max of 7 steps can be taken in any given direction
         // take 8 steps so that the last check is off the board
         // and will clear mPossiblePiecesToFlip if we get there
-        for (const Direction direction : sDirectionsTable) {
+        for (const Direction direction : DIRECTIONS) {
             // init position and step
 
             // short-circuit search based on proximity to edge and direction vector

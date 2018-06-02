@@ -16,7 +16,7 @@ namespace reversi {
     }
 
     double AiHeuristicPlayer::heuristic(const Board& board) {
-        return 4.8 * heuristics::stanford_modified(board);
+        return heuristics::stanford_modified(board);
     }
 
 }

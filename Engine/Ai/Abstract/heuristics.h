@@ -13,4 +13,6 @@ namespace reversi::heuristics {
 
     double moves(const Board& board);
 
+    double stability(const Board& board);
+
 };

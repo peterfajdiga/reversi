@@ -1,4 +1,5 @@
 #include "heuristics.h"
+#include "../../Containers/Direction.h"
 
 
 namespace reversi::heuristics {
@@ -94,5 +95,64 @@ namespace reversi::heuristics {
 
     double moves(const Board& board) {
         return board.getLegalMoves().size() * board.getCurrentPlayer();
+    }
+
+    const double STABILITY_POS = 1.0;
+    const double STABILITY_NEG = -1.0;
+    double stability(const Board& board) {
+        double score = 0.0;
+
+        for (const Direction& direction : DIRECTIONS) {
+            std::vector<Tile> startingPositions;
+            if (direction.x > 0) {
+                for (coordinate i = 0; i < 8; ++i) {
+                    startingPositions.emplace_back(Tile(0, i));
+                }
+            } else if (direction.x < 0) {
+                for (coordinate i = 0; i < 8; ++i) {
+                    startingPositions.emplace_back(Tile(7, i));
+                }
+            }
+            if (direction.y > 0) {
+                for (coordinate i = 0; i < 8; ++i) {
+                    startingPositions.emplace_back(Tile(i, 0));
+                }
+            } else if (direction.y < 0) {
+                for (coordinate i = 0; i < 8; ++i) {
+                    startingPositions.emplace_back(Tile(i, 7));
+                }
+            }
+
+            for (Tile& tile : startingPositions) {
+                const color startingColor = board[tile];
+                bool penaltyRequired = false;
+
+                for (size_t i = 0; i < 8; ++i) {
+                    if (!tile.isOnBoard()) {
+                        break;
+                    }
+                    const color currentColor = board[tile];
+
+                    if (currentColor == unoccupied) {
+                        penaltyRequired = true;
+
+                    } else if (penaltyRequired) {
+                        score += STABILITY_NEG * currentColor;
+                        break;
+
+                    } else if (currentColor == startingColor) {
+                        score += STABILITY_POS * currentColor;
+
+                    } else {
+                        score += STABILITY_NEG * currentColor;
+                        break;  // TODO: maybe not?
+                    }
+
+                    tile.x += direction.x;
+                    tile.y += direction.y;
+                }
+            }
+        }
+        return score;
     }
 }

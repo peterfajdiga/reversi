@@ -1,6 +1,6 @@
 #pragma once
 
-#include "AiEvaluationPlayer.h"
+#include "Abstract/AiEvaluationPlayer.h"
 
 
 namespace reversi {

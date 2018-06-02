@@ -1,6 +1,6 @@
 #pragma once
 
-#include "AiPlayerTimed.h"
+#include "Abstract/AiPlayerTimed.h"
 
 
 namespace reversi {

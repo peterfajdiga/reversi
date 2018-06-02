@@ -1,6 +1,6 @@
 #include <iostream>
 #include "AiPlayerTimed.h"
-#include "../helpers.h"
+#include "../../helpers.h"
 
 
 namespace reversi {

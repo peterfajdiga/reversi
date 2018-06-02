@@ -3,12 +3,14 @@ cmake_minimum_required(VERSION 3.9)
 set(CMAKE_CXX_STANDARD 17)
 
 set(SOURCE_FILES
-        Engine/Ai/AiEvaluationPlayer.cpp
-        Engine/Ai/AiEvaluationPlayer.h
+        Engine/Ai/Abstract/heuristics.cpp
+        Engine/Ai/Abstract/heuristics.h
+        Engine/Ai/Abstract/AiEvaluationPlayer.cpp
+        Engine/Ai/Abstract/AiEvaluationPlayer.h
+        Engine/Ai/Abstract/AiPlayerTimed.cpp
+        Engine/Ai/Abstract/AiPlayerTimed.h
         Engine/Ai/AiHeuristicPlayer.cpp
         Engine/Ai/AiHeuristicPlayer.h
-        Engine/Ai/AiPlayerTimed.cpp
-        Engine/Ai/AiPlayerTimed.h
         Engine/Ai/AlphaBetaPlayer.cpp
         Engine/Ai/AlphaBetaPlayer.h
         Engine/Ai/EasyComputerPlayer.cpp

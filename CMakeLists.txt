@@ -1,5 +1,4 @@
 cmake_minimum_required(VERSION 3.9)
-project(reversi)
 
 set(CMAKE_CXX_STANDARD 17)
 
@@ -28,7 +27,10 @@ set(SOURCE_FILES
         Engine/ViewInterface.cpp
         Engine/ViewInterface.h
         ConsoleReversi/ConsoleView.cpp
-        ConsoleReversi/ConsoleView.h
-        ConsoleReversi/main.cpp)
+        ConsoleReversi/ConsoleView.h)
 
-add_executable(reversi ${SOURCE_FILES})
+project(reversi)
+add_executable(reversi ${SOURCE_FILES} ConsoleReversi/main.cpp)
+
+project(reversi_pit)
+add_executable(reversi_pit ${SOURCE_FILES} ConsoleReversi/pit.cpp)

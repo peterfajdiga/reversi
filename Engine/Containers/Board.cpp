@@ -95,6 +95,10 @@ namespace reversi {
         return scoreBlack;
     }
 
+    size_t Board::getPiecesCount() const {
+        return scoreWhite + scoreBlack;
+    }
+
 
     bool Board::isOpen(const Tile& move) const {
         return positions[move.x][move.y] == unoccupied;

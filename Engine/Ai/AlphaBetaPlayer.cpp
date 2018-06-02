@@ -19,7 +19,7 @@ namespace reversi {
 
         for (const Tile& move : legalMoves) {
             Board child(board, move);
-            const double evalScore = negamax(child, 4, -INFINITY, INFINITY);
+            const double evalScore = negamax(child, 8, -INFINITY, INFINITY);
             if (evalScore > maxEvalScore) {
                 maxEvalScore = evalScore;
                 bestMove = move;

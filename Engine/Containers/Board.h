@@ -34,6 +34,8 @@ namespace reversi {
 
         size_t getPiecesCount() const;
 
+        double getProgression() const;
+
         // isOpen
         // Determines if the supplied position (x/y indexes) is open (is empty and not already taken).
         bool isOpen(const Tile& move) const;

@@ -99,6 +99,10 @@ namespace reversi {
         return scoreWhite + scoreBlack;
     }
 
+    double Board::getProgression() const {
+        return (getPiecesCount() - 4) / 60.0;
+    }
+
 
     bool Board::isOpen(const Tile& move) const {
         return positions[move.x][move.y] == unoccupied;

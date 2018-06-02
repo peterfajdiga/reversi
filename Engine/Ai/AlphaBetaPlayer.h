@@ -1,11 +1,11 @@
 #pragma once
 
-#include "../PlayerInterface.h"
+#include "AiPlayerTimed.h"
 
 
 namespace reversi {
 
-    class AlphaBetaPlayer : public PlayerInterface {
+    class AlphaBetaPlayer : public AiPlayerTimed {
     public:
         AlphaBetaPlayer();
 
@@ -13,7 +13,7 @@ namespace reversi {
 
         ~AlphaBetaPlayer() override;
 
-        Tile getMove(const Board& board, ViewInterface& view) override;
+        Tile getMoveTimed(const Board& board) override;
 
         double negamax(const Board& board, int depth, double alpha, double beta) const;
 

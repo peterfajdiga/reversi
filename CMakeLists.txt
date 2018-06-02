@@ -4,6 +4,8 @@ project(reversi)
 set(CMAKE_CXX_STANDARD 17)
 
 set(SOURCE_FILES
+        Engine/Ai/AiPlayerTimed.cpp
+        Engine/Ai/AiPlayerTimed.h
         Engine/Ai/AlphaBetaPlayer.cpp
         Engine/Ai/AlphaBetaPlayer.h
         Engine/Ai/EasyComputerPlayer.cpp

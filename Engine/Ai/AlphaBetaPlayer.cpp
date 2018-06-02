@@ -5,16 +5,14 @@
 
 namespace reversi {
 
-    AlphaBetaPlayer::AlphaBetaPlayer() : PlayerInterface("Negamax") {};
+    AlphaBetaPlayer::AlphaBetaPlayer() : AiPlayerTimed("Alphabet") {};
 
-    AlphaBetaPlayer::AlphaBetaPlayer(const std::string& name) : PlayerInterface(name) {}
+    AlphaBetaPlayer::AlphaBetaPlayer(const std::string& name) : AiPlayerTimed(name) {}
 
     AlphaBetaPlayer::~AlphaBetaPlayer() = default;
 
 
-    Tile AlphaBetaPlayer::getMove(const Board& board, ViewInterface& view) {
-        view.displayStatus(Status::FINDING_MOVE);
-
+    Tile AlphaBetaPlayer::getMoveTimed(const Board& board) {
         const std::vector<Tile>& legalMoves = board.getLegalMoves();
         double maxEvalScore = -INFINITY;
         Tile bestMove = legalMoves[0];  // default move if given state is not winnable

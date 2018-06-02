@@ -4,15 +4,13 @@
 
 namespace reversi {
 
-    MonteCarloPlayer::MonteCarloPlayer() : PlayerInterface("Carlos") {}
+    MonteCarloPlayer::MonteCarloPlayer() : AiPlayerTimed("Carlos") {}
 
-    MonteCarloPlayer::MonteCarloPlayer(const std::string& name) : PlayerInterface(name) {}
+    MonteCarloPlayer::MonteCarloPlayer(const std::string& name) : AiPlayerTimed(name) {}
 
     MonteCarloPlayer::~MonteCarloPlayer() = default;
 
-    Tile MonteCarloPlayer::getMove(const Board& board, ViewInterface& view) {
-        view.displayStatus(Status::FINDING_MOVE);
-
+    Tile MonteCarloPlayer::getMoveTimed(const Board& board) {
         double maxEvalScore = -INFINITY;
         Tile bestMove;
 

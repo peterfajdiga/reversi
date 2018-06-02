@@ -1,11 +1,11 @@
 #pragma once
 
-#include <string>
-#include "../PlayerInterface.h"
+#include "AiPlayerTimed.h"
+
 
 namespace reversi {
 
-    class MonteCarloPlayer : public PlayerInterface {
+    class MonteCarloPlayer : public AiPlayerTimed {
     public:
         MonteCarloPlayer();
 
@@ -13,7 +13,7 @@ namespace reversi {
 
         ~MonteCarloPlayer() override;
 
-        Tile getMove(const Board& board, ViewInterface& view) override;
+        Tile getMoveTimed(const Board& board) override;
 
         double sampleMC(const Board& board) const;
 

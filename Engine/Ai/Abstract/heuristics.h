@@ -9,6 +9,8 @@ namespace reversi::heuristics {
 
     double stanford_modified(const Board& board);
 
+    double stanford_modified_4_8(const Board& board);
+
     double moves(const Board& board);
 
 };

@@ -14,6 +14,8 @@ namespace reversi {
         ~AiHeuristicPlayer() override;
 
         double evaluateStart(const Board& board) override;
+
+        double heuristic(const Board& board) override;
     };
 
 }

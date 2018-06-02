@@ -2,6 +2,7 @@
 #include <cassert>
 #include "AlphaBetaPlayer.h"
 #include "../helpers.h"
+#include "Abstract/heuristics.h"
 
 
 namespace reversi {
@@ -47,24 +48,12 @@ namespace reversi {
     }
 
 
-    const double weights[8][8] = {
-            {16.160, -3.575,  1.160,  0.530,  0.530,  1.160, -3.575, 16.160},
-            {-3.575, -1.810, -0.060, -0.225, -0.225, -0.060, -1.810, -3.575},
-            { 1.160, -0.060,  0.510,  0.015,  0.015,  0.510, -0.060,  1.160},
-            { 0.530, -0.225,  0.015, -0.010, -0.010,  0.015, -0.225,  0.530},
-            { 0.530, -0.225,  0.015, -0.010, -0.010,  0.015, -0.225,  0.530},
-            { 1.160, -0.060,  0.510,  0.015,  0.015,  0.510, -0.060,  1.160},
-            {-3.575, -1.810, -0.060, -0.225, -0.225, -0.060, -1.810, -3.575},
-            {16.160, -3.575,  1.160,  0.530,  0.530,  1.160, -3.575, 16.160}
-    };
-
-
     double AlphaBetaPlayer::evaluateStart(const Board& board) {
         return negamax(board, 6, -INFINITY, INFINITY);
     }
 
 
-    double AlphaBetaPlayer::negamax(const Board& board, size_t depth, double alpha, double beta) const {
+    double AlphaBetaPlayer::negamax(const Board& board, size_t depth, double alpha, double beta) {
         if (depth == 0 || board.isGameOver()) {
             return evaluate(board);
         }
@@ -102,49 +91,7 @@ namespace reversi {
     }
 
 
-    double AlphaBetaPlayer::evaluate(const Board& board) const {
-        if (board.isGameOver()) {
-            const gamestate state = board.getGamestate();
-            if (state == draw) {
-                return 0.0;
-            } else {
-                return INFINITY * state * playerColor;
-            }
-        }
-
-        double weightsModified[8][8];
-        std::copy(&weights[0][0], &weights[0][0]+8*8,&weightsModified[0][0]);
-
-
-        if(board(0,0)== board.getCurrentPlayer()){
-            weightsModified[0][1] *= -1;
-            weightsModified[1][0] *= -1;
-            weightsModified[1][1] *= -1;
-        }
-        if(board(7,7)== board.getCurrentPlayer()){
-            weightsModified[7][6] *= -1;
-            weightsModified[6][7] *= -1;
-            weightsModified[6][6] *= -1;
-        }
-        if(board(0,7)== board.getCurrentPlayer()){
-            weightsModified[0][6] *= -1;
-            weightsModified[1][7] *= -1;
-            weightsModified[1][6] *= -1;
-        }
-        if(board(7,0)== board.getCurrentPlayer()){
-            weightsModified[7][1] *= -1;
-            weightsModified[6][0] *= -1;
-            weightsModified[6][1] *= -1;
-        }
-        double boardValue = 0.0;
-        for (coordinate y = 0; y < 8; ++y) {
-            for (coordinate x = 0; x < 8; ++x) {
-                boardValue += board(x, y) * weightsModified[x][y];
-            }
-        }
-
-        const double legalMovesValue =  board.getLegalMoves().size() * board.getCurrentPlayer(); // * getId();
-        //if(board.getPiecesCount() >= 40) return (boardValue + legalMovesValue) * playerColor;
-        return (boardValue) * playerColor;
+    double AlphaBetaPlayer::heuristic(const Board& board) {
+        return heuristics::stanford_modified(board);
     }
 }

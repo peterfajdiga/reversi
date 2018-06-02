@@ -1,5 +1,6 @@
 #include <cmath>
 #include "AiHeuristicPlayer.h"
+#include "Abstract/heuristics.h"
 
 
 namespace reversi {
@@ -11,16 +12,11 @@ namespace reversi {
     AiHeuristicPlayer::~AiHeuristicPlayer() = default;
 
     double AiHeuristicPlayer::evaluateStart(const Board& board) {
-        if (board.isGameOver()) {
-            const gamestate state = board.getGamestate();
-            if (state == draw) {
-                return 0.0;
-            } else {
-                return INFINITY * state * playerColor;
-            }
-        }
-
-        return board.getLegalMoves().size() * board.getCurrentPlayer() * playerColor;
+        return evaluate(board);
     }
-    
+
+    double AiHeuristicPlayer::heuristic(const Board& board) {
+        return heuristics::moves(board);
+    }
+
 }

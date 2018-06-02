@@ -1,6 +1,7 @@
 #include <cassert>
 #include "../Engine/Ai/EasyComputerPlayer.h"
-#include "../Engine/Ai/AlphaBetaPlayer.h"
+#include "../Engine/Ai/AiHeuristicPlayer.h"
+#include "NullView.h"
 
 
 int main() {
@@ -8,7 +9,8 @@ int main() {
     using namespace reversi;
 
     EasyComputerPlayer playerWhite(white);
-    AlphaBetaPlayer playerBlack(black);
+    AiHeuristicPlayer playerBlack(black);
+    NullView nullView;
 
     size_t winsWhite = 0;
     size_t winsBlack = 0;
@@ -19,8 +21,8 @@ int main() {
     while (true) {
         Board board;
         while (!board.isGameOver()) {
-            AiPlayerTimed& currentPlayer = board.getCurrentPlayer() == white ? (AiPlayerTimed&)playerWhite : (AiPlayerTimed&)playerBlack;
-            const Tile move = currentPlayer.getMoveTimed(board);
+            PlayerInterface& currentPlayer = board.getCurrentPlayer() == white ? (AiPlayerTimed&)playerWhite : (AiPlayerTimed&)playerBlack;
+            const Tile move = currentPlayer.getMove(board, nullView);
             board.doMove(move);
         }
         switch (board.getGamestate()) {

@@ -5,6 +5,8 @@ set(CMAKE_CXX_STANDARD 17)
 set(SOURCE_FILES
         Engine/Ai/AiEvaluationPlayer.cpp
         Engine/Ai/AiEvaluationPlayer.h
+        Engine/Ai/AiHeuristicPlayer.cpp
+        Engine/Ai/AiHeuristicPlayer.h
         Engine/Ai/AiPlayerTimed.cpp
         Engine/Ai/AiPlayerTimed.h
         Engine/Ai/AlphaBetaPlayer.cpp
@@ -35,4 +37,4 @@ project(reversi)
 add_executable(reversi ${SOURCE_FILES} ConsoleReversi/main.cpp)
 
 project(reversi_pit)
-add_executable(reversi_pit ${SOURCE_FILES} ConsoleReversi/pit.cpp)
+add_executable(reversi_pit ${SOURCE_FILES} pit/pit.cpp pit/NullView.cpp pit/NullView.h)

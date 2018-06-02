@@ -12,8 +12,8 @@ int main() {
 
     using namespace reversi;
 
-    AiHeuristicPlayer playerWhite(white);
-    AiHeuristicPlayer2 playerBlack(black);
+    MonteCarloPlayer playerWhite(white);
+    AlphaBetaPlayer playerBlack(black);
     NullView nullView;
 
     size_t winsWhite = 0;

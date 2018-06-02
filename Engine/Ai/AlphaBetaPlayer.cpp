@@ -49,12 +49,12 @@ namespace reversi {
 
 
     double AlphaBetaPlayer::evaluateStart(const Board& board) {
-        if(board.getPiecesCount() >= 50){return negamax(board, 14, -INFINITY, INFINITY);}
-        return negamax(board, 5, -INFINITY, INFINITY);
+        if(board.getPiecesCount() >= 50){return minimax(board, 14, -INFINITY, INFINITY);}
+        return minimax(board, 5, -INFINITY, INFINITY);
     }
 
 
-    double AlphaBetaPlayer::negamax(const Board& board, size_t depth, double alpha, double beta) {
+    double AlphaBetaPlayer::minimax(const Board& board, size_t depth, double alpha, double beta) {
         if (depth == 0 || board.isGameOver()) {
             return evaluate(board);
         }
@@ -65,7 +65,7 @@ namespace reversi {
 
             for (const Tile& move : board.getLegalMoves()) {
                 Board child(board, move);
-                const double evalScore = negamax(child, depth - 1, alpha, beta);
+                const double evalScore = minimax(child, depth - 1, alpha, beta);
                 maxEvalScore = std::max(maxEvalScore, evalScore);
                 alpha = std::max(alpha, maxEvalScore);
                 if (beta <= alpha) {
@@ -80,7 +80,7 @@ namespace reversi {
 
             for (const Tile& move : board.getLegalMoves()) {
                 Board child(board, move);
-                const double evalScore = negamax(child, depth - 1, alpha, beta);
+                const double evalScore = minimax(child, depth - 1, alpha, beta);
                 minEvalScore = std::min(minEvalScore, evalScore);
                 beta = std::min(beta, minEvalScore);
                 if (beta <= alpha) {
@@ -93,6 +93,6 @@ namespace reversi {
 
 
     double AlphaBetaPlayer::heuristic(const Board& board) {
-        return 4.8 * heuristics::stanford_modified(board);
+        return heuristics::stability(board);
     }
 }

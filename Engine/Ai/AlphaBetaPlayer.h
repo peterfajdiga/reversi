@@ -21,7 +21,7 @@ namespace reversi {
 
         double evaluateStart(const Board& board) override;
 
-        double negamax(const Board& board, size_t depth, double alpha, double beta);
+        double minimax(const Board& board, size_t depth, double alpha, double beta);
 
         double heuristic(const Board& board) override;
     };

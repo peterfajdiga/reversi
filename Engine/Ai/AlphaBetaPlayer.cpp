@@ -1,6 +1,7 @@
 #include <cmath>
 #include <cassert>
 #include "AlphaBetaPlayer.h"
+#include "../helpers.h"
 
 
 namespace reversi {
@@ -10,6 +11,41 @@ namespace reversi {
     AlphaBetaPlayer::AlphaBetaPlayer(const std::string& name) : AiPlayerTimed(name) {}
 
     AlphaBetaPlayer::~AlphaBetaPlayer() = default;
+
+
+    const double PIECES_GAUSS_A1 =   1.066;
+    const double PIECES_GAUSS_B1 =   18.29;
+    const double PIECES_GAUSS_C1 =   25.82;
+    const double PIECES_GAUSS_A2 = -0.5588;
+    const double PIECES_GAUSS_B2 =   6.164;
+    const double PIECES_GAUSS_C2 =    9.95;
+    double AlphaBetaPlayer::estimateTimeByPieces(const size_t n_pieces) {
+        // gauss function learned with depth 4
+        const double exp1 = (n_pieces-PIECES_GAUSS_B1)/PIECES_GAUSS_C1;
+        const double exp2 = (n_pieces-PIECES_GAUSS_B2)/PIECES_GAUSS_C2;
+        return PIECES_GAUSS_A1 * exp(-exp1 * exp1) +
+               PIECES_GAUSS_A2 * exp(-exp2 * exp2);
+    }
+
+
+    const double MOVES_QUAD_P2 =  0.001804020295611;
+    const double MOVES_QUAD_P1 =  0.024237733457924;
+    const double MOVES_QUAD_P0 = -0.020781778020523;
+    double AlphaBetaPlayer::estimateTimeByMoves(const size_t n_moves) {
+        // quadratic function learned with depth 4
+        // 18 moves gives 1
+        return n_moves * n_moves * MOVES_QUAD_P2 + n_moves * MOVES_QUAD_P1 * MOVES_QUAD_P0;
+    }
+
+
+    const size_t DEPTH_MIN = 4;
+    const size_t DEPTH_MAX = 10;
+    const size_t DEPTH_D = DEPTH_MAX-DEPTH_MIN;
+    size_t AlphaBetaPlayer::estimateDepth(const size_t n_pieces, const size_t n_moves) {
+        const double time = (estimateTimeByPieces(n_pieces) + estimateTimeByMoves(n_moves)) / 2.0;
+        return (size_t)floor(DEPTH_MAX - time * DEPTH_D);
+    }
+
 
     const double weights[8][8] = {
             {16.160, -3.575,  1.160,  0.530,  0.530,  1.160, -3.575, 16.160},
@@ -24,13 +60,19 @@ namespace reversi {
 
 
     Tile AlphaBetaPlayer::getMoveTimed(const Board& board) {
+        if (board.getPiecesCount() == 4) {
+            return helpers::getRandom(board.getLegalMoves());
+        }
+
         const std::vector<Tile>& legalMoves = board.getLegalMoves();
         double maxEvalScore = -INFINITY;
         Tile bestMove = legalMoves[0];  // default move if given state is not winnable
 
+        //printf("pieces: %ld | moves: %ld | depth: %ld\n", board.getPiecesCount(), legalMoves.size(), estimateDepth(board.getPiecesCount(), 0));
+
         for (const Tile& move : legalMoves) {
             Board child(board, move);
-            const double evalScore = negamax(child, 8, -INFINITY, INFINITY);
+            const double evalScore = negamax(child, estimateDepth(board.getPiecesCount(), legalMoves.size()), -INFINITY, INFINITY);
             if (evalScore > maxEvalScore) {
                 maxEvalScore = evalScore;
                 bestMove = move;
@@ -40,7 +82,7 @@ namespace reversi {
     }
 
 
-    double AlphaBetaPlayer::negamax(const Board& board, int depth, double alpha, double beta) const {
+    double AlphaBetaPlayer::negamax(const Board& board, size_t depth, double alpha, double beta) const {
         if (depth == 0 || board.isGameOver()) {
             return evaluate(board);
         }

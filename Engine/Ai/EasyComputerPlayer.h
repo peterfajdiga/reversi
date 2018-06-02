@@ -1,7 +1,6 @@
 #pragma once
 
-#include <string>
-#include "../PlayerInterface.h"
+#include "AiPlayerTimed.h"
 
 
 namespace reversi {
@@ -12,7 +11,7 @@ namespace reversi {
     * Concrete player class for easy computer players.
     *
     */
-    class EasyComputerPlayer : public PlayerInterface {
+    class EasyComputerPlayer : public AiPlayerTimed {
     public:
         EasyComputerPlayer();
 
@@ -20,7 +19,7 @@ namespace reversi {
 
         ~EasyComputerPlayer() override;
 
-        Tile getMove(const Board& board, ViewInterface& view) override;
+        Tile getMoveTimed(const Board& board) override;
     };
 
 }

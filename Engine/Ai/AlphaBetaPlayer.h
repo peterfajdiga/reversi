@@ -13,9 +13,11 @@ namespace reversi {
 
         ~AlphaBetaPlayer() override;
 
-        static double estimateTime(const size_t n_pieces);
+        static double estimateTimeByPieces(const size_t n_pieces);
 
-        static size_t estimateDepth(const size_t n_pieces);
+        static double estimateTimeByMoves(const size_t n_moves);
+
+        static size_t estimateDepth(const size_t n_pieces, const size_t n_moves);
 
         Tile getMoveTimed(const Board& board) override;
 

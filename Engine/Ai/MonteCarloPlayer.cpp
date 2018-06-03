@@ -10,30 +10,41 @@ namespace reversi {
 
     MonteCarloPlayer::~MonteCarloPlayer() = default;
 
+    const clock_t SAMPLE_TIME = (clock_t)(3 * CLOCKS_PER_SEC);
     Tile MonteCarloPlayer::getMoveTimed(const Board& board) {
-        double maxEvalScore = -INFINITY;
-        Tile bestMove;
+        const std::vector<Tile>& legalMoves = board.getLegalMoves();
+        const size_t n = legalMoves.size();
 
-        for (const Tile& move : board.getLegalMoves()) {
-            Board child(board, move);
-            const double evalScore = sampleMC(child);
-            if (evalScore > maxEvalScore) {
-                maxEvalScore = evalScore;
-                bestMove = move;
+        // initialize win counters
+        size_t wins[n];
+        for (size_t i = 0; i < n; ++i) {
+            wins[i] = 0;
+        }
+
+        // get child states
+        Board children[n];
+        for (size_t i = 0; i < n; ++i) {
+            children[i] = Board(board, legalMoves[i]);
+        }
+
+        // sample
+        const clock_t startTime = clock();
+        size_t i = 0;
+        while (clock() - startTime < SAMPLE_TIME) {
+            wins[i] += playRandom(children[i]);
+            i = (i + 1) % n;
+        }
+
+        // find best move
+        Tile bestMove = legalMoves[0];  // default move if winning is not possible
+        size_t mostWins = 0;
+        for (size_t i = 0; i < n; ++i) {
+            if (wins[i] > mostWins) {
+                mostWins = wins[i];
+                bestMove = legalMoves[i];
             }
         }
         return bestMove;
-    }
-
-    const size_t N_RUNS = 1000;
-    double MonteCarloPlayer::sampleMC(const Board& board) const {
-        size_t wins = 0;
-        for (int run = 0; run < N_RUNS; ++run) {
-            if (playRandom(board)) {
-                wins++;
-            }
-        }
-        return (double)wins / N_RUNS;
     }
 
     bool MonteCarloPlayer::playRandom(const Board& boardStart) const {

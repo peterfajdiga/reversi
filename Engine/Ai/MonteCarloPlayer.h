@@ -15,7 +15,7 @@ namespace reversi {
 
         Tile getMoveTimed(const Board& board) override;
 
-        bool playRandom(const Board& boardStart) const;
+        static gamestate playRandom(const Board& boardStart);
     };
 
 }

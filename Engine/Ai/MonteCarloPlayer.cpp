@@ -31,7 +31,7 @@ namespace reversi {
         const clock_t startTime = clock();
         size_t i = 0;
         while (clock() - startTime < SAMPLE_TIME) {
-            wins[i] += playRandom(children[i]);
+            wins[i] += playRandom(children[i]) / 2 == playerColor;  // increment if this player won
             i = (i + 1) % n;
         }
 
@@ -47,14 +47,14 @@ namespace reversi {
         return bestMove;
     }
 
-    bool MonteCarloPlayer::playRandom(const Board& boardStart) const {
+    gamestate MonteCarloPlayer::playRandom(const Board& boardStart) {
         Board board = boardStart;
         while (!board.isGameOver()) {
             std::vector<Tile> legalMoves = board.getLegalMoves();
             const size_t index = rand() % legalMoves.size();
             board.doMove(legalMoves[index]);
         }
-        return board.getGamestate() / 2 == playerColor;
+        return board.getGamestate();
     }
 
 }

@@ -19,6 +19,8 @@ set(SOURCE_FILES
         Engine/Ai/EasyComputerPlayer.h
         Engine/Ai/MonteCarloPlayer.cpp
         Engine/Ai/MonteCarloPlayer.h
+        Engine/Ai/MonteCarloTreePlayer.cpp
+        Engine/Ai/MonteCarloTreePlayer.h
         Engine/Containers/Board.cpp
         Engine/Containers/Board.h
         Engine/Containers/Direction.h

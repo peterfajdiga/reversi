@@ -1,8 +1,8 @@
 #include <cassert>
 #include <ctime>
+#include "NullView.h"
 #include "../Engine/Ai/EasyComputerPlayer.h"
 #include "../Engine/Ai/AiHeuristicPlayer.h"
-#include "NullView.h"
 #include "../Engine/Ai/AiHeuristicPlayer2.h"
 #include "../Engine/Ai/AlphaBetaPlayer.h"
 #include "../Engine/Ai/MonteCarloPlayer.h"
@@ -20,7 +20,7 @@ int main() {
     size_t winsBlack = 0;
     size_t draws = 0;
 
-    printf("%s (white) : %s (black)\n", playerWhite.name.c_str(), playerBlack.name.c_str());
+    printf(" Games | %5.5s (white) | %5.5s (black) |         draws | cpu time white | cpu time black \n", playerWhite.name.c_str(), playerBlack.name.c_str());
     clock_t lastPrint = 0;
     while (true) {
         Board board;
@@ -37,8 +37,12 @@ int main() {
         }
         clock_t time = clock();
         if (time - lastPrint > 2 * CLOCKS_PER_SEC) {
-            printf("\r%ld : %ld (%ld draws) | %.2lfs : %.2lfs",
-                   winsWhite, winsBlack, draws,
+            const size_t n_games = winsWhite + winsBlack + draws;
+            printf("\r%6ld | %6ld (%3.0lf%%) | %6ld (%3.0lf%%) | %6ld (%3.0lf%%) | %13.2lfs | %13.2lfs",
+                   n_games,
+                   winsWhite, winsWhite * 100.0 / n_games,
+                   winsBlack, winsBlack * 100.0 / n_games,
+                   draws,     draws     * 100.0 / n_games,
                    (double)playerWhite.getCpuTime() / CLOCKS_PER_SEC,
                    (double)playerBlack.getCpuTime() / CLOCKS_PER_SEC
             );

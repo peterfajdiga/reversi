@@ -37,7 +37,11 @@ int main() {
         }
         clock_t time = clock();
         if (time - lastPrint > 2 * CLOCKS_PER_SEC) {
-            printf("\r%ld : %ld (%ld draws)", winsWhite, winsBlack, draws);
+            printf("\r%ld : %ld (%ld draws) | %.2lfs : %.2lfs",
+                   winsWhite, winsBlack, draws,
+                   (double)playerWhite.getCpuTime() / CLOCKS_PER_SEC,
+                   (double)playerBlack.getCpuTime() / CLOCKS_PER_SEC
+            );
             fflush(stdout);
             lastPrint = time;
         }

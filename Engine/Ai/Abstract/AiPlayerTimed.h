@@ -16,6 +16,11 @@ namespace reversi {
         Tile getMove(const Board& board, ViewInterface& view) final;
 
         virtual Tile getMoveTimed(const Board& board) = 0;
+
+        clock_t getCpuTime() const;
+
+    private:
+        clock_t cpuTime;
     };
 
 }

@@ -6,9 +6,9 @@
 
 namespace reversi {
 
-    AiPlayerTimed::AiPlayerTimed(color playerColor) : PlayerInterface(playerColor, "CPU") {}
+    AiPlayerTimed::AiPlayerTimed(color playerColor) : cpuTime(0), PlayerInterface(playerColor, "CPU") {}
 
-    AiPlayerTimed::AiPlayerTimed(color playerColor, const std::string& name) : PlayerInterface(playerColor, name) {}
+    AiPlayerTimed::AiPlayerTimed(color playerColor, const std::string& name) : cpuTime(0), PlayerInterface(playerColor, name) {}
 
     AiPlayerTimed::~AiPlayerTimed() = default;
 
@@ -20,9 +20,15 @@ namespace reversi {
 
         const clock_t startTime = clock();
         Tile move = getMoveTimed(board);
+        const clock_t turnTime = clock() - startTime;
+        cpuTime += turnTime;
         //fprintf(stderr, "%ld\t%ld\t%lf\n", board.getPiecesCount(), board.getLegalMoves().size(), (double)(clock() - startTime) / CLOCKS_PER_SEC);
         //printf("PiecesCount: %ld | LegalMovesCount: %ld\n", board.getPiecesCount(), board.getLegalMoves().size());
         //std::cout << "Finding move took " << (double)(clock() - startTime) / CLOCKS_PER_SEC << " seconds\n";
         return move;
+    }
+
+    clock_t AiPlayerTimed::getCpuTime() const {
+        return cpuTime;
     }
 }

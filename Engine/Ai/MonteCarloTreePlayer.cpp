@@ -75,6 +75,7 @@ namespace reversi {
         }
         const size_t n = board.getLegalMoves().size();
         for (size_t i = 0; i < n; ++i) {
+            // TODO: fix segfault with unexpanded nodes (would be best to entirely avoid searching states)
             if (children[i]->findState(moves, state, depth-1)) {
                 moves.insert(moves.begin(), i);
                 return true;

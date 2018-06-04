@@ -23,6 +23,8 @@ namespace reversi {
         color& operator() (coordinate x, coordinate y);
         const color& operator() (coordinate x, coordinate y) const;
 
+        bool operator== (const Board& other) const;
+
         gamestate getGamestate() const;
 
         color getCurrentPlayer() const;

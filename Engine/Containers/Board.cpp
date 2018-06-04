@@ -57,6 +57,18 @@ namespace reversi {
     }
 
 
+    bool Board::operator==(const Board& other) const {
+        for (Tile move(0, 0); move.y < 8; move.y++) {
+            for (move.x = 0; move.x < 8; move.x++) {
+                if ((*this)[move] != other[move]) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
+
     gamestate Board::getGamestate() const {
         return state;
     }

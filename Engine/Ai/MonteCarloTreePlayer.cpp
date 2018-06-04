@@ -6,6 +6,9 @@
 
 namespace reversi {
 
+    const double C = sqrt(2);
+    const double EPS = 1e-14;
+
     class Tree {
     public:
         Tree* const parent;
@@ -24,7 +27,8 @@ namespace reversi {
         }
 
         double selectionFitness() const {
-            return (double)wins / runs;
+            // UCT
+            return (double)wins / (runs+EPS) + C * sqrt(log(parent->runs+1) / (runs+EPS)) + rand() * EPS;
         }
 
         Tree& select() {

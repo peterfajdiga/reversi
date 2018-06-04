@@ -44,8 +44,8 @@ namespace reversi {
 
         void propagate(const gamestate winner) {
             Tree* tree = this;
-            while (tree != nullptr) {
-                if (tree->board.isGameOver() || winner / 2 == tree->board.getCurrentPlayer()) {
+            while (tree->parent != nullptr) {
+                if (winner / 2 == tree->parent->board.getCurrentPlayer()) {
                     tree->wins++;
                 }
                 tree->runs++;

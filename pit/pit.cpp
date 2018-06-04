@@ -6,14 +6,15 @@
 #include "../Engine/Ai/AiHeuristicPlayer2.h"
 #include "../Engine/Ai/AlphaBetaPlayer.h"
 #include "../Engine/Ai/MonteCarloPlayer.h"
+#include "../Engine/Ai/MonteCarloTreePlayer.h"
 
 
 int main() {
 
     using namespace reversi;
 
-    MonteCarloPlayer playerWhite(white);
-    AlphaBetaPlayer playerBlack(black);
+    MonteCarloTreePlayer playerWhite(white);
+    MonteCarloPlayer playerBlack(black);
     NullView nullView;
 
     size_t winsWhite = 0;

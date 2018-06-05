@@ -57,14 +57,23 @@ namespace reversi {
     }
 
     void MCTree::reroot(MCTree*& root, size_t index) {
-        const size_t n = root->board.getLegalMoves().size();
-        for (size_t i = 0; i < n; ++i) {
-            if (i != index) {
-                root->children[i]->clear();
+        MCTree* newRoot;
+        if (root->children.empty()) {
+            // not expanded, create correct child
+            newRoot = new MCTree(Board(root->board, root->board.getLegalMoves()[index]));
+            root->clear();
+
+        } else {
+            // expanded, select new root from children
+            const size_t n = root->board.getLegalMoves().size();
+            for (size_t i = 0; i < n; ++i) {
+                if (i != index) {
+                    root->children[i]->clear();
+                }
             }
+            newRoot = root->children[index];
+            newRoot->parent = nullptr;
         }
-        MCTree* newRoot = root->children[index];
-        newRoot->parent = nullptr;
         delete root;
         root = newRoot;
     }

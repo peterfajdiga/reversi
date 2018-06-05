@@ -1,5 +1,6 @@
 #include <cmath>
 #include "MonteCarloPlayer.h"
+#include "Abstract/heuristics.h"
 
 
 namespace reversi {
@@ -53,6 +54,25 @@ namespace reversi {
             std::vector<Tile> legalMoves = board.getLegalMoves();
             const size_t index = rand() % legalMoves.size();
             board.doMove(legalMoves[index]);
+        }
+        return board.getGamestate();
+    }
+
+    gamestate MonteCarloPlayer::playInformed(const Board& boardStart) {
+        Board board = boardStart;
+        while (!board.isGameOver()) {
+            const std::vector<Tile>& legalMoves = board.getLegalMoves();
+            double maxEvalScore = -INFINITY;
+            Tile bestMove = legalMoves[0];  // default move if given state is not winnable
+            for (const Tile& move : legalMoves) {
+                Board child(board, move);
+                const double evalScore = heuristics::stability(child) * board.getCurrentPlayer();
+                if (evalScore > maxEvalScore) {
+                    maxEvalScore = evalScore;
+                    bestMove = move;
+                }
+            }
+            board.doMove(bestMove);
         }
         return board.getGamestate();
     }

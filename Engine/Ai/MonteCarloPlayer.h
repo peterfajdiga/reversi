@@ -15,7 +15,9 @@ namespace reversi {
 
         Tile getMoveTimed(const Board& board, const std::vector<Tile>& moveHistory) override;
 
-        static gamestate playRandom(const Board& boardStart);
+        static gamestate playRandom(const Board&);
+
+        static gamestate playInformed(const Board&);
     };
 
 }

@@ -20,11 +20,8 @@ namespace reversi {
         MCTree& select();
         void propagate(const gamestate winner);
         void clear();
-        std::vector<size_t> findState(const Board& state);
         static void reroot(MCTree*& root, size_t index);
-
-    private:
-        bool findState(std::vector<size_t>& moves, const Board& state, size_t depth);
+        static void reroot(MCTree*& root, const Tile& move);
     };
 
 
@@ -36,11 +33,12 @@ namespace reversi {
 
         ~MonteCarloTreePlayer() override;
 
-        Tile getMoveTimed(const Board& board) override;
+        Tile getMoveTimed(const Board& board, const std::vector<Tile>& moveHistory) override;
 
     private:
         MCTree* root;
         size_t lastPiecesCount;
+        size_t lastMoveHistoryLength;
     };
 
 }

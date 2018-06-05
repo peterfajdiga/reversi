@@ -13,7 +13,7 @@ namespace reversi {
 
         ~MonteCarloPlayer() override;
 
-        Tile getMoveTimed(const Board& board) override;
+        Tile getMoveTimed(const Board& board, const std::vector<Tile>& moveHistory) override;
 
         static gamestate playRandom(const Board& boardStart);
     };

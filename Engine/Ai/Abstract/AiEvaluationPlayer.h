@@ -13,7 +13,7 @@ namespace reversi {
 
         ~AiEvaluationPlayer() override;
 
-        Tile getMoveTimed(const Board& board) final;
+        Tile getMoveTimed(const Board& board, const std::vector<Tile>& moveHistory) final;
 
         // positive value good for this player
         virtual double evaluateStart(const Board& board) = 0;

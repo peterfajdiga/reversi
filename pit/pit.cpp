@@ -25,10 +25,12 @@ int main() {
     clock_t lastPrint = 0;
     while (true) {
         Board board;
+        std::vector<Tile> moveHistory;
         while (!board.isGameOver()) {
             PlayerInterface& currentPlayer = board.getCurrentPlayer() == white ? (AiPlayerTimed&)playerWhite : (AiPlayerTimed&)playerBlack;
-            const Tile move = currentPlayer.getMove(board, nullView);
+            const Tile move = currentPlayer.getMove(board, moveHistory, nullView);
             board.doMove(move);
+            moveHistory.emplace_back(move);
         }
         switch (board.getGamestate()) {
             case draw: draws++; break;

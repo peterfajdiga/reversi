@@ -9,7 +9,7 @@ namespace reversi {
 
     EasyComputerPlayer::~EasyComputerPlayer() = default;
 
-    Tile EasyComputerPlayer::getMoveTimed(const Board& board) {
+    Tile EasyComputerPlayer::getMoveTimed(const Board& board, const std::vector<Tile>& moveHistory) {
         return board.getLegalMoves()[0];
     }
 }

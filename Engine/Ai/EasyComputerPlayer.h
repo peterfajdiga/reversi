@@ -19,7 +19,7 @@ namespace reversi {
 
         ~EasyComputerPlayer() override;
 
-        Tile getMoveTimed(const Board& board) override;
+        Tile getMoveTimed(const Board& board, const std::vector<Tile>& moveHistory) override;
     };
 
 }

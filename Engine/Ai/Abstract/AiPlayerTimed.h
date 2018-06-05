@@ -14,9 +14,9 @@ namespace reversi {
 
         ~AiPlayerTimed() override;
 
-        Tile getMove(const Board& board, ViewInterface& view) final;
+        Tile getMove(const Board& board, const std::vector<Tile>& moveHistory, ViewInterface& view) final;
 
-        virtual Tile getMoveTimed(const Board& board) = 0;
+        virtual Tile getMoveTimed(const Board& board, const std::vector<Tile>& moveHistory) = 0;
 
         clock_t getCpuTime() const;
 

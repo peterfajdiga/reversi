@@ -27,7 +27,7 @@ namespace reversi {
 
         virtual ~PlayerInterface();
 
-        virtual Tile getMove(const Board& board, ViewInterface& view) = 0;
+        virtual Tile getMove(const Board& board, const std::vector<Tile>& moveHistory, ViewInterface& view) = 0;
 
         const color playerColor;
 

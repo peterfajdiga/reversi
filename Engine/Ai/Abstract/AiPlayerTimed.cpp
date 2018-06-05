@@ -11,14 +11,14 @@ namespace reversi {
 
     AiPlayerTimed::~AiPlayerTimed() = default;
 
-    Tile AiPlayerTimed::getMove(const Board& board, ViewInterface& view) {
+    Tile AiPlayerTimed::getMove(const Board& board, const std::vector<Tile>& moveHistory, ViewInterface& view) {
         view.displayStatus(Status::FINDING_MOVE);
         if (board.getPiecesCount() == 4) {
             return helpers::getRandom(board.getLegalMoves());
         }
 
         const clock_t startTime = clock();
-        Tile move = getMoveTimed(board);
+        Tile move = getMoveTimed(board, moveHistory);
         const clock_t turnTime = clock() - startTime;
         cpuTime += turnTime;
         //fprintf(stderr, "%ld\t%ld\t%lf\n", board.getPiecesCount(), board.getLegalMoves().size(), (double)(clock() - startTime) / CLOCKS_PER_SEC);

@@ -69,24 +69,15 @@ namespace reversi {
         root = newRoot;
     }
 
-    bool MCTree::findState(std::vector<size_t>& moves, const Board& state, const size_t depth) {
-        if (depth == 0) {
-            return board == state;
-        }
-        const size_t n = board.getLegalMoves().size();
+    void MCTree::reroot(MCTree*& root, const Tile& move) {
+        const std::vector<Tile>& legalMoves = root->board.getLegalMoves();
+        const size_t n = legalMoves.size();
         for (size_t i = 0; i < n; ++i) {
-            if (children[i]->findState(moves, state, depth-1)) {
-                moves.insert(moves.begin(), i);
-                return true;
+            if (legalMoves[i] == move) {
+                reroot(root, i);
+                return;
             }
         }
-        return false;
-    }
-
-    std::vector<size_t> MCTree::findState(const Board& state) {
-        std::vector<size_t> moves;
-        findState(moves, state, state.getPiecesCount() - board.getPiecesCount());
-        return moves;
     }
 
 
@@ -100,7 +91,7 @@ namespace reversi {
     }
 
     const clock_t SAMPLE_TIME = (clock_t)(1 * CLOCKS_PER_SEC);
-    Tile MonteCarloTreePlayer::getMoveTimed(const Board& board) {
+    Tile MonteCarloTreePlayer::getMoveTimed(const Board& board, const std::vector<Tile>& moveHistory) {
         if (board.getPiecesCount() < lastPiecesCount) {
             // new game
             if (root != nullptr) {
@@ -115,11 +106,13 @@ namespace reversi {
             // first move
             root = new MCTree(board);
         } else {
-            for (const size_t move : root->findState(board)) {
-                MCTree::reroot(root, move);
+            const size_t newMoveHistoryLength = moveHistory.size();
+            for (size_t i = lastMoveHistoryLength+1; i < newMoveHistoryLength; ++i) {
+                MCTree::reroot(root, moveHistory[i]);
             }
             assert(root->board == board);
         }
+        lastMoveHistoryLength = moveHistory.size();
 
         // sample
         const clock_t startTime = clock();

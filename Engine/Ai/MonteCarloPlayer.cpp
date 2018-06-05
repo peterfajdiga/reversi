@@ -11,7 +11,7 @@ namespace reversi {
     MonteCarloPlayer::~MonteCarloPlayer() = default;
 
     const clock_t SAMPLE_TIME = (clock_t)(3 * CLOCKS_PER_SEC);
-    Tile MonteCarloPlayer::getMoveTimed(const Board& board) {
+    Tile MonteCarloPlayer::getMoveTimed(const Board& board, const std::vector<Tile>& moveHistory) {
         const std::vector<Tile>& legalMoves = board.getLegalMoves();
         const size_t n = legalMoves.size();
 

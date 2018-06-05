@@ -19,7 +19,7 @@ namespace reversi {
 
         virtual ~HumanPlayer();
 
-        Tile getMove(const Board& board, ViewInterface& view) override;
+        Tile getMove(const Board& board, const std::vector<Tile>& moveHistory, ViewInterface& view) override;
     };
 
 }

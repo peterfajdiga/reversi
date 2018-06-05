@@ -10,7 +10,7 @@ namespace reversi {
     HumanPlayer::~HumanPlayer() = default;
 
 
-    Tile HumanPlayer::getMove(const Board& board, ViewInterface& view) {
+    Tile HumanPlayer::getMove(const Board& board, const std::vector<Tile>& moveHistory, ViewInterface& view) {
         return view.getMoveInput();
     }
 

@@ -10,7 +10,7 @@ namespace reversi {
 
     AiEvaluationPlayer::~AiEvaluationPlayer() = default;
 
-    Tile AiEvaluationPlayer::getMoveTimed(const Board& board) {
+    Tile AiEvaluationPlayer::getMoveTimed(const Board& board, const std::vector<Tile>& moveHistory) {
         const std::vector<Tile>& legalMoves = board.getLegalMoves();
         double maxEvalScore = -INFINITY;
         Tile bestMove = legalMoves[0];  // default move if given state is not winnable

@@ -51,6 +51,7 @@ namespace reversi {
 
     void Engine::setupGame() {
         board = Board();  // TODO: do differently
+        moveHistory.clear();
         mView->setupGame();
     }
 
@@ -67,7 +68,7 @@ namespace reversi {
             }
 
             try {
-                Tile requestedMove = getPlayer()->getMove(board, *mView);  // TODO: reference
+                Tile requestedMove = getPlayer()->getMove(board, moveHistory, *mView);  // TODO: reference
 
                 Status status = updateState(requestedMove);
                 displayStatus(status);
@@ -104,7 +105,7 @@ namespace reversi {
         try {
             lastMoveSkipped = board.doMove(move);
             lastMovePlayer = currentPlayer;
-            lastMoveTile = move;
+            moveHistory.emplace_back(move);
         } catch (const InvalidMoveException& e) {
             return Status::INVALID_MOVE;
         }
@@ -132,7 +133,7 @@ namespace reversi {
 
 
     const Tile& Engine::getLastMoveTile() const {
-        return lastMoveTile;
+        return moveHistory.back();
     }
 
     const PlayerInterface* Engine::getLastMovePlayer() const {

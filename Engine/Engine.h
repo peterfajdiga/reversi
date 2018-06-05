@@ -97,11 +97,10 @@ namespace reversi {
         // The view reference must be set via setView before calling runGame.
         ViewInterface* mView;
 
-        // Positions:
         Board board;
+        std::vector<Tile> moveHistory;
 
         bool lastMoveSkipped;
-        Tile lastMoveTile;  // if lastMoveSkipped, think of this as lastLastMoveTile
         color lastMovePlayer;  // if lastMoveSkipped, think of this as lastLastMovePlayer
 
         PlayerInterface* playerWhite;

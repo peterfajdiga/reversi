@@ -11,7 +11,6 @@ namespace reversi {
 
     MonteCarloPlayer::~MonteCarloPlayer() = default;
 
-    const clock_t SAMPLE_TIME = (clock_t)(3 * CLOCKS_PER_SEC);
     Tile MonteCarloPlayer::getMoveTimed(const Board& board, const std::vector<Tile>& moveHistory) {
         const std::vector<Tile>& legalMoves = board.getLegalMoves();
         const size_t n = legalMoves.size();
@@ -31,7 +30,7 @@ namespace reversi {
         // sample
         const clock_t startTime = clock();
         size_t i = 0;
-        while (clock() - startTime < SAMPLE_TIME) {
+        while (clock() - startTime < MOVE_TIME) {
             wins[i] += playRandom(children[i]) / 2 == playerColor;  // increment if this player won
             i = (i + 1) % n;
         }

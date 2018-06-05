@@ -1,9 +1,11 @@
 #pragma once
 
+#include <ctime>
 #include <string>
 #include "ViewInterface.h"
 #include "constants.h"
 #include "Containers/Board.h"
+
 
 namespace reversi {
 
@@ -18,8 +20,7 @@ namespace reversi {
      * Game view may access player objects via engine.getPlayer(id).
      *
      */
-    class PlayerInterface
-    {
+    class PlayerInterface {
     public:
         PlayerInterface(color playerColor);
 
@@ -32,6 +33,8 @@ namespace reversi {
         const color playerColor;
 
         const std::string name;
+
+        static const clock_t MOVE_TIME = (clock_t)(0.1 * CLOCKS_PER_SEC);
     };
 
 }

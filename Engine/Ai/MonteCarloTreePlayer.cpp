@@ -90,7 +90,6 @@ namespace reversi {
         delete root;
     }
 
-    const clock_t SAMPLE_TIME = (clock_t)(1 * CLOCKS_PER_SEC);
     Tile MonteCarloTreePlayer::getMoveTimed(const Board& board, const std::vector<Tile>& moveHistory) {
         if (board.getPiecesCount() < lastPiecesCount) {
             // new game
@@ -116,7 +115,7 @@ namespace reversi {
 
         // sample
         const clock_t startTime = clock();
-        while (clock() - startTime < SAMPLE_TIME) {
+        while (clock() - startTime < MOVE_TIME) {
             MCTree& nodeToExpand = root->select();
             if (nodeToExpand.board.isGameOver()) {
                 nodeToExpand.propagate(nodeToExpand.board.getGamestate());

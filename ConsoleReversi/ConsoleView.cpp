@@ -5,6 +5,9 @@
 #include "../Engine/Ai/MonteCarloPlayer.h"
 #include "../Engine/helpers.h"
 #include "../Engine/Ai/AlphaBetaPlayer.h"
+#include "../Engine/Ai/AiHeuristicPlayer.h"
+#include "../Engine/Ai/MonteCarloTreePlayer.h"
+
 
 #ifdef _WIN32
 #define UNOCCUPIED "."
@@ -89,9 +92,7 @@ namespace reversi {
                     case 'q': engine->quitGame(); break;
                     case 'n': engine->newGame(); break;
                     case 'h': std::cout << "\nLegal moves are now marked with " << UNOCCUPIED_LEGAL << "\n\n\n" << drawBoard(board, true) << "\n"; goto ask;
-                    case 'c': engine->playerToAi<EasyComputerPlayer>(); break;
-                    case 'v': engine->playerToAi<AlphaBetaPlayer>(); break;
-                    case 'm': engine->playerToAi<MonteCarloPlayer>(); break;
+                    case 'c': selectAi(); break;
                     default: goto ask;
                 } break;
             case 2: return Tile(input);
@@ -113,6 +114,32 @@ namespace reversi {
         switch (input[0]) {
             case 'q': engine->quitGame(); break;
             case 'n': engine->newGame(); break;
+            default: goto ask;
+        }
+    }
+
+
+    void ConsoleView::selectAi() const {
+        std::cout << "Select an opponent:\n"
+                  << " - EasyComputerPlayer   (c)\n"
+                  << " - HeuristicPlayer      (h)\n"
+                  << " - MonteCarloPlayer     (m)\n"
+                  << " - MonteCarloTreePlayer (t)\n"
+                  << " - AlphaBetaPlayer      (a)\n";
+        ask:
+        std::cout << "Your choice: ";
+        std::string input;
+        std::cin >> input;
+
+        if (input.length() != 1) {
+            goto ask;
+        }
+        switch (input[0]) {
+            case 'c': engine->playerToAi<EasyComputerPlayer>(); break;
+            case 'h': engine->playerToAi<AiHeuristicPlayer>(); break;
+            case 'm': engine->playerToAi<MonteCarloPlayer>(); break;
+            case 't': engine->playerToAi<MonteCarloTreePlayer>(); break;
+            case 'a': engine->playerToAi<AlphaBetaPlayer>(); break;
             default: goto ask;
         }
     }

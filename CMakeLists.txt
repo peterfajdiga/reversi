@@ -36,12 +36,16 @@ set(SOURCE_FILES
         Engine/PlayerInterface.cpp
         Engine/PlayerInterface.h
         Engine/ViewInterface.cpp
-        Engine/ViewInterface.h
+        Engine/ViewInterface.h)
+
+project(reversi)
+add_executable(reversi ${SOURCE_FILES}
+        ConsoleReversi/main.cpp
         ConsoleReversi/ConsoleView.cpp
         ConsoleReversi/ConsoleView.h)
 
-project(reversi)
-add_executable(reversi ${SOURCE_FILES} ConsoleReversi/main.cpp)
-
 project(reversi_pit)
-add_executable(reversi_pit ${SOURCE_FILES} pit/pit.cpp pit/NullView.cpp pit/NullView.h)
+add_executable(reversi_pit ${SOURCE_FILES}
+        pit/pit.cpp
+        pit/NullView.cpp
+        pit/NullView.h)

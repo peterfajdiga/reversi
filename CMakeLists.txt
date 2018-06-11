@@ -11,8 +11,6 @@ set(SOURCE_FILES
         Engine/Ai/Abstract/AiPlayerTimed.h
         Engine/Ai/AiHeuristicPlayer.cpp
         Engine/Ai/AiHeuristicPlayer.h
-        Engine/Ai/AiHeuristicPlayer2.cpp
-        Engine/Ai/AiHeuristicPlayer2.h
         Engine/Ai/AlphaBetaPlayer.cpp
         Engine/Ai/AlphaBetaPlayer.h
         Engine/Ai/EasyComputerPlayer.cpp
@@ -21,6 +19,10 @@ set(SOURCE_FILES
         Engine/Ai/MonteCarloPlayer.h
         Engine/Ai/MonteCarloTreePlayer.cpp
         Engine/Ai/MonteCarloTreePlayer.h
+        Engine/Ai/Testing/AiHeuristicPlayer2.cpp
+        Engine/Ai/Testing/AiHeuristicPlayer2.h
+        Engine/Ai/Testing/AlphaBetaPlayer.cpp
+        Engine/Ai/Testing/AlphaBetaPlayer.h
         Engine/Containers/Board.cpp
         Engine/Containers/Board.h
         Engine/Containers/Direction.h

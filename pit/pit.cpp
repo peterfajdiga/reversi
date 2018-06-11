@@ -3,8 +3,9 @@
 #include "NullView.h"
 #include "../Engine/Ai/EasyComputerPlayer.h"
 #include "../Engine/Ai/AiHeuristicPlayer.h"
-#include "../Engine/Ai/AiHeuristicPlayer2.h"
+#include "../Engine/Ai/Testing/AiHeuristicPlayer2.h"
 #include "../Engine/Ai/AlphaBetaPlayer.h"
+#include "../Engine/Ai/Testing/AlphaBetaPlayer.h"
 #include "../Engine/Ai/MonteCarloPlayer.h"
 #include "../Engine/Ai/MonteCarloTreePlayer.h"
 
@@ -13,7 +14,7 @@ int main() {
 
     using namespace reversi;
 
-    MonteCarloPlayer player1(white);
+    testing::AlphaBetaPlayer player1(white);
     MonteCarloTreePlayer player2(black);
     NullView nullView;
 

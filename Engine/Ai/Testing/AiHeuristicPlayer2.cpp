@@ -1,9 +1,9 @@
 #include <cmath>
 #include "AiHeuristicPlayer2.h"
-#include "Abstract/heuristics.h"
+#include "../Abstract/heuristics.h"
 
 
-namespace reversi {
+namespace reversi::testing {
 
     AiHeuristicPlayer2::AiHeuristicPlayer2(color playerColor) : AiEvaluationPlayer(playerColor, "Heuristic") {}
 

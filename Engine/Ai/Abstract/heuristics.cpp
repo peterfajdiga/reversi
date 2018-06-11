@@ -99,7 +99,7 @@ namespace reversi::heuristics {
     }
 
     const double STABILITY_POS = 1.0;
-    const double STABILITY_NEG = -1.0;
+    const double STABILITY_NEG = -4.0;
     double stability(const Board& board) {
         double score = 0.0;
 
@@ -129,6 +129,46 @@ namespace reversi::heuristics {
 
                     } else {
                         score += STABILITY_NEG * currentColor;
+                        break;  // TODO: maybe not?
+                    }
+
+                    tile.x += direction.x;
+                    tile.y += direction.y;
+                }
+            }
+        }
+        return score;
+    }
+
+    double stability_old(const Board& board) {
+        double score = 0.0;
+
+        for (size_t i_direction = 0; i_direction < 8; i_direction++) {
+            const Direction& direction = DIRECTIONS[i_direction];
+
+            for (const Tile& start : edges::EDGES[i_direction]) {
+                Tile tile = start;
+                const color startingColor = board[tile];
+                bool penaltyRequired = false;
+
+                for (size_t i = 0; i < 8; ++i) {
+                    if (!tile.isOnBoard()) {
+                        break;
+                    }
+                    const color currentColor = board[tile];
+
+                    if (currentColor == unoccupied) {
+                        penaltyRequired = true;
+
+                    } else if (penaltyRequired) {
+                        score += -3.0 * currentColor;
+                        break;
+
+                    } else if (currentColor == startingColor) {
+                        score += 1.0 * currentColor;
+
+                    } else {
+                        score += -3.0 * currentColor;
                         break;  // TODO: maybe not?
                     }
 

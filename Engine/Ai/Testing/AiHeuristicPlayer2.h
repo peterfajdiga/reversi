@@ -1,9 +1,9 @@
 #pragma once
 
-#include "Abstract/AiEvaluationPlayer.h"
+#include "../Abstract/AiEvaluationPlayer.h"
 
 
-namespace reversi {
+namespace reversi::testing {
 
     class AiHeuristicPlayer2 : public AiEvaluationPlayer {
     public:

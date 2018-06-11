@@ -15,4 +15,6 @@ namespace reversi::heuristics {
 
     double stability(const Board& board);
 
+    double stability_old(const Board& board);
+
 };

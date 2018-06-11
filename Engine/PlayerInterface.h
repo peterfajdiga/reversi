@@ -30,7 +30,7 @@ namespace reversi {
 
         virtual Tile getMove(const Board& board, const std::vector<Tile>& moveHistory, ViewInterface& view) = 0;
 
-        const color playerColor;
+        color playerColor;  // not const for pid  // TODO: make const in release
 
         const std::string name;
 

@@ -34,6 +34,8 @@ int main() {
         const bool white1 = n_games % 2 == 0;
         PlayerInterface& playerWhite = white1 ? (PlayerInterface&)player1 : (PlayerInterface&)player2;
         PlayerInterface& playerBlack = white1 ? (PlayerInterface&)player2 : (PlayerInterface&)player1;
+        playerWhite.playerColor = white;
+        playerBlack.playerColor = black;
 
         while (!board.isGameOver()) {
             PlayerInterface& currentPlayer = board.getCurrentPlayer() == white ? playerWhite : playerBlack;

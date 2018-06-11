@@ -1,5 +1,6 @@
 #include "heuristics.h"
 #include "../../Containers/Direction.h"
+#include "../../Containers/edges.h"
 
 
 namespace reversi::heuristics {
@@ -102,28 +103,11 @@ namespace reversi::heuristics {
     double stability(const Board& board) {
         double score = 0.0;
 
-        for (const Direction& direction : DIRECTIONS) {
-            std::vector<Tile> startingPositions;
-            if (direction.x > 0) {
-                for (coordinate i = 0; i < 8; ++i) {
-                    startingPositions.emplace_back(Tile(0, i));
-                }
-            } else if (direction.x < 0) {
-                for (coordinate i = 0; i < 8; ++i) {
-                    startingPositions.emplace_back(Tile(7, i));
-                }
-            }
-            if (direction.y > 0) {
-                for (coordinate i = 0; i < 8; ++i) {
-                    startingPositions.emplace_back(Tile(i, 0));
-                }
-            } else if (direction.y < 0) {
-                for (coordinate i = 0; i < 8; ++i) {
-                    startingPositions.emplace_back(Tile(i, 7));
-                }
-            }
+        for (size_t i_direction = 0; i_direction < 8; i_direction++) {
+            const Direction& direction = DIRECTIONS[i_direction];
 
-            for (Tile& tile : startingPositions) {
+            for (const Tile& start : edges::EDGES[i_direction]) {
+                Tile tile = start;
                 const color startingColor = board[tile];
                 bool penaltyRequired = false;
 

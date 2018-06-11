@@ -24,6 +24,7 @@ set(SOURCE_FILES
         Engine/Containers/Board.cpp
         Engine/Containers/Board.h
         Engine/Containers/Direction.h
+        Engine/Containers/edges.h
         Engine/Containers/Tile.cpp
         Engine/Containers/Tile.h
         Engine/constants.h
